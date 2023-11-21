@@ -62,9 +62,6 @@ export default defineNuxtConfig({
             'Bai Jamjuree': [400, 500, 600, 700]
         }
     },
-    routeRules: {
-        '/': { prerender: true }
-    },
     components: [
         {
             path: '~/components',
