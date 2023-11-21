@@ -1,0 +1,163 @@
+<script setup lang="ts">
+
+// ** Props & Emits
+interface Props {
+    modelValue?: number;
+    numberOfStars?: number;
+    starColor?: string;
+    inactiveColor?: string;
+    starSize?: number;
+    disableClick?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    numberOfStars: 5,
+    starSize: 24,
+    modelValue: 0,
+    starColor: '#3b82f6',
+    inactiveColor: '#333333'
+})
+
+const emit = defineEmits<{
+    (e: 'update:modelValue', v: number): void;
+}>()
+
+// ** Data
+const utils = {
+    rounded(value: number, decimalPlaces: number) {
+        const power = Math.pow(10, decimalPlaces)
+
+        return Math.round(value * power) / power
+    }
+}
+
+const starsContainer = ref<HTMLDivElement>()
+
+// ** Computed
+const rating = computed({
+    get() {
+        return props.modelValue
+    },
+    set(newVal) {
+        const roundedVal = utils.rounded(newVal, 1)
+
+        emit('update:modelValue', roundedVal)
+    }
+})
+
+// ** Methods
+function adjustRating(this: HTMLDivElement, e: MouseEvent) {
+    if (props.disableClick) return
+    const rect = this.getBoundingClientRect()
+
+    const { pageX } = e
+    const relativeX = pageX - rect.left
+    const offsetWidth = rect.width
+    const numberOfStars = props.numberOfStars
+    const result = (relativeX / offsetWidth) * numberOfStars
+
+    rating.value = Math.ceil(result)
+}
+
+const percent = computed(() => {
+    const normalizedRating =
+    rating.value < 0
+        ? 0
+        : rating.value > props.numberOfStars
+            ? props.numberOfStars
+            : rating.value
+
+    return (normalizedRating / props.numberOfStars) * 100
+})
+
+watchEffect(() => {
+    const styleValues = {
+        '--vue3StarRatingsInnerColor': props.inactiveColor,
+        '--vue3StarRatingsOuterColor': props.starColor,
+        '--vue3StarRatingOuterWidth': `${percent.value}%`,
+        '--vue3StarRatingIconSize': `${props.starSize}px`
+    }
+
+    for (const [key, value] of Object.entries(styleValues)) {
+        starsContainer.value?.style.setProperty(key, value)
+    }
+})
+
+onMounted(() => {
+    starsContainer.value?.addEventListener('click', adjustRating)
+})
+
+onBeforeUnmount(() => {
+    starsContainer.value?.removeEventListener('click', adjustRating)
+})
+</script>
+
+<template>
+    <div
+        ref="starsContainer"
+        class="vue3-star-ratings"
+        :style="{
+            pointerEvents: disableClick ? 'none' : 'auto',
+        }"
+    >
+        <div class="vue3-star-ratings__outer">
+            <BaseIconStar
+                v-for="i in numberOfStars"
+                :key="i"
+                class="vue3-star-ratings__icon"
+            />
+        </div>
+
+        <div class="vue3-star-ratings__inner">
+            <BaseIconStar
+                v-for="i in numberOfStars"
+                :key="i"
+                class="vue3-star-ratings__icon"
+            />
+        </div>
+    </div>
+</template>
+
+<style scoped>
+.vue3-star-ratings {
+  width: fit-content;
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+}
+
+.vue3-star-ratings * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.vue3-star-ratings__inner,
+.vue3-star-ratings__outer {
+  height: inherit;
+}
+
+.vue3-star-ratings__outer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--vue3StarRatingOuterWidth);
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--vue3StarRatingsOuterColor);
+  transition: width 320ms cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.vue3-star-ratings__inner {
+  color: var(--vue3StarRatingsInnerColor);
+}
+
+.vue3-star-ratings__icon {
+  fill: currentColor;
+  width: var(--vue3StarRatingIconSize);
+  aspect-ratio: 1;
+  cursor: pointer;
+  display: inline-block;
+}
+</style>

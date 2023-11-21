@@ -1,0 +1,70 @@
+<script setup lang="ts">
+
+// ** Types Imports
+import type { Group } from '@nuxt/ui/dist/runtime/types'
+import type { IProduct } from '~/types/product.type'
+
+// ** Data
+const isOpen = ref(false)
+
+// ** useHooks
+const { path } = useProduct()
+const _fetcher = useFetchData()
+
+const groups: Group[] = [{
+    key: 'products',
+    label: (q: string) => q && `Từ khóa “${q}”...`,
+    search: async (q: string) => {
+        if (!q) {
+            return []
+        }
+
+        const product = await _fetcher(path.value + '/data-list-search', {
+            params: { key: q }
+        })
+
+        return product.map((_p: IProduct) => ({
+            id: _p.id,
+            label: _p.name,
+            avatar: {
+                src: getImageFile(path.value, _p.image_uri)
+            },
+            to: navigateProduct(_p.slug),
+            loading: 'lazy'
+        }))
+    }
+}]
+
+// ** Methods
+function onSelect (option: Group) {
+    if (option.to) {
+        navigateTo(option.to)
+    }
+
+    isOpen.value = false
+}
+
+</script>
+
+<template>
+    <UTooltip text="Tìm Kiếm">
+        <UButton
+            icon="i-heroicons-magnifying-glass-20-solid"
+            size="sm"
+            square
+            color="gray"
+            variant="ghost"
+            @click="isOpen = true"
+        />
+    </UTooltip>
+
+    <UModal v-model="isOpen">
+        <UCommandPalette
+            :groups="groups"
+            :autoselect="false"
+            :close-button="{ icon: 'i-heroicons-x-mark-20-solid', color: 'gray', variant: 'link', padded: false }"
+            placeholder="Tìm kiếm..."
+            @update:model-value="onSelect"
+        />
+    </UModal>
+</template>
