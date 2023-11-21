@@ -49,7 +49,7 @@ const { dataFormInput } = useCrudFormInput<ICartFormInput>(pathCart.value, MESSA
 
                 <div class="flex-1 flex flex-col gap-1">
                     <StarRatings
-                        :model-value="product.total_rating"
+                        :model-value="Number(product.total_rating)"
                         disable-click
                         :star-size="14"
                     />

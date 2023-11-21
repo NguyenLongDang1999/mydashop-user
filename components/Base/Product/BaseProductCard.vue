@@ -74,7 +74,7 @@ const handleCart = () => {
 
         <div class="mt-3 flex gap-1 flex-col">
             <StarRatings
-                :model-value="product.total_rating"
+                :model-value="Number(product.total_rating)"
                 disable-click
                 :star-size="14"
             />

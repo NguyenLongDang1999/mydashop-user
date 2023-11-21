@@ -64,7 +64,7 @@ useServerSeoMeta({
 
 <template>
     <main>
-        <BaseBreadcumbsCategoryNested
+        <BaseBreadcrumbsCategoryNested
             :title="data.name"
             :category-id="data.category.id"
         />
@@ -83,7 +83,7 @@ useServerSeoMeta({
 
                         <StarRatings
                             class="mt-2"
-                            :model-value="data.total_rating"
+                            :model-value="Number(data.total_rating)"
                             disable-click
                             :star-size="14"
                         />

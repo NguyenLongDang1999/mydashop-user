@@ -90,7 +90,7 @@ const { dataList } = await useCrudList<IProduct>(path.value, '/data-list-flash-s
 
                                 <StarRatings
                                     class="mt-1 mb-2"
-                                    :model-value="product.total_rating"
+                                    :model-value="Number(product.total_rating)"
                                     disable-click
                                     :star-size="14"
                                 />
