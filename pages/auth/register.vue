@@ -4,15 +4,19 @@
 import { label, schema } from '~/validations/register'
 
 // ** useHooks
-const router = useRouter()
 const { handleSubmit } = useForm({ validationSchema: schema })
 const { isLoading, authRegister } = useAuthRegister()
+const _fetcher = useFetchData()
 
 // ** Methods
 const onSubmit = handleSubmit(async values => {
-    values.confirm_password = undefined
-    await authRegister(values)
-    router.push('/')
+    const config = useRuntimeConfig()
+
+    await _fetcher('/sanctum/csrf-cookie', {
+        baseURL: config.public.api
+    })
+
+    authRegister(values)
 })
 </script>
 
@@ -35,8 +39,8 @@ const onSubmit = handleSubmit(async values => {
                             <div class="grid gap-4 grid-cols-12">
                                 <div class="col-span-6">
                                     <FormInput
-                                        :label="label.fullname"
-                                        name="fullname"
+                                        :label="label.name"
+                                        name="name"
                                     />
                                 </div>
 

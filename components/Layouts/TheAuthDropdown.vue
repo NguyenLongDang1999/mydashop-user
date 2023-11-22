@@ -31,12 +31,12 @@ const authNoLogin: DropdownItem[][] = [
     [{
         label: 'Đăng nhập',
         icon: 'i-heroicons-arrow-right-on-rectangle',
-        to: '/dang-nhap'
+        click: () => navigateTo('/dang-nhap')
     },
     {
         label: 'Đăng ký',
         icon: 'i-heroicons-arrow-left-on-rectangle',
-        to: '/dang-ky'
+        click: () => navigateTo('/dang-ky')
     }]
 ]
 </script>
@@ -53,7 +53,7 @@ const authNoLogin: DropdownItem[][] = [
         <template #account="{ item }">
             <div class="text-left w-full">
                 <p class="font-medium text-gray-900 dark:text-white">
-                    {{ item.label.fullname }}
+                    {{ item.label.name }}
                 </p>
             </div>
         </template>

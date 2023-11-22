@@ -71,6 +71,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             domainUrl: process.env.NUXT_PUBLIC_DOMAIN_URL,
+            api: process.env.NUXT_PUBLIC_API,
             apiBase: process.env.NUXT_PUBLIC_API_BASE,
             previewCdn: process.env.NUXT_PUBLIC_BUNNY_CDN_URL
         }

@@ -2,7 +2,7 @@
 import { object, ref, string } from 'yup'
 
 export const label = {
-    fullname: 'Họ và tên',
+    name: 'Họ và tên',
     phone: 'Số điện thoại',
     email: 'Email',
     password: 'Mật khẩu',
@@ -10,9 +10,9 @@ export const label = {
 }
 
 export const schema = object({
-    fullname: string()
-        .required(`${label.fullname} không được bỏ trống.`)
-        .max(50, ({ max }) => `${label.fullname} không được vượt quá ${max} ký tự.`),
+    name: string()
+        .required(`${label.name} không được bỏ trống.`)
+        .max(60, ({ max }) => `${label.name} không được vượt quá ${max} ký tự.`),
     email: string()
         .required(`${label.email} không được bỏ trống.`)
         .email(`${label.email} không đúng định dạng.`),

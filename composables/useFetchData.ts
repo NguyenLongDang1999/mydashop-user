@@ -14,6 +14,16 @@ export default function () {
         },
         retry: 1,
         keepalive: true,
+        onRequest: ({ options }) => {
+            const accessToken = useCookie('accessToken')
+
+            if (accessToken) {
+                options.headers = {
+                    ...options.headers,
+                    Authorization: `Bearer ${accessToken.value}`
+                }
+            }
+        },
         onResponseError: async ({ response }) => {
             if (!response.ok && response.status === 401) {
                 navigateTo('/dang-nhap')

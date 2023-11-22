@@ -4,7 +4,7 @@ export interface IAuthLogin {
 }
 
 export interface IAuthRegister {
-    fullname: string
+    name: string
     email: string
     phone: string
     password: string

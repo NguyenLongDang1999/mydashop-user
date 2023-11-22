@@ -17,6 +17,22 @@ export default function () {
     }
 }
 
+export const useCsrfToken = async () => {
+    // ** Hooks
+    const _fetcher = useFetchData()
+    const config = useRuntimeConfig()
+
+    const { refetch } = useQuery({
+        queryKey: ['authCsrfToken'],
+        queryFn: () => _fetcher('/sanctum/csrf-cookie', {
+            baseURL: config.public.api
+        }),
+        enabled: false
+    })
+
+    return { refetch }
+}
+
 export const useAuthLogin = () => {
     // ** Hooks
     const _fetcher = useFetchData()
@@ -24,8 +40,9 @@ export const useAuthLogin = () => {
     const { isLoading, mutateAsync: authLogin } = useMutation(
         (body: IAuthLogin) => _fetcher(`${path.value}/sign-in`, { method: 'POST', body }),
         {
-            onSuccess: users => {
-                userData.value = users
+            onSuccess: user => {
+                userData.value = user
+
                 navigateTo('/')
                 useNotification('Đăng nhập thành công')
             },
@@ -45,8 +62,9 @@ export const useAuthRegister = () => {
     const { isLoading, mutateAsync: authRegister } = useMutation(
         (body: IAuthRegister) => _fetcher(`${path.value}/sign-up`, { method: 'POST', body }),
         {
-            onSuccess: users => {
-                userData.value = users
+            onSuccess: data => {
+                userData.value = data
+
                 navigateTo('/')
                 useNotification('Đăng nhập thành công')
             },
@@ -70,6 +88,7 @@ export const useAuthLogout = () => {
         enabled: false,
         onSuccess: () => {
             userData.value = undefined
+
             navigateTo('/dang-nhap')
             useNotification('Đăng xuất thành công')
         }
