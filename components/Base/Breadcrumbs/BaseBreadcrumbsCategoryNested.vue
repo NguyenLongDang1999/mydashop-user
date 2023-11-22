@@ -41,7 +41,7 @@ const findParentCategories = (categories: ICategory[], targetId: number) => {
                 findParentCategories(categoryList.value, category.parent_id)
             }
 
-            return
+            return breadcrumb.value
         } else if (category.children) {
             findParentCategories(category.children, targetId)
         }

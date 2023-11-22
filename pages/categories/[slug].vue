@@ -74,7 +74,7 @@ function parseQueryArray(value: LocationQueryValue | LocationQueryValue[]) {
 
 <template>
     <main>
-        <BaseBreadcumbsCategoryNested
+        <BaseBreadcrumbsCategoryNested
             :title="data.name"
             :category-id="data.id"
             page-category

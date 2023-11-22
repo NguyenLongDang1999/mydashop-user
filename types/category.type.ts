@@ -1,6 +1,6 @@
 // ** Types Imports
 import type { ICategoryAttribute } from '~/types/attribute.type'
-import type { ICategoryBrand } from '~/types/brand.type'
+import type { IBrand } from '~/types/brand.type'
 import type { IProduct } from '~/types/product.type'
 
 export interface ICategoryBreadcrumb {
@@ -32,7 +32,7 @@ export interface ICategoryDetail {
     meta_title: string
     meta_description: string
     Product: IProduct[]
-    brands: ICategoryBrand[]
+    brands: IBrand[]
     attributes: ICategoryAttribute[]
     aggregations: number
 }
