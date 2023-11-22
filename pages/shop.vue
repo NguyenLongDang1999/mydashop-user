@@ -22,12 +22,9 @@ const search = reactive<ICategoryProductFilter>({
 const { path } = useCategory()
 const { path: pathBrand } = useBrand()
 const { path: pathProduct } = useProduct()
-const { dataList: brandList } = await useCrudList<IBrand>(pathBrand.value, '/data-list-all', 'DataListAll')
+const { dataList: categoryBrand } = await useCrudList<IBrand>(pathBrand.value, '/data-list-all', 'DataListAll')
 const { dataList: categoryList } = await useCrudList<ICategory>(path.value, '/data-list-nested', 'DataListNested')
 const { isFetching, dataTable, dataAggregations } = await useCrudPagination<IProductPagination, ICategoryProductFilter>(pathProduct.value, { params: search })
-
-// ** Computed
-const categoryBrand = computed(() => brandList.value.map(_v => ({ Brand: _v })))
 
 provide('product', {
     dataTable,

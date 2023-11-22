@@ -2,7 +2,7 @@
 
 // ** Types Imports
 import type { ICategoryAttribute } from '~/types/attribute.type'
-import type { ICategoryBrand } from '~/types/brand.type'
+import type { IBrand } from '~/types/brand.type'
 import type { ICategory } from '~/types/category.type'
 import type { ICrudTableOptions } from '~/types/core.type'
 import type { IProduct } from '~/types/product.type'
@@ -10,7 +10,7 @@ import type { IProduct } from '~/types/product.type'
 // ** Props & Emits
 interface Props {
     categoryList?: ICategory[]
-    categoryBrand?: ICategoryBrand[]
+    categoryBrand?: IBrand[]
     categoryAttribute?: ICategoryAttribute[]
 }
 

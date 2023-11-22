@@ -2,13 +2,13 @@
 
 // ** Types Imports
 import type { ICategoryAttribute } from '~/types/attribute.type'
-import type { ICategoryBrand } from '~/types/brand.type'
+import type { IBrand } from '~/types/brand.type'
 import type { ICategory } from '~/types/category.type'
 
 // ** Props & Emits
 interface Props {
     categoryList?: ICategory[]
-    categoryBrand?: ICategoryBrand[]
+    categoryBrand?: IBrand[]
     categoryAttribute?: ICategoryAttribute[]
 }
 
