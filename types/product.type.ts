@@ -39,6 +39,8 @@ export interface IProductDetail extends IProduct {
     description: string
     meta_title: string
     meta_description: string
+    relatedProducts: IProduct[]
+    upsellProducts: IProduct[]
 }
 
 export interface IProductPagination extends IAggregations {

@@ -137,8 +137,50 @@ useServerSeoMeta({
                         </UTabs>
                     </div>
 
-                    <div class="col-span-12">
-                        <!-- <LazyBaseProductRelated /> -->
+                    <div
+                        v-if="data.relatedProducts.length"
+                        class="col-span-12"
+                    >
+                        <section class="grid grid-cols-12 mt-10">
+                            <div class="col-span-12">
+                                <div class="flex items-center justify-between">
+                                    <h2 class="uppercase font-bold md:text-3xl sm:text-2xl text-xl">
+                                        Sản phẩm có liên quan
+                                    </h2>
+                                </div>
+
+                                <div class="mt-5">
+                                    <Swiper
+                                        :space-between="10"
+                                        :slides-per-view="2"
+                                        :breakpoints="{
+                                            1200: {
+                                                slidesPerView: 5,
+                                            },
+                                            1024: {
+                                                slidesPerView: 4,
+                                            },
+                                            768: {
+                                                slidesPerView: 3,
+                                            },
+                                            475: {
+                                                slidesPerView: 2,
+                                            },
+                                            360: {
+                                                slidesPerView: 1,
+                                            },
+                                        }"
+                                    >
+                                        <SwiperSlide
+                                            v-for="product in data.relatedProducts"
+                                            :key="product.id"
+                                        >
+                                            <BaseProductCard :product="product" />
+                                        </SwiperSlide>
+                                    </Swiper>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                 </div>
             </section>
