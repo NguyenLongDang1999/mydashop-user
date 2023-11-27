@@ -17,7 +17,7 @@ const search = inject('search') as ICategoryProductFilter
                 v-for="product in dataTable"
                 :key="product.id"
                 :product="product"
-                class="md:col-span-12 col-span-6"
+                class="col-span-12"
             />
 
             <div class="mt-10 flex justify-center col-span-12">

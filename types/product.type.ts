@@ -23,6 +23,7 @@ export interface IProduct {
     short_description: string
     special_price_type: number
     total_rating: number
+    productAttributes: IProductAttribute[]
     product_attributes: IProductAttribute[]
     category: {
         id: number

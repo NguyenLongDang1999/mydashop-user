@@ -66,6 +66,9 @@ const handleAddToCart = () => {
                 <UFormGroup
                     :label="attribute.attribute.name"
                     :name="`attribute_value_id-${product.id}-${attribute.attribute.id}`"
+                    :ui="{
+                        label: { base: 'font-semibold' }
+                    }"
                 >
                     <URadioGroup
                         :model-value="attribute.product_attribute_values[0].attribute_value_id"

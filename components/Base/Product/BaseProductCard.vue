@@ -31,6 +31,7 @@ const handleCart = () => {
 
 <template>
     <UCard
+        v-once
         class="group text-left"
         :ui="{
             strategy: 'override',
@@ -114,8 +115,8 @@ const handleCart = () => {
                 variant="outline"
                 block
                 :disabled="product.in_stock !== INVENTORY_STATUS.IN_STOCK || isLoading"
-                label="Thêm Giỏ Hàng"
-                @click="handleCart"
+                :label="product.productAttributes.length ? 'Xem Lựa Chọn' : 'Thêm Giỏ Hàng'"
+                @click="product.productAttributes.length ? navigateTo(navigateProduct(product.slug)) : handleCart"
             />
         </div>
     </UCard>

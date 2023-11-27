@@ -19,6 +19,7 @@ const { dataFormInput } = useCrudFormInput<ICartFormInput>(pathCart.value, MESSA
 
 <template>
     <UCard
+        v-once
         class="group"
         :ui="{
             strategy: 'override',
@@ -92,8 +93,8 @@ const { dataFormInput } = useCrudFormInput<ICartFormInput>(pathCart.value, MESSA
                             icon="i-heroicons-shopping-bag"
                             class="capitalize"
                             :disabled="product.in_stock !== INVENTORY_STATUS.IN_STOCK"
-                            label="Thêm Giỏ Hàng"
-                            @click="dataFormInput({
+                            :label="product.productAttributes.length ? 'Xem Lựa Chọn' : 'Thêm Giỏ Hàng'"
+                            @click="product.productAttributes.length ? navigateTo(navigateProduct(product.slug)) : dataFormInput({
                                 product_id: product.id,
                                 quantity: 1
                             })"
