@@ -93,7 +93,10 @@ useServerSeoMeta({
                             class="mt-3"
                         />
 
-                        <p class="tracking-wide my-2">
+                        <p
+                            v-if="data.short_description"
+                            class="tracking-wide my-2"
+                        >
                             {{ data.short_description }}
                         </p>
 

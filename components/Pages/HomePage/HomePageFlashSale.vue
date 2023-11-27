@@ -97,7 +97,10 @@ const { dataList } = await useCrudList<IProduct>(path.value, '/data-list-flash-s
 
                                 <BaseProductInformation :product="product" />
 
-                                <p class="tracking-wide my-2">
+                                <p
+                                    v-if="product.short_description"
+                                    class="tracking-wide my-2"
+                                >
                                     {{ product.short_description }}
                                 </p>
 

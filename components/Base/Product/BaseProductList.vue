@@ -72,7 +72,10 @@ const { dataFormInput } = useCrudFormInput<ICartFormInput>(pathCart.value, MESSA
                         </h4>
                     </NuxtLink>
 
-                    <p class="line-clamp-2">
+                    <p
+                        v-if="product.short_description"
+                        class="line-clamp-2"
+                    >
                         {{ product.short_description }}
                     </p>
 
