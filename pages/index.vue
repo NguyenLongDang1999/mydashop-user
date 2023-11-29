@@ -12,10 +12,8 @@ useHead({
 
         <UContainer>
             <HomePageCategory />
-            <!--
-              <HomePageFlashSale />
-              <HomePageProduct />
-            -->
+            <HomePageFlashSale />
+            <HomePageProduct />
         </UContainer>
     </main>
 </template>

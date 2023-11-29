@@ -1,11 +1,7 @@
 <script setup lang="ts">
 
-// **Types Imports
-import type { IProduct } from '~/types/product.type'
-
 // ** useHooks
-const { path } = useProduct()
-const { dataList } = await useCrudList<IProduct>(path.value, '/data-list-flash-sale', 'DataListFlashSale')
+const { data } = await useProductFlashSale()
 </script>
 
 <template>
@@ -21,7 +17,7 @@ const { dataList } = await useCrudList<IProduct>(path.value, '/data-list-flash-s
                 />
 
                 <h2 class="md:text-3xl sm:text-2xl text-xl font-bold uppercase">
-                    Flash Sale
+                    {{ data.campaign_name }}
                 </h2>
 
                 <UIcon
@@ -63,7 +59,7 @@ const { dataList } = await useCrudList<IProduct>(path.value, '/data-list-flash-s
                 :slides-per-view="1.2"
             >
                 <SwiperSlide
-                    v-for="product in dataList"
+                    v-for="product in data.FlashSaleProduct"
                     :key="product.id"
                 >
                     <UCard

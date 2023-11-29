@@ -31,12 +31,12 @@ const authNoLogin: DropdownItem[][] = [
     [{
         label: 'Đăng nhập',
         icon: 'i-heroicons-arrow-right-on-rectangle',
-        click: () => navigateTo('/dang-nhap')
+        to: '/dang-nhap'
     },
     {
         label: 'Đăng ký',
         icon: 'i-heroicons-arrow-left-on-rectangle',
-        click: () => navigateTo('/dang-ky')
+        to: '/dang-ky'
     }]
 ]
 </script>
@@ -67,7 +67,6 @@ const authNoLogin: DropdownItem[][] = [
             />
         </template>
     </UDropdown>
-
 
     <UDropdown
         v-else

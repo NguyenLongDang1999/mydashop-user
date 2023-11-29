@@ -74,3 +74,8 @@ export interface IProductCommentPagination extends IAggregations {
         percent: number
     }[]
 }
+
+export interface IProductFlashSale {
+    campaign_name: string
+    FlashSaleProduct: IProduct[]
+}
