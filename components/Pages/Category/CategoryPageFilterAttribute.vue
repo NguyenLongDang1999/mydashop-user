@@ -12,6 +12,7 @@ interface Props {
 const props = defineProps<Props>()
 
 // ** Data
+const showAll = ref<boolean>(false)
 const search = inject('search') as ICategoryProductFilter
 const attributeList: string[] = []
 
@@ -78,7 +79,7 @@ const route = useRoute()
             <template #item="{ item }">
                 <ul class="flex flex-col gap-2 mb-4">
                     <li
-                        v-for="attribute in item.children"
+                        v-for="attribute in item.children.slice(0, showAll ? undefined : 5)"
                         :key="attribute.id"
                         class="capitalize"
                     >
@@ -99,6 +100,15 @@ const route = useRoute()
                                 })
                             }"
                         />
+                    </li>
+
+                    <li
+                        v-if="item.children.length > 5"
+                        class="flex gap-3 items-center justify-center cursor-pointer hover:text-primary"
+                        @click="showAll = !showAll"
+                    >
+                        {{ showAll ? 'Rút Gọn' : 'Xem Tất Cả' }}
+                        <UIcon :name="showAll ? 'i-heroicons-chevron-double-up' : 'i-heroicons-chevron-double-down'" />
                     </li>
                 </ul>
             </template>
