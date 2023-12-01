@@ -32,12 +32,12 @@ const thumbsSwiper = ref()
         </SwiperSlide>
 
         <SwiperSlide
-            v-for="img in 10"
-            :key="img"
+            v-for="data in product.productImage"
+            :key="data.image_uri"
         >
             <NuxtImg
-                alt="Gallery"
-                :src="`https://swiperjs.com/demos/images/nature-${img}.jpg`"
+                :alt="product.name"
+                :src="getImageFile(path, data.image_uri)"
                 class="rounded-md w-full"
             />
         </SwiperSlide>
@@ -61,12 +61,12 @@ const thumbsSwiper = ref()
         </SwiperSlide>
 
         <SwiperSlide
-            v-for="img in 10"
-            :key="img"
+            v-for="data in product.productImage"
+            :key="data.image_uri"
         >
             <NuxtImg
-                alt="Gallery"
-                :src="`https://swiperjs.com/demos/images/nature-${img}.jpg`"
+                :alt="product.name"
+                :src="getImageFile(path, data.image_uri)"
                 class="rounded-md w-full"
             />
         </SwiperSlide>

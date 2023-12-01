@@ -25,6 +25,9 @@ export interface IProduct {
     total_rating: number
     productAttributes: IProductAttribute[]
     product_attributes: IProductAttribute[]
+    productImage: {
+        image_uri: string
+    }[]
     category: {
         id: number
         slug: string
