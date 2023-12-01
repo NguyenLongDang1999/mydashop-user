@@ -36,18 +36,18 @@
 
                                 <div class="sm:mt-16 sm:ml-5 mt-4">
                                     <h3 class="text-xl font-semibold capitalize mb-1">
-                                        Nguyễn Long Đăng
+                                        {{ useCookie('userData').value.name }}
                                     </h3>
 
                                     <p class="text-base text-gray-500">
-                                        038 9747 179
+                                        {{ useCookie('userData').value.phone }}
                                     </p>
                                 </div>
                             </div>
                         </UCard>
                     </div>
 
-                    <div class="col-span-4">
+                    <div class="lg:col-span-4 md:col-span-6 col-span-12">
                         <UCard>
                             <h5 class="uppercase text-gray-500">
                                 Giới thiệu
@@ -60,7 +60,7 @@
                                         <span class="font-semibold capitalize">Họ và tên:</span>
                                     </div>
 
-                                    <span class="capitalize">Nguyễn Long Đăng</span>
+                                    <span class="capitalize flex-1">{{ useCookie('userData').value.name }}</span>
                                 </li>
 
                                 <li class="flex items-center gap-2">
@@ -69,7 +69,7 @@
                                         <span class="font-semibold capitalize">SĐT:</span>
                                     </div>
 
-                                    <span>038 9747 179</span>
+                                    <span class="flex-1">{{ useCookie('userData').value.phone }}</span>
                                 </li>
 
                                 <li class="flex items-center gap-2">
@@ -78,7 +78,7 @@
                                         <span class="font-semibold capitalize">Email:</span>
                                     </div>
 
-                                    <span>longdang0412@gmail.com</span>
+                                    <span class="flex-1">{{ useCookie('userData').value.email }}</span>
                                 </li>
 
                                 <li class="flex items-center gap-2">
@@ -87,7 +87,7 @@
                                         <span class="font-semibold capitalize">Skype:</span>
                                     </div>
 
-                                    <span>Skype ID</span>
+                                    <span class="flex-1">Skype ID</span>
                                 </li>
 
                                 <li class="flex items-center gap-2">
@@ -96,7 +96,7 @@
                                         <span class="font-semibold capitalize">Facebook:</span>
                                     </div>
 
-                                    <span>Facebook ID</span>
+                                    <span class="flex-1">Facebook ID</span>
                                 </li>
                             </ul>
                         </UCard>

@@ -30,6 +30,7 @@ const { dataComments, dataTable: commentList, dataAggregations } = await useProd
 const onSubmit = handleSubmit((values, { resetForm }) => {
     dataFormInput({
         ...values,
+        user_id: useCookie('userData').value.id,
         product_id: props.productId
     })
 
@@ -138,7 +139,7 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
 
                                 <div class="flex flex-col">
                                     <h6 class="font-semibold capitalize text-base">
-                                        {{ comment.Users.fullname }}
+                                        {{ comment.Users.name }}
                                     </h6>
 
                                     <div class="flex gap-0.5">

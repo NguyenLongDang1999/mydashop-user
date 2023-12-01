@@ -6,18 +6,9 @@ import { label, schema } from '~/validations/register'
 // ** useHooks
 const { handleSubmit } = useForm({ validationSchema: schema })
 const { isLoading, authRegister } = useAuthRegister()
-const _fetcher = useFetchData()
 
 // ** Methods
-const onSubmit = handleSubmit(async values => {
-    const config = useRuntimeConfig()
-
-    await _fetcher('/sanctum/csrf-cookie', {
-        baseURL: config.public.api
-    })
-
-    authRegister(values)
-})
+const onSubmit = handleSubmit(values => authRegister(values))
 </script>
 
 <template>

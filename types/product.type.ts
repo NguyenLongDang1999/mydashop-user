@@ -53,6 +53,7 @@ export interface IProductPagination extends IAggregations {
 
 export interface IProductCommentFormInput {
     rating: number
+    user_id: number
     product_id: number
     content: string
 }
@@ -64,7 +65,7 @@ export interface IProductComment {
     created_at: string
     Users: {
         id: number
-        fullname: string
+        name: string
         image_uri: string
     }
 }

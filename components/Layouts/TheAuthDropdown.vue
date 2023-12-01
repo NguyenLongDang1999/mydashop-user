@@ -4,13 +4,12 @@
 import type { DropdownItem } from '@nuxt/ui/dist/runtime/types'
 
 // ** useHooks
-const { userData } = useAuth()
 const { refetch } = useAuthLogout()
 
 // ** Data
 const authLogined: DropdownItem[][]  = [
     [{
-        label: userData.value,
+        label: 'Account',
         slot: 'account',
         disabled: true
     }], [{
@@ -43,17 +42,17 @@ const authNoLogin: DropdownItem[][] = [
 
 <template>
     <UDropdown
-        v-if="userData"
+        v-if="useIsLoggedIn()"
         :items="authLogined"
         :ui="{ item: { disabled: 'cursor-text select-text', base: 'capitalize' } }"
         :popper="{ placement: 'bottom-start' }"
     >
         <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" />
 
-        <template #account="{ item }">
+        <template #account>
             <div class="text-left w-full">
                 <p class="font-medium text-gray-900 dark:text-white">
-                    {{ item.label.name }}
+                    {{ useCookie('userData').value.name }}
                 </p>
             </div>
         </template>

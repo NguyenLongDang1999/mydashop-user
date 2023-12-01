@@ -6,31 +6,11 @@ import type { IAuthLogin, IAuthRegister } from '~/types/auth.type'
 
 // ** State
 const path = ref<string>(ROUTE.AUTH)
-const userData = ref()
 
 export default function () {
-    userData.value = useCookie('userData').value
-
     return {
-        path,
-        userData
+        path
     }
-}
-
-export const useCsrfToken = async () => {
-    // ** Hooks
-    const _fetcher = useFetchData()
-    const config = useRuntimeConfig()
-
-    const { refetch } = useQuery({
-        queryKey: ['authCsrfToken'],
-        queryFn: () => _fetcher('/sanctum/csrf-cookie', {
-            baseURL: config.public.api
-        }),
-        enabled: false
-    })
-
-    return { refetch }
 }
 
 export const useAuthLogin = () => {
@@ -40,10 +20,10 @@ export const useAuthLogin = () => {
     const { isLoading, mutateAsync: authLogin } = useMutation(
         (body: IAuthLogin) => _fetcher(`${path.value}/sign-in`, { method: 'POST', body }),
         {
-            onSuccess: user => {
-                userData.value = user
+            onSuccess: data => {
+                useCookie('userData').value = data
 
-                navigateTo('/')
+                nextTick(() => navigateTo('/'))
                 useNotification('Đăng nhập thành công')
             },
             onError: () => useNotification('Đăng nhập thất bại', true)
@@ -63,9 +43,9 @@ export const useAuthRegister = () => {
         (body: IAuthRegister) => _fetcher(`${path.value}/sign-up`, { method: 'POST', body }),
         {
             onSuccess: data => {
-                userData.value = data
+                useCookie('userData').value = data
 
-                navigateTo('/')
+                nextTick(() => navigateTo('/'))
                 useNotification('Đăng nhập thành công')
             },
             onError: () => useNotification('Đăng nhập thất bại', true)
@@ -87,9 +67,9 @@ export const useAuthLogout = () => {
         queryFn: () => _fetcher(`${path.value}/sign-out`),
         enabled: false,
         onSuccess: () => {
-            userData.value = undefined
+            useCookie('userData').value = null
 
-            navigateTo('/dang-nhap')
+            nextTick(() => navigateTo('/dang-nhap'))
             useNotification('Đăng xuất thành công')
         }
     })
@@ -97,4 +77,4 @@ export const useAuthLogout = () => {
     return { refetch }
 }
 
-export const useIsLoggedIn = () => !!(userData.value = useCookie('userData').value)
+export const useIsLoggedIn = () => !!(useCookie('userData').value)
