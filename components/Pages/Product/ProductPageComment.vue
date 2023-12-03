@@ -95,31 +95,35 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
             <div class="md:col-span-7 col-span-12">
                 <div class="flex flex-col gap-4">
                     <UCard>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="space-y-2 border-r border-gray-200 dark:border-gray-800">
-                                <div class="flex items-center gap-1">
-                                    <span class="text-3xl text-primary">{{ totalRating?.toFixed(2) || 0 }}</span>
+                        <div class="grid grid-cols-12 gap-4">
+                            <div class="sm:col-span-6 col-span-12 sm:border-r sm:border-gray-200 dark:border-gray-800">
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-1">
+                                        <span class="text-3xl text-primary">{{ totalRating?.toFixed(2) || 0 }}</span>
 
-                                    <UIcon
-                                        class="bg-primary w-6 h-6"
-                                        name="i-heroicons-star-solid"
-                                    />
+                                        <UIcon
+                                            class="bg-primary w-6 h-6"
+                                            name="i-heroicons-star-solid"
+                                        />
+                                    </div>
+
+                                    <p class="text-gray-500">
+                                        Tổng cộng {{ dataComments?.totalReviews }} đánh giá sản phẩm
+                                    </p>
                                 </div>
-
-                                <p class="text-gray-500">
-                                    Tổng cộng {{ dataComments?.totalReviews }} đánh giá sản phẩm
-                                </p>
                             </div>
 
-                            <div class="flex flex-col gap-3 justify-center">
-                                <div
-                                    v-for="(rating, key) in dataComments?.ratingPercentages"
-                                    :key="key"
-                                    class="flex items-center gap-2"
-                                >
-                                    <span class="whitespace-nowrap">{{ key }} Sao</span>
-                                    <UProgress :value="rating.percent" />
-                                    <span>{{ rating.count }}</span>
+                            <div class="sm:col-span-6 col-span-12">
+                                <div class="flex flex-col gap-3 justify-center">
+                                    <div
+                                        v-for="(rating, key) in dataComments?.ratingPercentages"
+                                        :key="key"
+                                        class="flex items-center gap-2"
+                                    >
+                                        <span class="whitespace-nowrap">{{ key }} Sao</span>
+                                        <UProgress :value="rating.percent" />
+                                        <span>{{ rating.count }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
