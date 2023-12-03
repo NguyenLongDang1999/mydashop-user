@@ -79,7 +79,6 @@ const authNoLogin: DropdownItem[][] = [
                 size="sm"
                 square
                 color="gray"
-                variant="ghost"
             />
         </UTooltip>
 

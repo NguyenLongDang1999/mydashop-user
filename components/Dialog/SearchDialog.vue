@@ -20,7 +20,7 @@ const groups: Group[] = [{
         }
 
         const product = await _fetcher(path.value + '/data-list-search', {
-            params: { key: q }
+            params: { q }
         })
 
         return product.map((_p: IProduct) => ({
@@ -53,7 +53,6 @@ function onSelect (option: Group) {
             size="sm"
             square
             color="gray"
-            variant="ghost"
             @click="isOpen = true"
         />
     </UTooltip>
@@ -64,6 +63,11 @@ function onSelect (option: Group) {
             :autoselect="false"
             :close-button="{ icon: 'i-heroicons-x-mark-20-solid', color: 'gray', variant: 'link', padded: false }"
             placeholder="Tìm kiếm..."
+            :empty-state="{
+                icon: 'i-heroicons-magnifying-glass-20-solid',
+                label: 'Nhập từ khoá cần tìm kiếm.',
+                queryLabel: 'Không tìm thấy sản phẩm nào.'
+            }"
             @update:model-value="onSelect"
         />
     </UModal>

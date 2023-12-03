@@ -1,8 +1,5 @@
 <script setup lang="ts">
 
-// ** Types Imports
-import { useCartList } from '~/composables/useCart'
-
 // ** Data
 const isOpen = ref<boolean>(false)
 
@@ -20,32 +17,18 @@ const cartTotal = computed(() => cartLength.value && dataList.value.CartItem.red
 <template>
     <div class="block">
         <UTooltip text="Giỏ Hàng">
-            <UButton
-                icon="i-heroicons-shopping-bag"
-                size="sm"
-                square
-                color="gray"
-                variant="ghost"
-                @click="isOpen = true"
+            <UChip
+                :text="0"
+                size="2xl"
             >
-                <template #leading>
-                    <div class="relative">
-                        <UIcon
-                            name="i-heroicons-shopping-bag"
-                            class="w-5 h-5"
-                        />
-
-                        <span
-                            v-if="cartLength"
-                            class="absolute -top-3 -right-3"
-                        >
-                            <div class="w-5 h-5 bg-primary text-white rounded-full text-xs flex justify-center items-center">
-                                {{ dataList.CartItem.length }}
-                            </div>
-                        </span>
-                    </div>
-                </template>
-            </UButton>
+                <UButton
+                    icon="i-heroicons-shopping-bag"
+                    size="sm"
+                    square
+                    color="gray"
+                    @click="isOpen = true"
+                />
+            </UChip>
         </UTooltip>
 
         <USlideover v-model="isOpen">
