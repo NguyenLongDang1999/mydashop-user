@@ -15,12 +15,12 @@ export default function () {
         retry: 1,
         keepalive: true,
         onRequest: ({ options }) => {
-            const accessToken = useCookie('accessToken')
+            const accessToken = useCookie('accessToken').value
 
             if (accessToken) {
                 options.headers = {
                     ...options.headers,
-                    Authorization: `Bearer ${accessToken.value}`
+                    Authorization: `Bearer ${accessToken}`
                 }
             }
         },

@@ -69,7 +69,7 @@ const { dataFormInput } = useCrudFormInput<ICartFormInput>(pathCart.value, MESSA
                         class="block capitalize"
                     >
                         <h4 class="text-sm font-semibold line-clamp-1 hover:text-primary">
-                            {{ product.name }}
+                            {{ product.name }} - {{ product.sku }}
                         </h4>
                     </NuxtLink>
 

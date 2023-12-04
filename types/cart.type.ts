@@ -3,7 +3,8 @@ import type { IProduct } from '~/types/product.type'
 
 export interface ICartItem {
     id: number
-    quantity: number;
+    quantity: number
+    attributes: string
     Product: IProduct
 }
 
@@ -16,5 +17,5 @@ export interface ICartFormInput {
     id?: number
     product_id: number
     quantity: number
-    attribute_id?: string
+    attributes?: string
 }

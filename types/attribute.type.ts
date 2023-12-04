@@ -18,10 +18,16 @@ export interface IProductAttribute {
         id: number
         value: string
         attribute_value_id: number
+        attribute_values: {
+            id: number
+            value: string
+        }
     }[]
 }
 
 export interface IAttributeValues {
-    attribute_id?: number
-    attribute_value_id?: number
+    attribute_id: number
+    attribute_value_id: number
+    attribute_name: string
+    attribute_value: string
 }

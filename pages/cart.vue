@@ -2,6 +2,7 @@
 
 // ** Types Imports
 import { useCartList } from '~/composables/useCart'
+import type { IAttributeValues } from '~/types/attribute.type'
 import type { ICartFormInput } from '~/types/cart.type'
 
 // ** useHooks
@@ -67,7 +68,9 @@ const cartColumns = [{
                                             <NuxtImg
                                                 :src="getImageFile(pathProduct, row.Product.image_uri)"
                                                 :alt="row.Product.name"
-                                                class="rounded-lg w-14 h-14 object-cover"
+                                                :width="56"
+                                                :height="56"
+                                                class="rounded-lg min-w-[56px] min-h-[56px] object-cover"
                                             />
 
                                             <UButton
@@ -86,11 +89,14 @@ const cartColumns = [{
                                                 class="hover:text-primary"
                                             >
                                                 <h4 class="font-semibold">
-                                                    {{ row.Product.name }}
+                                                    {{ row.Product.name }} - {{ row.Product.sku }}
                                                 </h4>
                                             </NuxtLink>
 
-                                            <span>{{ row.Product.sku }}</span>
+                                            <span
+                                                v-if="row.attributes"
+                                                class="text-xs text-gray-400 mt-1"
+                                            >{{ JSON.parse(row.attributes).map((item: IAttributeValues) => `${item.attribute_name}: ${item.attribute_value}`).join(', ') }}</span>
                                         </div>
                                     </div>
                                 </template>
@@ -157,7 +163,7 @@ const cartColumns = [{
 
                                     <li class="flex items-center justify-between">
                                         <span class="capitalize font-semibold">Giảm giá:</span>
-                                        <span class="text-base font-semibold">500.000đ</span>
+                                        <span class="text-base font-semibold">{{ formatCurrency(500000) }}</span>
                                     </li>
 
                                     <UDivider />

@@ -68,6 +68,10 @@ export default defineNuxtConfig({
             pathPrefix: false
         }
     ],
+    routeRules: {
+        '/': { prerender: true },
+        '/san-pham/**': { swr: true }
+    },
     runtimeConfig: {
         public: {
             domainUrl: process.env.NUXT_PUBLIC_DOMAIN_URL,

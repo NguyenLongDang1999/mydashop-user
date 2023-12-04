@@ -19,7 +19,7 @@ export const getImageFile = (path: string, name?: string) => {
 export const navigateProduct = (slug: string) => `/san-pham/${slug}`
 export const navigateCategory = (slug: string) => `/danh-muc/${slug}`
 
-export const formatTimeAgo = dateString => {
+export const formatTimeAgo = (dateString: string) => {
     const date = new Date(dateString)
     const now = new Date()
 
@@ -46,3 +46,10 @@ export const formatTimeAgo = dateString => {
         return `${seconds} giây trước`
     }
 }
+
+export const generateUUIDv4 = () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = (Math.random() * 16) | 0
+    const v = c === 'x' ? r : (r & 0x3) | 0x8
+
+    return v.toString(16)
+})

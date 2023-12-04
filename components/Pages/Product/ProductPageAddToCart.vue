@@ -19,37 +19,28 @@ const { isLoading, dataFormInput } = useCrudFormInput<ICartFormInput>(path.value
 // ** Data
 const quantity = ref<number>(1)
 
-const attributeValues: IAttributeValues[] = props.product.product_attributes.map((item: IProductAttribute) => ({
-    attribute_id: item.id,
-    attribute_value_id: item.product_attribute_values[0].attribute_value_id
-}))
+const attributeValues = reactive<IAttributeValues[]>(props.product.product_attributes.map((item: IProductAttribute) => ({
+    attribute_id: item.attribute.id,
+    attribute_value_id: item.product_attribute_values[0].attribute_value_id,
+    attribute_name: item.attribute.name,
+    attribute_value: item.product_attribute_values[0].attribute_values.value
+})))
 
 // ** Methods
-const handleAttributeValues = (attribute: IProductAttribute, values: number) => {
-    const existingItem = attributeValues.find(item => item.attribute_id === attribute.id)
+const handleAttributeValues = (attribute: IProductAttribute, attribute_value: { id: number, value: string }) => {
+    const existingItem = attributeValues.find(item => item.attribute_id === attribute.attribute.id)
 
     if (existingItem) {
-        existingItem.attribute_value_id = values
+        existingItem.attribute_value_id = attribute_value.id
+        existingItem.attribute_value = attribute_value.value
     } else {
-        attributeValues.push({ attribute_id: attribute.id, attribute_value_id: values })
+        attributeValues.push({
+            attribute_id: attribute.attribute.id,
+            attribute_value_id: attribute_value.id,
+            attribute_name: attribute.attribute.name,
+            attribute_value: attribute_value.value
+        })
     }
-}
-
-const handleAddToCart = () => {
-    if (useIsLoggedIn()) {
-        const formInput: ICartFormInput = {
-            product_id: props.product.id,
-            quantity: quantity.value
-        }
-
-        if (props.product.product_attributes.length) {
-            formInput.attribute_id = JSON.stringify(attributeValues)
-        }
-
-        dataFormInput(formInput)
-    }
-
-    return navigateTo('/dang-nhap')
 }
 </script>
 
@@ -71,10 +62,10 @@ const handleAddToCart = () => {
                     }"
                 >
                     <URadioGroup
-                        :model-value="attribute.product_attribute_values[0].attribute_value_id"
+                        :model-value="attribute.product_attribute_values[0].attribute_values"
                         :options="attribute.product_attribute_values"
                         option-attribute="attribute_values.value"
-                        value-attribute="attribute_values.id"
+                        value-attribute="attribute_values"
                         @update:model-value="val => handleAttributeValues(attribute, val)"
                     />
                 </UFormGroup>
@@ -111,7 +102,11 @@ const handleAddToCart = () => {
                 icon="i-heroicons-shopping-bag"
                 :disabled="product.in_stock !== INVENTORY_STATUS.IN_STOCK || isLoading"
                 label="Thêm Giỏ Hàng"
-                @click="handleAddToCart"
+                @click="dataFormInput({
+                    product_id: product.id,
+                    quantity,
+                    attributes: product.product_attributes.length ? JSON.stringify(attributeValues) : undefined
+                })"
             />
         </div>
     </div>

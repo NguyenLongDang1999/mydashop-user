@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { IAttributeValues } from '~/types/attribute.type'
+
 
 // ** Data
 const isOpen = ref<boolean>(false)
@@ -18,7 +20,7 @@ const cartTotal = computed(() => cartLength.value && dataList.value.CartItem.red
     <div class="block">
         <UTooltip text="Giỏ Hàng">
             <UChip
-                :text="0"
+                :text="cartLength ? dataList.CartItem.length : 0"
                 size="2xl"
             >
                 <UButton
@@ -71,9 +73,9 @@ const cartTotal = computed(() => cartLength.value && dataList.value.CartItem.red
                                     :alt="cart.Product.name"
                                     :title="cart.Product.name"
                                     loading="lazy"
-                                    width="96"
-                                    height="96"
-                                    class="w-24 h-24 rounded-md"
+                                    width="100"
+                                    height="100"
+                                    class="w-[100px] h-[100px] rounded-md"
                                 />
                             </NuxtLink>
 
@@ -87,13 +89,13 @@ const cartTotal = computed(() => cartLength.value && dataList.value.CartItem.red
                             />
                         </div>
 
-                        <div class="flex-1 flex flex-col gap-2">
+                        <div class="flex-1 flex flex-col gap-1">
                             <NuxtLink
-                                :to="navigateCategory(cart.Product.Category.slug)"
+                                :to="navigateCategory(cart.Product.category.slug)"
                                 @click="isOpen = false"
                             >
                                 <h6 class="font-medium line-clamp-1 text-gray-400 text-xs hover:text-primary capitalize">
-                                    {{ cart.Product.Category.name }}
+                                    {{ cart.Product.category.name }}
                                 </h6>
                             </NuxtLink>
 
@@ -102,11 +104,18 @@ const cartTotal = computed(() => cartLength.value && dataList.value.CartItem.red
                                 @click="isOpen = false"
                             >
                                 <h4 class="line-clamp-2 font-semibold text-sm hover:text-primary">
-                                    {{ cart.Product.name }}
+                                    {{ cart.Product.name }} - {{ cart.Product.sku }}
                                 </h4>
                             </NuxtLink>
 
                             <div>
+                                <div
+                                    v-if="cart.attributes"
+                                    class="text-xs text-gray-400"
+                                >
+                                    {{ JSON.parse(cart.attributes).map((item: IAttributeValues) => `${item.attribute_name}: ${item.attribute_value}`).join(', ') }}
+                                </div>
+
                                 <span class="font-semibold sm:text-lg text-primary text-base">{{ cart.quantity }} x {{ formatCurrency(Number(cart.Product.selling_price)) }}</span>
                                 <span class="font-normal sm:text-base text-sm text-gray-300 line-through pl-3">{{ formatCurrency(Number(cart.Product.price)) }}</span>
                             </div>

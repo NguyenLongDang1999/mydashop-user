@@ -9,24 +9,12 @@ interface Props {
     product: IProduct
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 // ** useHooks
 const { path } = useProduct()
 const { path: pathCart } = useCart()
 const { isLoading, dataFormInput } = useCrudFormInput<ICartFormInput>(pathCart.value, MESSAGE_SUCCESS.CART)
-
-// ** Methods
-const handleCart = () => {
-    if (useIsLoggedIn()) {
-        return dataFormInput({
-            product_id: props.product.id,
-            quantity: 1
-        })
-    }
-
-    return navigateTo('/dang-nhap')
-}
 </script>
 
 <template>
@@ -98,7 +86,7 @@ const handleCart = () => {
                     :popper="{ placement: 'bottom' }"
                 >
                     <h4 class="text-sm font-semibold line-clamp-2 hover:text-primary">
-                        {{ product.name }}
+                        {{ product.name }} - {{ product.sku }}
                     </h4>
                 </UTooltip>
             </NuxtLink>
@@ -116,7 +104,10 @@ const handleCart = () => {
                 block
                 :disabled="product.in_stock !== INVENTORY_STATUS.IN_STOCK || isLoading"
                 :label="product.productAttributes.length ? 'Xem Lựa Chọn' : 'Thêm Giỏ Hàng'"
-                @click="product.productAttributes.length ? navigateTo(navigateProduct(product.slug)) : handleCart"
+                @click="product.productAttributes.length ? navigateTo(navigateProduct(product.slug)) : dataFormInput({
+                    product_id: product.id,
+                    quantity: 1
+                })"
             />
         </div>
     </UCard>
