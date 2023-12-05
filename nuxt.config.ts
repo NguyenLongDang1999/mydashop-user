@@ -69,8 +69,7 @@ export default defineNuxtConfig({
         }
     ],
     routeRules: {
-        '/': { prerender: true },
-        '/san-pham/**': { swr: true }
+        '/': { prerender: true }
     },
     runtimeConfig: {
         public: {

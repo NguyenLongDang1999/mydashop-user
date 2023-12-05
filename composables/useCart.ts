@@ -18,7 +18,7 @@ export const useCartList = async () => {
 
     const { data, suspense } = useQuery<ICart>({
         queryKey: [path.value + 'DataList'],
-        queryFn: () => _fetcher(`${path.value}`)
+        queryFn: () => _fetcher(path.value)
     })
 
     // ** Computed

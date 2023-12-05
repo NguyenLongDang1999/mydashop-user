@@ -9,7 +9,7 @@ import type { ICartFormInput } from '~/types/cart.type'
 const { path } = useCart()
 const { path: pathProduct } = useProduct()
 const { dataList } = await useCartList()
-const { dataFormInput: cartQuantity } = useCrudFormInput<ICartFormInput>(path.value, 'Thành công!')
+const { dataFormInput: cartQuantity } = useCrudFormInput<ICartFormInput>(path.value, 'Thành công!', false)
 const { isLoading, dataFormInput } = useCrudDelete(path.value, MESSAGE_SUCCESS.DELETE_CART)
 
 // ** Computed
@@ -79,7 +79,7 @@ const cartColumns = [{
                                                 size="2xs"
                                                 :ui="{ rounded: 'rounded-full' }"
                                                 :disabled="isLoading"
-                                                @click="dataFormInput(row.Product.id)"
+                                                @click="dataFormInput(row.id)"
                                             />
                                         </div>
 
@@ -111,10 +111,11 @@ const cartColumns = [{
                                     <BaseProductQuantity
                                         :model-value="row.quantity"
                                         class="w-32"
-                                        @update:model-value="val => cartQuantity({
+                                        @update:model-value="quantity => cartQuantity({
                                             id: row.Product.id,
                                             product_id: row.Product.id,
-                                            quantity: val
+                                            quantity,
+                                            attributes: row.attributes
                                         })"
                                     />
                                 </template>

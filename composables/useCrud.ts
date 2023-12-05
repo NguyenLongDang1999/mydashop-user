@@ -18,7 +18,7 @@ export const useCrudList = async <T>(path: string, subPath = '/data-list', subKe
     return { dataList }
 }
 
-export const useCrudFormInput = <T>(path: string, description?: string) => {
+export const useCrudFormInput = <T>(path: string, description?: string, show_description = true) => {
     // ** Hooks
     const _fetcher = useFetchData()
     const queryClient = useQueryClient()
@@ -31,8 +31,11 @@ export const useCrudFormInput = <T>(path: string, description?: string) => {
         },
         {
             onSuccess: () => {
-                queryClient.refetchQueries({ queryKey: [`${path}DataList`] })
-                useNotification(description)
+                queryClient.invalidateQueries({ queryKey: [`${path}DataList`] })
+
+                if (show_description) {
+                    useNotification(description)
+                }
             },
             onError: () => useNotification(description, true)
         })
