@@ -70,7 +70,8 @@ export default defineNuxtConfig({
         }
     ],
     routeRules: {
-        '/': { prerender: true }
+        '/': { prerender: true },
+        'gio-hang': { ssr: false }
     },
     runtimeConfig: {
         public: {

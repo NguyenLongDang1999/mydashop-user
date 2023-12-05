@@ -31,7 +31,7 @@ export const useCrudFormInput = <T>(path: string, description?: string, show_des
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: [`${path}DataList`] })
+                queryClient.refetchQueries({ queryKey: [`${path}DataList`] })
 
                 if (show_description) {
                     useNotification(description)
@@ -52,12 +52,11 @@ export const useCrudDelete = (path: string, description?: string) => {
     const queryClient = useQueryClient()
 
     const { isLoading, mutateAsync: dataFormInput } = useMutation(
-        async (id: number) => {
-            return _fetcher(`${path}/${id}`, { method: 'DELETE' })
-        },
+        async (id: number) => _fetcher(`${path}/${id}`, { method: 'DELETE' }),
         {
             onSuccess: () => {
                 queryClient.refetchQueries({ queryKey: [`${path}DataList`] })
+
                 useNotification(description)
             },
             onError: () => useNotification(description, true)

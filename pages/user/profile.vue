@@ -101,6 +101,61 @@
                             </ul>
                         </UCard>
                     </div>
+
+                    <div class="lg:col-span-4 md:col-span-6 col-span-12">
+                        <UCard>
+                            <h5 class="uppercase text-gray-500">
+                                Giới thiệu
+                            </h5>
+
+                            <ul class="flex flex-col mt-3 gap-3">
+                                <li class="flex items-center gap-2">
+                                    <div class="flex items-center gap-1">
+                                        <BaseIconUser />
+                                        <span class="font-semibold capitalize">Họ và tên:</span>
+                                    </div>
+
+                                    <span class="capitalize flex-1">{{ useCookie('userData').value.name }}</span>
+                                </li>
+
+                                <li class="flex items-center gap-2">
+                                    <div class="flex items-center gap-1">
+                                        <BaseIconPhoneCall />
+                                        <span class="font-semibold capitalize">SĐT:</span>
+                                    </div>
+
+                                    <span class="flex-1">{{ useCookie('userData').value.phone }}</span>
+                                </li>
+
+                                <li class="flex items-center gap-2">
+                                    <div class="flex items-center gap-1">
+                                        <BaseIconMail />
+                                        <span class="font-semibold capitalize">Email:</span>
+                                    </div>
+
+                                    <span class="flex-1">{{ useCookie('userData').value.email }}</span>
+                                </li>
+
+                                <li class="flex items-center gap-2">
+                                    <div class="flex items-center gap-1">
+                                        <BaseIconSkype />
+                                        <span class="font-semibold capitalize">Skype:</span>
+                                    </div>
+
+                                    <span class="flex-1">Skype ID</span>
+                                </li>
+
+                                <li class="flex items-center gap-2">
+                                    <div class="flex items-center gap-1">
+                                        <BaseIconFacebookTabler />
+                                        <span class="font-semibold capitalize">Facebook:</span>
+                                    </div>
+
+                                    <span class="flex-1">Facebook ID</span>
+                                </li>
+                            </ul>
+                        </UCard>
+                    </div>
                 </div>
             </section>
         </UContainer>
