@@ -76,7 +76,7 @@ useServerSeoMeta({
                         <BaseProductGallery :product="data" />
                     </div>
 
-                    <div class="lg:col-span-7 col-span-12 ">
+                    <div class="lg:col-span-7 col-span-12">
                         <h1 class="capitalize font-semibold text-xl">
                             {{ data.name }}
                         </h1>
@@ -101,6 +101,21 @@ useServerSeoMeta({
                         </p>
 
                         <ProductPageAddToCart :product="data" />
+
+                        <div class="mt-2 flex items-center gap-2">
+                            <span class="capitalize font-semibold">Chia sẻ:</span>
+
+                            <div class="flex flex-row gap-2">
+                                <SocialShare
+                                    v-for="network in ['facebook', 'twitter', 'telegram']"
+                                    :key="network"
+                                    :network="network"
+                                    :label="false"
+                                    styled
+                                    class="p-1 rounded-full text-white text-xs"
+                                />
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-span-12">

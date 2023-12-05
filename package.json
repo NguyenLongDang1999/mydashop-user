@@ -16,6 +16,7 @@
         "@nuxt/ui": "^2.11.0",
         "@nuxtjs/google-fonts": "^3.0.2",
         "@nuxtjs/tailwindcss": "^6.9.4",
+        "@stefanobartoletti/nuxt-social-share": "^0.5.0",
         "@typescript-eslint/eslint-plugin": "^6.7.5",
         "@typescript-eslint/parser": "^6.7.5",
         "@vee-validate/nuxt": "^4.11.8",

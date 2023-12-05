@@ -8,7 +8,8 @@ export default defineNuxtConfig({
         '@nuxt/ui',
         '@nuxt/image',
         'nuxt-swiper',
-        '@vee-validate/nuxt'
+        '@vee-validate/nuxt',
+        '@stefanobartoletti/nuxt-social-share'
     ],
     hooks: {
         'pages:extend' (pages) {
