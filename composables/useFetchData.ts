@@ -5,7 +5,7 @@ export default function () {
     const config = useRuntimeConfig()
     const headers = useRequestHeaders(['cookie'])
 
-    return ofetch.create({
+    const _fetcher = ofetch.create({
         baseURL: config.public.apiBase,
         credentials: 'include',
         headers: {
@@ -26,8 +26,14 @@ export default function () {
         },
         onResponseError: async ({ response }) => {
             if (!response.ok && response.status === 401) {
-                navigateTo('/dang-nhap')
+                try {
+                    return await _fetcher('/auth/refresh')
+                } catch {
+                    navigateTo('/dang-nhap')
+                }
             }
         }
     })
+
+    return _fetcher
 }
