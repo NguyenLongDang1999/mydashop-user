@@ -23,6 +23,7 @@ export interface IProduct {
     short_description: string
     special_price_type: number
     total_rating: number
+    productVariant: IProductVariant[]
     productAttributes: IProductAttribute[]
     product_attributes: IProductAttribute[]
     productImage: {
@@ -82,4 +83,15 @@ export interface IProductCommentPagination extends IAggregations {
 export interface IProductFlashSale {
     campaign_name: string
     FlashSaleProduct: IProduct[]
+}
+
+export interface IProductVariant {
+    sku: string
+    label: string
+    quantity: number
+    in_stock: number
+    price: string
+    special_price: string
+    selling_price: string
+    special_price_type: number
 }

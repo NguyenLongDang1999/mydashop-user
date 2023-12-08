@@ -4,6 +4,7 @@
 import type { DropdownItem } from '@nuxt/ui/dist/runtime/types'
 
 // ** useHooks
+const { userData } = useAuth()
 const { refetch } = useAuthLogout()
 
 // ** Data
@@ -52,7 +53,7 @@ const authNoLogin: DropdownItem[][] = [
         <template #account>
             <div class="text-left w-full">
                 <p class="font-medium text-gray-900 dark:text-white">
-                    {{ useCookie('userData').value.name }}
+                    {{ userData?.name }}
                 </p>
             </div>
         </template>

@@ -2,14 +2,18 @@
 import { useMutation, useQuery } from '@tanstack/vue-query'
 
 // ** Types Imports
-import type { IAuthLogin, IAuthRegister } from '~/types/auth.type'
+import type { IAuthLogin, IAuthProfile, IAuthRegister } from '~/types/auth.type'
 
 // ** State
 const path = ref<string>(ROUTE.AUTH)
+const userData = ref<IAuthProfile>()
 
 export default function () {
+    userData.value = useCookie<IAuthProfile>('userData').value
+
     return {
-        path
+        path,
+        userData
     }
 }
 

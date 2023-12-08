@@ -2,7 +2,7 @@
 
 // ** Types Imports
 import type { TabItem } from '@nuxt/ui/dist/runtime/types'
-import type { IProductDetail } from '~/types/product.type'
+import type { IProductDetail, IProductVariant } from '~/types/product.type'
 
 // ** useHooks
 const route = useRoute()
@@ -14,6 +14,8 @@ const { data } = await useCrudDetail<IProductDetail>(path.value, route.params.sl
 const technical_specifications = computed(() => JSON.parse(data.value.technical_specifications) || [])
 
 // ** Data
+const result = ref<IProductVariant>()
+
 const productDescription: TabItem[] = [{
     slot: 'product-description',
     label: 'Chi Tiết Sản Phẩm'
@@ -90,6 +92,7 @@ useServerSeoMeta({
 
                         <BaseProductInformation
                             :product="data"
+                            :result="(result as IProductVariant)"
                             class="mt-3"
                         />
 
@@ -100,7 +103,10 @@ useServerSeoMeta({
                             {{ data.short_description }}
                         </p>
 
-                        <ProductPageAddToCart :product="data" />
+                        <ProductPageAddToCart
+                            :product="data"
+                            @result="val => result = val"
+                        />
 
                         <div class="mt-2 flex items-center gap-2">
                             <span class="capitalize font-semibold">Chia sẻ:</span>

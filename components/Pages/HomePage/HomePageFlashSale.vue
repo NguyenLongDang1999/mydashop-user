@@ -1,7 +1,13 @@
 <script setup lang="ts">
 
+// ** Types Imports
+import type { IProductVariant } from '~/types/product.type'
+
 // ** useHooks
 const { data } = await useProductFlashSale()
+
+// ** Data
+const result = ref<IProductVariant>()
 </script>
 
 <template>
@@ -91,7 +97,10 @@ const { data } = await useProductFlashSale()
                                     :star-size="14"
                                 />
 
-                                <BaseProductInformation :product="product" />
+                                <BaseProductInformation
+                                    :product="product"
+                                    :result="(result as IProductVariant)"
+                                />
 
                                 <p
                                     v-if="product.short_description"
@@ -100,7 +109,10 @@ const { data } = await useProductFlashSale()
                                     {{ product.short_description }}
                                 </p>
 
-                                <ProductPageAddToCart :product="product" />
+                                <ProductPageAddToCart
+                                    :product="product"
+                                    @result="val => result = val"
+                                />
                             </div>
                         </div>
                     </UCard>

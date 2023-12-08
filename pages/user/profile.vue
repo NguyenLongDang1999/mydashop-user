@@ -1,3 +1,9 @@
+<script setup lang="ts">
+
+// ** useHooks
+const { userData } = useAuth()
+</script>
+
 <template>
     <main>
         <BaseBreadcrumbs
@@ -36,11 +42,11 @@
 
                                 <div class="sm:mt-16 sm:ml-5 mt-4">
                                     <h3 class="text-xl font-semibold capitalize mb-1">
-                                        {{ useCookie('userData').value.name }}
+                                        {{ userData?.name }}
                                     </h3>
 
                                     <p class="text-base text-gray-500">
-                                        {{ useCookie('userData').value.phone }}
+                                        {{ userData?.phone }}
                                     </p>
                                 </div>
                             </div>
@@ -60,7 +66,7 @@
                                         <span class="font-semibold capitalize">Họ và tên:</span>
                                     </div>
 
-                                    <span class="capitalize flex-1">{{ useCookie('userData').value.name }}</span>
+                                    <span class="capitalize flex-1">{{ userData?.name }}</span>
                                 </li>
 
                                 <li class="flex items-center gap-2">
@@ -69,7 +75,7 @@
                                         <span class="font-semibold capitalize">SĐT:</span>
                                     </div>
 
-                                    <span class="flex-1">{{ useCookie('userData').value.phone }}</span>
+                                    <span class="flex-1">{{ userData?.phone }}</span>
                                 </li>
 
                                 <li class="flex items-center gap-2">
@@ -78,7 +84,7 @@
                                         <span class="font-semibold capitalize">Email:</span>
                                     </div>
 
-                                    <span class="flex-1">{{ useCookie('userData').value.email }}</span>
+                                    <span class="flex-1">{{ userData?.email }}</span>
                                 </li>
 
                                 <li class="flex items-center gap-2">
@@ -115,7 +121,7 @@
                                         <span class="font-semibold capitalize">Họ và tên:</span>
                                     </div>
 
-                                    <span class="capitalize flex-1">{{ useCookie('userData').value.name }}</span>
+                                    <span class="capitalize flex-1">{{ userData?.name }}</span>
                                 </li>
 
                                 <li class="flex items-center gap-2">
@@ -124,7 +130,7 @@
                                         <span class="font-semibold capitalize">SĐT:</span>
                                     </div>
 
-                                    <span class="flex-1">{{ useCookie('userData').value.phone }}</span>
+                                    <span class="flex-1">{{ userData?.phone }}</span>
                                 </li>
 
                                 <li class="flex items-center gap-2">
@@ -133,7 +139,7 @@
                                         <span class="font-semibold capitalize">Email:</span>
                                     </div>
 
-                                    <span class="flex-1">{{ useCookie('userData').value.email }}</span>
+                                    <span class="flex-1">{{ userData?.email }}</span>
                                 </li>
 
                                 <li class="flex items-center gap-2">

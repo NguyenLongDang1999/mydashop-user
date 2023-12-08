@@ -10,3 +10,9 @@ export interface IAuthRegister {
     password: string
     confirm_password: string
 }
+
+export interface IAuthProfile {
+    name: string
+    email: string
+    phone: string
+}
