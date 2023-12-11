@@ -108,8 +108,8 @@ watch(attributeValues, () => findAttributeValues(props.product.productVariant, a
         </div>
 
         <BaseProductPrice
-            :price="Number(result?.price)"
-            :selling-price="Number(result?.selling_price)"
+            :price="Number(result?.price || product.price)"
+            :selling-price="Number(result?.selling_price || product.selling_price)"
         />
     </div>
 
@@ -134,7 +134,7 @@ watch(attributeValues, () => findAttributeValues(props.product.productVariant, a
                 size="lg"
                 block
                 icon="i-heroicons-shopping-bag"
-                :disabled="result?.in_stock !== INVENTORY_STATUS.IN_STOCK || isLoading"
+                :disabled="(result?.in_stock || product.in_stock) !== INVENTORY_STATUS.IN_STOCK || isLoading"
                 label="Thêm Giỏ Hàng"
                 @click="dataFormInput({
                     product_id: product.id,

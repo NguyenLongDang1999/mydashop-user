@@ -5,26 +5,12 @@ import { useCartList } from '~/composables/useCart'
 import type { IAttributeValues } from '~/types/attribute.type'
 
 // ** useHooks
+const { userData } = useAuth()
 const { path: pathProduct } = useProduct()
 const { dataList } = await useCartList()
 
 // ** Computed
 const cartTotal = computed(() => dataList.value.CartItem.reduce((acc, item) => acc + (item.quantity * Number(item.Product.selling_price)), 0))
-
-// ** Data
-const cartColumns = [{
-    key: 'name',
-    label: 'Thông tin sản phẩm',
-    class: 'capitalize'
-}, {
-    key: 'price',
-    label: 'Giá cả',
-    class: 'capitalize'
-}, {
-    key: 'total',
-    label: 'Tổng tiền',
-    class: 'capitalize'
-}]
 </script>
 
 <template>
@@ -51,7 +37,7 @@ const cartColumns = [{
                         </UButton>
                     </div>
 
-                    <div class="md:col-span-6 col-span-12">
+                    <div class="md:col-span-5 col-span-12">
                         <UCard>
                             <template #header>
                                 <h4 class="uppercase font-semibold">
@@ -119,8 +105,10 @@ const cartColumns = [{
                         </UCard>
                     </div>
 
-                    <div class="md:col-span-6 col-span-12">
+                    <div class="md:col-span-7 col-span-12">
                         <UAlert
+                            v-if="!useIsLoggedIn()"
+                            class="mb-4"
                             title="Cảnh Báo!"
                             color="red"
                             icon="i-heroicons-information-circle"
@@ -135,49 +123,60 @@ const cartColumns = [{
                             </template>
                         </UAlert>
 
-                        <UCard class="mt-4">
+                        <UCard>
                             <template #header>
                                 <h4 class="uppercase font-semibold">
                                     Thông tin thanh toán
                                 </h4>
                             </template>
 
-                            <div class="grid grid-cols-12 gap-4">
-                                <div class="col-span-12">
-                                    <FormInput
-                                        name="name"
-                                        label="Họ và tên"
-                                    />
-                                </div>
+                            <UForm :state="{}">
+                                <div class="grid grid-cols-12 gap-4">
+                                    <div class="col-span-12">
+                                        <FormInput
+                                            name="name"
+                                            label="Họ và tên"
+                                        />
+                                    </div>
 
-                                <div class="sm:col-span-6 col-span-12">
-                                    <FormInput
-                                        name="email"
-                                        label="Email"
-                                    />
-                                </div>
+                                    <div class="sm:col-span-6 col-span-12">
+                                        <FormInput
+                                            name="email"
+                                            label="Email"
+                                        />
+                                    </div>
 
-                                <div class="sm:col-span-6 col-span-12">
-                                    <FormInput
-                                        name="phone"
-                                        label="Số điện thoại"
-                                    />
-                                </div>
+                                    <div class="sm:col-span-6 col-span-12">
+                                        <FormInput
+                                            name="phone"
+                                            label="Số điện thoại"
+                                        />
+                                    </div>
 
-                                <div class="col-span-12">
-                                    <FormTextarea
-                                        name="address"
-                                        label="Địa chỉ giao hàng"
-                                    />
-                                </div>
+                                    <div class="col-span-12">
+                                        <FormTextarea
+                                            name="address"
+                                            label="Địa chỉ giao hàng"
+                                        />
+                                    </div>
 
-                                <div class="col-span-12">
-                                    <FormTextarea
-                                        name="note"
-                                        label="Ghi chú đơn hàng"
-                                    />
+                                    <div class="col-span-12">
+                                        <FormTextarea
+                                            name="note"
+                                            label="Ghi chú đơn hàng"
+                                        />
+                                    </div>
+
+                                    <div class="col-span-12">
+                                        <UButton
+                                            type="submit"
+                                            size="sm"
+                                        >
+                                            Thanh Toán
+                                        </UButton>
+                                    </div>
                                 </div>
-                            </div>
+                            </UForm>
                         </UCard>
                     </div>
                 </div>

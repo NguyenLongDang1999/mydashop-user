@@ -92,7 +92,7 @@ useServerSeoMeta({
 
                         <BaseProductInformation
                             :product="data"
-                            :result="(result as IProductVariant)"
+                            :result="result"
                             class="mt-3"
                         />
 
@@ -121,6 +121,54 @@ useServerSeoMeta({
                                     class="p-1 rounded-full text-white text-xs"
                                 />
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="col-span-12">
+                        <div
+                            v-if="data.crossSellProducts.length"
+                            class="col-span-12"
+                        >
+                            <section class="grid grid-cols-12 mt-10">
+                                <div class="col-span-12">
+                                    <div class="flex items-center justify-between">
+                                        <h2 class="uppercase font-bold md:text-3xl sm:text-2xl text-xl">
+                                            Sản phẩm thường mua cùng
+                                        </h2>
+                                    </div>
+
+                                    <div class="mt-5">
+                                        <Swiper
+                                            :space-between="10"
+                                            :slides-per-view="2"
+                                            :breakpoints="{
+                                                1200: {
+                                                    slidesPerView: 5,
+                                                },
+                                                1024: {
+                                                    slidesPerView: 4,
+                                                },
+                                                768: {
+                                                    slidesPerView: 3,
+                                                },
+                                                475: {
+                                                    slidesPerView: 2,
+                                                },
+                                                360: {
+                                                    slidesPerView: 1,
+                                                },
+                                            }"
+                                        >
+                                            <SwiperSlide
+                                                v-for="product in data.crossSellProducts"
+                                                :key="product.id"
+                                            >
+                                                <BaseProductCard :product="product" />
+                                            </SwiperSlide>
+                                        </Swiper>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
                     </div>
 

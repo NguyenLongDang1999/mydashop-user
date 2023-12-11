@@ -6,7 +6,7 @@ import type { IProduct, IProductVariant } from '~/types/product.type'
 // ** Props & Emits
 interface Props {
     product: IProduct
-    result: IProductVariant
+    result?: IProductVariant
 }
 
 defineProps<Props>()
@@ -16,7 +16,7 @@ defineProps<Props>()
     <ul class="flex flex-col gap-1">
         <li class="font-semibold">
             <span class="capitalize">Mã sản phẩm:</span>
-            <span class="pl-2 text-primary">{{ result?.sku }}</span>
+            <span class="pl-2 text-primary">{{ result?.sku || product.sku }}</span>
         </li>
 
         <li
@@ -49,7 +49,7 @@ defineProps<Props>()
 
         <li class="flex gap-2 items-center font-semibold">
             <span class="capitalize">Tình trạng:</span>
-            <BaseProductInStock :instock="product.in_stock" />
+            <BaseProductInStock :instock="result?.in_stock || product.in_stock" />
         </li>
     </ul>
 </template>

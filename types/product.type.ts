@@ -45,7 +45,7 @@ export interface IProductDetail extends IProduct {
     meta_title: string
     meta_description: string
     relatedProducts: IProduct[]
-    upsellProducts: IProduct[]
+    crossSellProducts: IProduct[]
 }
 
 export interface IProductPagination extends IAggregations {

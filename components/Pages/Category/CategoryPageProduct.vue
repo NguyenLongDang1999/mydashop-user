@@ -25,13 +25,14 @@ const isList = ref<boolean>(false)
 
 <template>
     <div class="lg:w-[calc(100%-288px)] w-full">
+        <CategoryPageFilterMobile
+            :category-list="categoryList"
+            :category-brand="categoryBrand"
+            :category-attribute="categoryAttribute"
+        />
+        <CategoryPageSort @category-view="val => isList = val" />
+
         <template v-if="dataTable.length">
-            <CategoryPageFilterMobile
-                :category-list="categoryList"
-                :category-brand="categoryBrand"
-                :category-attribute="categoryAttribute"
-            />
-            <CategoryPageSort @category-view="val => isList = val" />
             <CategoryPageListProduct v-if="isList" />
             <CategoryPageGridProduct v-else />
         </template>
