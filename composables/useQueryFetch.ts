@@ -1,5 +1,6 @@
 // ** Third Party Imports
-import { useMutation, useQuery, type MutationOptions } from '@tanstack/vue-query'
+import { useMutation, useQuery, type MutationObserverOptions } from '@tanstack/vue-query'
+import type { MaybeRefDeep } from '@tanstack/vue-query/build/legacy/types'
 import type { UseFetchOptions } from 'nuxt/dist/app/composables'
 import type { KeysOf } from 'nuxt/dist/app/composables/asyncData'
 
@@ -19,8 +20,8 @@ export default function <T>(
 
 export const useQueryMutation = <T>(
     path: string,
-    method = 'POST',
-    options?: MutationOptions
+    options?: MaybeRefDeep<MutationObserverOptions<unknown, Error, void, unknown>>,
+    method = 'POST'
 ) => {
     return useMutation({
         mutationFn: body => useFetcher<T>(path, { method, body }),

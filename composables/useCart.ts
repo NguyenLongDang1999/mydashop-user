@@ -1,6 +1,3 @@
-// ** Third Party Imports
-import { useQuery } from '@tanstack/vue-query'
-
 // ** Types Imports
 import type { ICart, ICartFormInput } from '~/types/cart.type'
 
@@ -13,22 +10,26 @@ export default function () {
     }
 }
 
-export const useCartList = async () => {
-    const _fetcher = useFetchData()
-
-    const { data, suspense } = useQuery<ICart>({
-        queryKey: [path.value + 'DataList'],
-        queryFn: () => _fetcher(path.value)
-    })
+export const useCartList = () => {
+    // ** useHooks
+    const { data } = useQueryFetch<ICart>(path.value)
 
     // ** Computed
     const dataList = computed(() => data.value as ICart)
+    const cartLength = computed(() => dataList.value?.CartItem && dataList.value?.CartItem.length)
+    const cartTotal = computed(() => cartLength.value && dataList.value?.CartItem.reduce((acc, item) => acc + (item.quantity * Number(item.Product.selling_price)), 0))
 
-    await suspense()
-
-    return { dataList }
+    return {
+        path,
+        dataList: computed(() => data.value as ICart),
+        cartLength,
+        cartTotal
+    }
 }
 
 export const useCartAdd = () => {
-    return useQueryMutation<ICartFormInput>(path.value)
+    return useQueryMutation<ICartFormInput>(path.value, {
+        onSuccess: () => useNotification(MESSAGE_SUCCESS.CART),
+        onError: () => useNotification(undefined, true)
+    })
 }

@@ -1,5 +1,5 @@
 // ** Types Imports
-import type { IProductDataList, IProductFlashSale } from '~/types/product.type'
+import type { IProductDataList, IProductDetail, IProductFlashSale } from '~/types/product.type'
 
 // ** State
 const path = ref<string>(ROUTE.PRODUCT)
@@ -29,4 +29,19 @@ export const useProductDataList = async () => {
 
     // ** Computed
     return computed(() => data.value || [])
+}
+
+export const useProductDetail = async () => {
+    // ** useHooks
+    const route = useRoute()
+
+    const { data: row, suspense } = useQueryFetch<IProductDetail>(path.value, `/${route.params.slug}`, 'Detail')
+
+    await suspense()
+
+    return {
+        path,
+        route,
+        data: computed(() => row.value as IProductDetail)
+    }
 }

@@ -2,7 +2,6 @@
 
 // ** Types Imports
 import type { IAttributeValues, IProductAttribute } from '~/types/attribute.type'
-import type { ICartFormInput } from '~/types/cart.type'
 import type { IProduct, IProductVariant } from '~/types/product.type'
 
 // ** Props & Emits
@@ -14,8 +13,7 @@ const props = defineProps<Props>()
 const emits = defineEmits(['result'])
 
 // ** useHooks
-const { path } = useCart()
-const { isLoading, dataFormInput } = useCrudFormInput<ICartFormInput>(path.value, MESSAGE_SUCCESS.CART)
+const { isPending, mutateAsync } = useCartAdd()
 
 // ** Data
 const quantity = ref<number>(1)
@@ -134,9 +132,9 @@ watch(attributeValues, () => findAttributeValues(props.product.productVariant, a
                 size="lg"
                 block
                 icon="i-heroicons-shopping-bag"
-                :disabled="(result?.in_stock || product.in_stock) !== INVENTORY_STATUS.IN_STOCK || isLoading"
+                :disabled="(result?.in_stock || product.in_stock) !== INVENTORY_STATUS.IN_STOCK || isPending"
                 label="Thêm Giỏ Hàng"
-                @click="dataFormInput({
+                @click="mutateAsync({
                     product_id: product.id,
                     quantity,
                     attributes: product.product_attributes.length ? JSON.stringify(attributeValues) : undefined

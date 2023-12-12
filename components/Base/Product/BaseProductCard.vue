@@ -8,11 +8,14 @@ interface Props {
     product: IProduct
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 // ** useHooks
 const { path } = useProduct()
 const { isPending, mutateAsync } = useCartAdd()
+
+// ** Computed
+const productAttributeLength = computed(() => props.product.productAttributes.length || 0)
 </script>
 
 <template>
@@ -101,8 +104,8 @@ const { isPending, mutateAsync } = useCartAdd()
                 variant="outline"
                 block
                 :disabled="product.in_stock !== INVENTORY_STATUS.IN_STOCK || isPending"
-                :label="product.productAttributes.length ? 'Xem Lựa Chọn' : 'Thêm Giỏ Hàng'"
-                @click="product.productAttributes.length ? navigateTo(navigateProduct(product.slug)) : mutateAsync({
+                :label="productAttributeLength ? 'Xem Lựa Chọn' : 'Thêm Giỏ Hàng'"
+                @click="productAttributeLength ? navigateTo(navigateProduct(product.slug)) : mutateAsync({
                     product_id: product.id,
                     quantity: 1
                 })"

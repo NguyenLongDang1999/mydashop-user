@@ -2,13 +2,11 @@
 
 // ** Types Imports
 import type { TabItem } from '@nuxt/ui/dist/runtime/types'
-import type { IProductDetail, IProductVariant } from '~/types/product.type'
+import type { IProductVariant } from '~/types/product.type'
 
 // ** useHooks
-const route = useRoute()
 const config = useRuntimeConfig()
-const { path } = useProduct()
-const { data } = await useCrudDetail<IProductDetail>(path.value, route.params.slug as string)
+const { data, path, route } = await useProductDetail()
 
 // ** Computed
 const technical_specifications = computed(() => JSON.parse(data.value.technical_specifications) || [])

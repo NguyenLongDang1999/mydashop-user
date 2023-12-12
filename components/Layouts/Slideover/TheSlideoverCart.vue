@@ -1,19 +1,16 @@
 <script setup lang="ts">
-import type { IAttributeValues } from '~/types/attribute.type'
 
+// ** Types Imports
+import type { IAttributeValues } from '~/types/attribute.type'
 
 // ** Data
 const isOpen = ref<boolean>(false)
 
 // ** useHooks
 const { path } = useProduct()
-const { path: pathCart } = useCart()
-const { dataList } = await useCartList()
-const { isLoading, dataFormInput } = useCrudDelete(pathCart.value, MESSAGE_SUCCESS.DELETE_CART)
+const { path: pathCart, dataList, cartLength, cartTotal } = useCartList()
 
-// ** Computed
-const cartLength = computed(() => dataList.value.CartItem && dataList.value.CartItem.length)
-const cartTotal = computed(() => cartLength.value && dataList.value.CartItem.reduce((acc, item) => acc + (item.quantity * Number(item.Product.selling_price)), 0))
+// const { isLoading, dataFormInput } = useCrudDelete(pathCart.value, MESSAGE_SUCCESS.DELETE_CART)
 </script>
 
 <template>
@@ -85,8 +82,7 @@ const cartTotal = computed(() => cartLength.value && dataList.value.CartItem.red
                                     icon="i-heroicons-x-mark-20-solid"
                                     size="2xs"
                                     :ui="{ rounded: 'rounded-full' }"
-                                    :disabled="isLoading"
-                                    @click="dataFormInput(cart.id)"
+                                    :disabled="false"
                                 />
                             </div>
 
