@@ -1,26 +1,7 @@
 <script setup lang="ts">
 
-// ** Types Imports
-import type { ICategory } from '~/types/category.type'
-
 // ** useHooks
-const { path } = useCategory()
-const { dataList } = await useCrudList<ICategory>(path.value)
-
-// ** Computed
-const categoryList = computed(() =>
-    dataList.value.map(category => ({
-        id: category.id,
-        name: category.name,
-        link: navigateCategory(category.slug),
-        imageSrc: getImageFile(path.value, category.image_uri),
-        children: category.children.map(subCategory => ({
-            id: subCategory.id,
-            name: subCategory.name,
-            link: navigateCategory(subCategory.slug)
-        }))
-    }))
-)
+const categoryList = await useCategoryDataList()
 </script>
 
 <template>

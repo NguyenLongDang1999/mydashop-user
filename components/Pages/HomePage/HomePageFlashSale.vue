@@ -1,10 +1,10 @@
 <script setup lang="ts">
 
 // ** Types Imports
-import type { IProductVariant } from '~/types/product.type'
+import type { IProductVariant } from '~/types/product.type';
 
 // ** useHooks
-const { data } = await useProductFlashSale()
+const data = await useProductFlashSale()
 
 // ** Data
 const result = ref<IProductVariant>()
@@ -109,10 +109,10 @@ const result = ref<IProductVariant>()
                                     {{ product.short_description }}
                                 </p>
 
-                                <ProductPageAddToCart
+                                <!-- <ProductPageAddToCart
                                     :product="product"
                                     @result="val => result = val"
-                                />
+                                /> -->
                             </div>
                         </div>
                     </UCard>

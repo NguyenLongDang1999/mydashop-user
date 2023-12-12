@@ -1,25 +1,9 @@
 <script setup lang="ts">
 
-// ** Types Imports
-import type { LocationQueryValue } from 'vue-router'
-import type { ICategory, ICategoryProductFilter } from '~/types/category.type'
-
 // ** useHooks
 const route = useRoute()
-
-// ** Data
-const search = reactive<ICategoryProductFilter>({
-    sort: Number(route.query.sort) || sortOption[0].id,
-    pageSize: route.query.pageSize as string || paginationOption[0],
-    page: Number(route.query.page) || PAGE.CURRENT,
-    attribute: parseQueryArray(route.query.attribute),
-    brand: parseQueryArray(route.query.brand)
-})
-
-// ** useHooks
 const { path } = useCategory()
-const { data, isFetching, productList, productAggregations } = await useCategoryDetail(route.params.slug as string, search)
-const { dataList: categoryList } = await useCrudList<ICategory>(path.value, '/data-list-nested', 'DataListNested')
+const { data, isFetching, dataTable, dataAggregations, categoryList, search } = await useCategoryDetail(route.params.slug as string)
 const config = useRuntimeConfig()
 
 // ** Meta SEO
@@ -54,27 +38,17 @@ useServerSeoMeta({
 
 provide('product', {
     isFetching,
-    dataTable: productList,
-    dataAggregations: productAggregations
+    dataTable,
+    dataAggregations
 })
 
 provide('search', search)
-
-// ** Methods
-function parseQueryArray(value: LocationQueryValue | LocationQueryValue[]) {
-    if (Array.isArray(value)) {
-        return value.map(_v => Number(_v))
-    } else if (value) {
-        return [Number(value)]
-    } else {
-        return []
-    }
-}
 </script>
 
 <template>
     <main>
         <BaseBreadcrumbsCategoryNested
+            v-once
             :title="data.name"
             :category-id="data.id"
             page-category

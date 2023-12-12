@@ -31,7 +31,7 @@ export const useCrudFormInput = <T>(path: string, description?: string, show_des
         },
         {
             onSuccess: () => {
-                queryClient.refetchQueries({ queryKey: [`${path}DataList`] })
+                queryClient.invalidateQueries({ queryKey: [`${path}DataList`] })
 
                 if (show_description) {
                     useNotification(description)
@@ -41,7 +41,7 @@ export const useCrudFormInput = <T>(path: string, description?: string, show_des
         })
 
     return {
-        isLoading: isLoading.value,
+        isLoading,
         dataFormInput
     }
 }
@@ -63,7 +63,7 @@ export const useCrudDelete = (path: string, description?: string) => {
         })
 
     return {
-        isLoading: isLoading.value,
+        isLoading,
         dataFormInput
     }
 }
@@ -84,7 +84,7 @@ export const useCrudDetail = async <T>(path: string, slug: string | number) => {
 
     return {
         data,
-        isLoading: isLoading.value
+        isLoading
     }
 }
 

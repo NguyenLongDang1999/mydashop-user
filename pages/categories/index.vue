@@ -1,16 +1,15 @@
 <script setup lang="ts">
 
-// ** Types Imports
-import type { ICategory } from '~/types/category.type'
-
 // ** useHooks
-const { path } = useCategory()
-const { dataList: categoryList } = await useCrudList<ICategory>(path.value, '/data-list-nested', 'DataListNested')
+const { path, dataList } = await useCategoryDataListNested()
 </script>
 
 <template>
     <main>
-        <BaseBreadcrumbs title="Danh mục" />
+        <BaseBreadcrumbs
+            v-once
+            title="Danh mục"
+        />
 
         <UContainer>
             <section
@@ -18,7 +17,7 @@ const { dataList: categoryList } = await useCrudList<ICategory>(path.value, '/da
                 class="mt-10"
             >
                 <div
-                    v-for="category in categoryList"
+                    v-for="category in dataList"
                     :key="category.id"
                     class="mb-7"
                 >

@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/vue-query'
 
 // ** Types Imports
-import type { ICart } from '~/types/cart.type'
+import type { ICart, ICartFormInput } from '~/types/cart.type'
 
 // ** State
 const path = ref<string>(ROUTE.CART)
@@ -27,4 +27,8 @@ export const useCartList = async () => {
     await suspense()
 
     return { dataList }
+}
+
+export const useCartAdd = () => {
+    return useQueryMutation<ICartFormInput>(path.value)
 }

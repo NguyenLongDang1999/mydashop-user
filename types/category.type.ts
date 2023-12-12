@@ -22,6 +22,7 @@ export interface ICategoryProductFilter {
     brand?: number[]
     page: number
     pageSize?: string
+    slug?: string
 }
 
 export interface ICategoryDetail {

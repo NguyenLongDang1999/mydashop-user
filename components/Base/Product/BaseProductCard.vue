@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 // ** Types Imports
-import type { ICartFormInput } from '~/types/cart.type'
 import type { IProduct } from '~/types/product.type'
 
 // ** Props & Emits
@@ -13,8 +12,7 @@ defineProps<Props>()
 
 // ** useHooks
 const { path } = useProduct()
-const { path: pathCart } = useCart()
-const { isLoading, dataFormInput } = useCrudFormInput<ICartFormInput>(pathCart.value, MESSAGE_SUCCESS.CART)
+const { isPending, mutateAsync } = useCartAdd()
 </script>
 
 <template>
@@ -102,9 +100,9 @@ const { isLoading, dataFormInput } = useCrudFormInput<ICartFormInput>(pathCart.v
                 size="md"
                 variant="outline"
                 block
-                :disabled="product.in_stock !== INVENTORY_STATUS.IN_STOCK || isLoading"
+                :disabled="product.in_stock !== INVENTORY_STATUS.IN_STOCK || isPending"
                 :label="product.productAttributes.length ? 'Xem Lựa Chọn' : 'Thêm Giỏ Hàng'"
-                @click="product.productAttributes.length ? navigateTo(navigateProduct(product.slug)) : dataFormInput({
+                @click="product.productAttributes.length ? navigateTo(navigateProduct(product.slug)) : mutateAsync({
                     product_id: product.id,
                     quantity: 1
                 })"

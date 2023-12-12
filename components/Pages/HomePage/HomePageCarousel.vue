@@ -1,11 +1,7 @@
 <script setup lang="ts">
 
-// ** Types Imports
-import type { ISlider } from '~/types/slider.type'
-
 // ** useHooks
-const { path } = useSlider()
-const { dataList } = await useCrudList<ISlider>(path.value)
+const { path, dataList } = await useSliderDataList()
 
 // ** Data
 const creativeEffect = {
@@ -27,13 +23,13 @@ const creativeEffect = {
         <Swiper
             :modules="[SwiperAutoplay, SwiperEffectCreative]"
             :slides-per-view="1"
-            loop
-            effect="creative"
             :autoplay="{
                 delay: 8000,
                 disableOnInteraction: true,
             }"
             :creative-effect="creativeEffect"
+            loop
+            effect="creative"
         >
             <SwiperSlide
                 v-for="slider in dataList"

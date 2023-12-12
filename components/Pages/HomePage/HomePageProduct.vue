@@ -1,11 +1,7 @@
 <script setup lang="ts">
 
-// ** Types Imports
-import type { IProductDataList } from '~/types/product.type'
-
 // ** useHooks
-const { path } = useProduct()
-const { dataList } = await useCrudList<IProductDataList>(path.value)
+const dataList = await useProductDataList()
 </script>
 
 <template>

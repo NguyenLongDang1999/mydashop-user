@@ -1,29 +1,8 @@
 <script setup lang="ts">
 
-// ** Types Imports
-import type { LocationQueryValue } from 'vue-router'
-import type { IBrand } from '~/types/brand.type'
-import type { ICategory, ICategoryProductFilter } from '~/types/category.type'
-import type { IProductPagination } from '~/types/product.type'
-
 // ** useHooks
-const route = useRoute()
-
-// ** Data
-const search = reactive<ICategoryProductFilter>({
-    sort: Number(route.query.sort) || sortOption[0].id,
-    pageSize: route.query.pageSize as string || paginationOption[0],
-    page: Number(route.query.page) || PAGE.CURRENT,
-    attribute: parseQueryArray(route.query.attribute),
-    brand: parseQueryArray(route.query.brand)
-})
-
-// ** useHooks
-const { path } = useCategory()
-const { path: pathBrand } = useBrand()
-const { dataList: categoryBrand } = await useCrudList<IBrand>(pathBrand.value, '/data-list-all', 'DataListAll')
-const { dataList: categoryList } = await useCrudList<ICategory>(path.value, '/data-list-nested', 'DataListNested')
-const { isFetching, dataTable, dataAggregations } = await useCrudPagination<IProductPagination, ICategoryProductFilter>(path.value, { params: search })
+const { dataList: categoryBrand } = await useBrandDataListAll()
+const { isFetching, dataTable, dataAggregations, categoryList, search } = await useCategoryPagination()
 
 provide('product', {
     dataTable,
@@ -32,17 +11,6 @@ provide('product', {
 })
 
 provide('search', search)
-
-// ** Methods
-function parseQueryArray(value: LocationQueryValue | LocationQueryValue[]) {
-    if (Array.isArray(value)) {
-        return value.map(_v => Number(_v))
-    } else if (value) {
-        return [Number(value)]
-    } else {
-        return []
-    }
-}
 </script>
 
 <template>
