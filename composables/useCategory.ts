@@ -15,8 +15,6 @@ export default function () {
     }
 }
 
-export const useCategoryNested = () => useQueryFetch<ICategory[]>(path.value, '/data-list-nested', 'DataListNested')
-
 export const useCategoryDataList = async () => {
     // ** useHooks
     const { data, suspense } = useQueryFetch<ICategory[]>(path.value)
@@ -41,7 +39,7 @@ export const useCategoryDataList = async () => {
 
 export const useCategoryDataListNested = async () => {
     // ** useHooks
-    const { data, suspense } = useCategoryNested()
+    const { data, suspense } = useQueryFetch<ICategory[]>(path.value, '/data-list-nested', 'DataListNested')
 
     await suspense()
 
@@ -55,7 +53,6 @@ export const useCategoryDataListNested = async () => {
 export const useCategoryDetail = async (slug: string) => {
     // ** useHooks
     const route = useRoute()
-    const { data: dataList } = useCategoryNested()
 
     // ** Data
     const search = reactive<ICategoryProductFilter>({
@@ -77,7 +74,6 @@ export const useCategoryDetail = async (slug: string) => {
         search,
         isFetching,
         data: computed(() => row.value as ICategoryDetail),
-        categoryList: computed(() => dataList.value || []),
         dataTable: computed(() => row.value?.Product || []),
         dataAggregations: computed(() => row.value?.aggregations || 0)
     }
@@ -86,7 +82,6 @@ export const useCategoryDetail = async (slug: string) => {
 export const useCategoryPagination = async () => {
     // ** useHooks
     const route = useRoute()
-    const { data: dataList } = useCategoryNested()
 
     // ** Data
     const search = reactive<ICategoryProductFilter>({
@@ -106,7 +101,6 @@ export const useCategoryPagination = async () => {
     return {
         search,
         isFetching,
-        categoryList: computed(() => dataList.value || []),
         dataTable: computed(() => data.value?.data || []),
         dataAggregations: computed(() => data.value?.aggregations || 0)
     }

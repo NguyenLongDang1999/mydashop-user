@@ -127,19 +127,22 @@ watch(attributeValues, () => findAttributeValues(props.product.productVariant, a
             />
         </div>
 
-        <div class="md:col-span-7 col-span-12">
-            <UButton
-                size="lg"
-                block
-                icon="i-heroicons-shopping-bag"
-                :disabled="(result?.in_stock || product.in_stock) !== INVENTORY_STATUS.IN_STOCK || isPending"
-                label="Thêm Giỏ Hàng"
-                @click="mutateAsync({
-                    product_id: product.id,
-                    quantity,
-                    attributes: product.product_attributes.length ? JSON.stringify(attributeValues) : undefined
-                })"
-            />
-        </div>
+        <ClientOnly>
+            <div class="md:col-span-7 col-span-12">
+                <UButton
+                    size="lg"
+                    block
+                    icon="i-heroicons-shopping-bag"
+                    :loading="isPending"
+                    :disabled="(result?.in_stock || product.in_stock) !== INVENTORY_STATUS.IN_STOCK"
+                    label="Thêm Giỏ Hàng"
+                    @click="mutateAsync({
+                        product_id: product.id,
+                        quantity,
+                        attributes: product.product_attributes.length ? JSON.stringify(attributeValues) : undefined
+                    })"
+                />
+            </div>
+        </ClientOnly>
     </div>
 </template>

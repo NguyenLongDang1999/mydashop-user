@@ -8,9 +8,8 @@ const isOpen = ref<boolean>(false)
 
 // ** useHooks
 const { path } = useProduct()
-const { path: pathCart, dataList, cartLength, cartTotal } = useCartList()
-
-// const { isLoading, dataFormInput } = useCrudDelete(pathCart.value, MESSAGE_SUCCESS.DELETE_CART)
+const { dataList, cartLength, cartTotal } = useCartList()
+const { isPending, mutateAsync } = useCartDelete()
 </script>
 
 <template>
@@ -82,7 +81,8 @@ const { path: pathCart, dataList, cartLength, cartTotal } = useCartList()
                                     icon="i-heroicons-x-mark-20-solid"
                                     size="2xs"
                                     :ui="{ rounded: 'rounded-full' }"
-                                    :disabled="false"
+                                    :loading="isPending"
+                                    @click="mutateAsync(cart.id)"
                                 />
                             </div>
 

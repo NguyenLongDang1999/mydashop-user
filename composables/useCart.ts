@@ -1,3 +1,6 @@
+// ** Third Party Imports
+import { useQueryClient } from '@tanstack/vue-query'
+
 // ** Types Imports
 import type { ICart, ICartFormInput } from '~/types/cart.type'
 
@@ -28,8 +31,35 @@ export const useCartList = () => {
 }
 
 export const useCartAdd = () => {
+    const queryClient = useQueryClient()
+
     return useQueryMutation<ICartFormInput>(path.value, {
-        onSuccess: () => useNotification(MESSAGE_SUCCESS.CART),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [`${path.value}DataList`] })
+            useNotification(MESSAGE_SUCCESS.CART)
+        },
+        onError: () => useNotification(undefined, true)
+    })
+}
+
+export const useCartQuantity = () => {
+    const queryClient = useQueryClient()
+
+    return useQueryMutation<ICartFormInput>(path.value, {
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: [`${path.value}DataList`] }),
+        onError: () => useNotification(undefined, true)
+    }, 'PATCH')
+}
+
+
+export const useCartDelete = (purge = false) => {
+    const queryClient = useQueryClient()
+
+    return useQueryMutationDelete<number>(purge ? `${path.value}/purge-cart` : path.value, {
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [`${path.value}DataList`] })
+            useNotification(MESSAGE_SUCCESS.DELETE_CART)
+        },
         onError: () => useNotification(undefined, true)
     })
 }

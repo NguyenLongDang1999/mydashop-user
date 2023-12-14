@@ -1,14 +1,17 @@
 <script setup lang="ts">
 
+// ** Types Imports
+import type { IAuthRegister } from '~/types/auth.type'
+
 // ** Validations Imports
 import { label, schema } from '~/validations/register'
 
 // ** useHooks
-const { handleSubmit } = useForm({ validationSchema: schema })
-const { isLoading, authRegister } = useAuthRegister()
+const { handleSubmit } = useForm<IAuthRegister>({ validationSchema: schema })
+const { isPending, mutateAsync } = useAuthRegister()
 
 // ** Methods
-const onSubmit = handleSubmit(values => authRegister(values))
+const onSubmit = handleSubmit(values => mutateAsync(values))
 </script>
 
 <template>
@@ -70,7 +73,7 @@ const onSubmit = handleSubmit(values => authRegister(values))
                                         type="submit"
                                         size="lg"
                                         block
-                                        :loading="isLoading"
+                                        :loading="isPending"
                                     >
                                         ĐĂNG KÝ
                                     </UButton>

@@ -1,6 +1,3 @@
-// ** Third Party Imports
-import { useMutation, useQuery } from '@tanstack/vue-query'
-
 // ** Types Imports
 import type { IAuthLogin, IAuthProfile, IAuthRegister } from '~/types/auth.type'
 
@@ -17,68 +14,28 @@ export default function () {
     }
 }
 
-export const useAuthLogin = () => {
-    // ** Hooks
-    const _fetcher = useFetchData()
+export const useAuthLogin = () => useQueryMutation<IAuthProfile, IAuthLogin>(`${path.value}/sign-in`, {
+    onSuccess: data => {
+        useCookie<IAuthProfile>('userData').value = data
 
-    const { isLoading, mutateAsync: authLogin } = useMutation(
-        (body: IAuthLogin) => _fetcher(`${path.value}/sign-in`, { method: 'POST', body }),
-        {
-            onSuccess: data => {
-                useCookie('userData').value = data
+        nextTick(() => navigateTo('/'))
+        useNotification('Đăng nhập thành công!')
+    },
+    onError: () => useNotification(undefined, true)
+})
 
-                nextTick(() => navigateTo('/'))
-                useNotification('Đăng nhập thành công')
-            },
-            onError: () => useNotification('Đăng nhập thất bại', true)
-        })
+export const useAuthRegister = () => useQueryMutation<IAuthProfile, IAuthRegister>(`${path.value}/sign-up`, {
+    onSuccess: data => {
+        useCookie<IAuthProfile>('userData').value = data
 
-    return {
-        isLoading,
-        authLogin
-    }
-}
+        nextTick(() => navigateTo('/'))
+        useNotification('Đăng nhập thành công!')
+    },
+    onError: () => useNotification(undefined, true)
+})
 
-export const useAuthRegister = () => {
-    // ** Hooks
-    const _fetcher = useFetchData()
-
-    const { isLoading, mutateAsync: authRegister } = useMutation(
-        (body: IAuthRegister) => _fetcher(`${path.value}/sign-up`, { method: 'POST', body }),
-        {
-            onSuccess: data => {
-                useCookie('userData').value = data
-
-                nextTick(() => navigateTo('/'))
-                useNotification('Đăng nhập thành công')
-            },
-            onError: () => useNotification('Đăng nhập thất bại', true)
-        })
-
-    return {
-        isLoading,
-        authRegister
-    }
-}
-
-
-export const useAuthLogout = () => {
-    // ** Hooks
-    const _fetcher = useFetchData()
-
-    const { refetch } = useQuery({
-        queryKey: ['authLogout'],
-        queryFn: () => _fetcher(`${path.value}/sign-out`),
-        enabled: false,
-        onSuccess: () => {
-            useCookie('userData').value = null
-
-            nextTick(() => navigateTo('/dang-nhap'))
-            useNotification('Đăng xuất thành công')
-        }
-    })
-
-    return { refetch }
-}
+export const useAuthLogout = () => useQueryFetch(path.value, '/sign-out', 'Logout', {}, {
+    enabled: false
+})
 
 export const useIsLoggedIn = () => !!(useCookie('userData').value)

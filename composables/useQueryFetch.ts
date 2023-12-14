@@ -18,20 +18,31 @@ export default function <T>(
     })
 };
 
-export const useQueryMutation = <T>(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const useQueryMutation = <T, U extends Record<string, any> = Record<string, any>>(
     path: string,
-    options?: MaybeRefDeep<MutationObserverOptions<unknown, Error, void, unknown>>,
-    method = 'POST'
+    options?: MaybeRefDeep<MutationObserverOptions<T, Error, U, unknown>>,
+    method: 'POST' | 'PATCH' = 'POST'
 ) => {
-    return useMutation({
-        mutationFn: body => useFetcher<T>(path, { method, body }),
+    return useMutation<T, Error, U, unknown>({
+        mutationFn: body => useFetcher<T>(method === 'PATCH' ? `${path}/${body.id}` : path, { method, body }),
+        ...options
+    })
+}
+
+export const useQueryMutationDelete = <T>(
+    path: string,
+    options?: MaybeRefDeep<MutationObserverOptions<unknown, Error, T, unknown>>
+) => {
+    return useMutation<unknown, Error, T, unknown>({
+        mutationFn: body => useFetcher<T>(`${path}/${body}`, { method: 'DELETE' }),
         ...options
     })
 }
 
 export const useFetcher = async <T>(
     path: string,
-    options?: UseFetchOptions<unknown, unknown, KeysOf<unknown>, null, string, 'get'> | undefined
+    options?: UseFetchOptions<unknown, unknown, KeysOf<unknown>, null, string, 'get' | 'GET' | 'POST' | 'DELETE' | 'PATCH'> | undefined
 ): Promise<T> => {
     const config = useRuntimeConfig()
 

@@ -26,9 +26,9 @@
 
                 <div class="flex items-center justify-end lg:flex-1 gap-2">
                     <TheSlideoverMenu />
-                    <!-- <SearchDialog /> -->
+                    <SearchDialog />
                     <TheSlideoverCart />
-                    <!-- <TheAuthDropdown /> -->
+                    <TheAuthDropdown />
                 </div>
             </div>
         </UContainer>

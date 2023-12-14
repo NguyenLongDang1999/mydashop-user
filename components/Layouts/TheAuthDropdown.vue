@@ -23,7 +23,12 @@ const authLogined: DropdownItem[][]  = [
     }], [{
         label: 'Đăng Xuất',
         icon: 'i-heroicons-arrow-left-on-rectangle',
-        click: () => refetch()
+        click: async () => {
+            await refetch()
+            useCookie('userData').value = null
+            nextTick(() => navigateTo('/dang-nhap'))
+            useNotification('Đăng xuất thành công')
+        }
     }]
 ]
 

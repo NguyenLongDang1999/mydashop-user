@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 // ** Types Imports
-import type { ICartFormInput } from '~/types/cart.type'
 import type { IProduct } from '~/types/product.type'
 
 // ** Props & Emits
@@ -9,12 +8,14 @@ interface Props {
     product: IProduct
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 // ** useHooks
 const { path } = useProduct()
-const { path: pathCart } = useCart()
-const { dataFormInput } = useCrudFormInput<ICartFormInput>(pathCart.value, MESSAGE_SUCCESS.CART)
+const { isPending, mutateAsync } = useCartAdd()
+
+// ** Computed
+const productAttributeLength = computed(() => props.product.productAttributes.length || 0)
 </script>
 
 <template>
@@ -88,17 +89,20 @@ const { dataFormInput } = useCrudFormInput<ICartFormInput>(pathCart.value, MESSA
                     </div>
 
                     <div class="flex flex-wrap gap-2">
-                        <UButton
-                            size="md"
-                            icon="i-heroicons-shopping-bag"
-                            class="capitalize"
-                            :disabled="product.in_stock !== INVENTORY_STATUS.IN_STOCK"
-                            :label="product.productAttributes.length ? 'Xem Lựa Chọn' : 'Thêm Giỏ Hàng'"
-                            @click="product.productAttributes.length ? navigateTo(navigateProduct(product.slug)) : dataFormInput({
-                                product_id: product.id,
-                                quantity: 1
-                            })"
-                        />
+                        <ClientOnly>
+                            <UButton
+                                size="md"
+                                icon="i-heroicons-shopping-bag"
+                                class="capitalize"
+                                :loading="isPending"
+                                :disabled="product.in_stock !== INVENTORY_STATUS.IN_STOCK"
+                                :label="productAttributeLength ? 'Xem Lựa Chọn' : 'Thêm Giỏ Hàng'"
+                                @click="productAttributeLength ? navigateTo(navigateProduct(product.slug)) : mutateAsync({
+                                    product_id: product.id,
+                                    quantity: 1
+                                })"
+                            />
+                        </ClientOnly>
 
                         <UButton
                             size="md"

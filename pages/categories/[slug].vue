@@ -3,7 +3,8 @@
 // ** useHooks
 const route = useRoute()
 const { path } = useCategory()
-const { data, isFetching, dataTable, dataAggregations, categoryList, search } = await useCategoryDetail(route.params.slug as string)
+const { dataList: categoryList } = await useCategoryDataListNested()
+const { data, isFetching, dataTable, dataAggregations, search } = await useCategoryDetail(route.params.slug as string)
 const config = useRuntimeConfig()
 
 // ** Meta SEO

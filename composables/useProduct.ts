@@ -35,7 +35,9 @@ export const useProductDetail = async () => {
     // ** useHooks
     const route = useRoute()
 
-    const { data: row, suspense } = useQueryFetch<IProductDetail>(path.value, `/${route.params.slug}`, 'Detail')
+    const { data: row, suspense } = useQueryFetch<IProductDetail>(path.value, `/${route.params.slug}`, 'Detail', {}, {
+        queryKey: [path.value + 'Detail', route.params.slug]
+    })
 
     await suspense()
 

@@ -5,11 +5,10 @@ import type { Group } from '@nuxt/ui/dist/runtime/types'
 import type { IProduct } from '~/types/product.type'
 
 // ** Data
-const isOpen = ref(false)
+const isOpen = ref<boolean>(false)
 
 // ** useHooks
 const { path } = useProduct()
-const _fetcher = useFetchData()
 
 const groups: Group[] = [{
     key: 'products',
@@ -19,7 +18,7 @@ const groups: Group[] = [{
             return []
         }
 
-        const product = await _fetcher(path.value + '/data-list-search', {
+        const product = await useFetcher<IProduct[]>(path.value + '/data-list-search', {
             params: { q }
         })
 

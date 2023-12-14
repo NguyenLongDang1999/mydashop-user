@@ -1,14 +1,17 @@
 <script setup lang="ts">
 
+// ** Types Imports
+import type { IAuthLogin } from '~/types/auth.type'
+
 // ** Validations Imports
 import { label, schema } from '~/validations/login'
 
 // ** useHooks
-const { handleSubmit } = useForm({ validationSchema: schema })
-const { isLoading, authLogin } = useAuthLogin()
+const { handleSubmit } = useForm<IAuthLogin>({ validationSchema: schema })
+const { isPending, mutateAsync } = useAuthLogin()
 
 // ** Methods
-const onSubmit = handleSubmit(values => authLogin(values))
+const onSubmit = handleSubmit(values => mutateAsync(values))
 </script>
 
 <template>
@@ -59,39 +62,38 @@ const onSubmit = handleSubmit(values => authLogin(values))
                                         type="submit"
                                         size="lg"
                                         block
-                                        :loading="isLoading"
+                                        :loading="isPending"
                                     >
                                         ĐĂNG NHẬP
                                     </UButton>
                                 </div>
                             </div>
+
+                            <div
+                                v-once
+                                class="mt-5 text-base text-center text-gray-500"
+                            >
+                                <span>Hoặc, Đăng nhập với</span>
+
+                                <div class="my-3 flex gap-2 justify-center">
+                                    <BaseIconFacebook />
+                                    <BaseIconGoogle />
+                                </div>
+
+                                <span>Nếu chưa có tài khoản?</span>
+
+                                <div class="mt-5">
+                                    <UButton
+                                        size="lg"
+                                        variant="outline"
+                                        to="/dang-ky"
+                                        block
+                                    >
+                                        TẠO TÀI KHOẢN
+                                    </UButton>
+                                </div>
+                            </div>
                         </UForm>
-
-                        <div
-                            v-once
-                            class="mt-5 text-base text-center text-gray-500"
-                        >
-                            <span>Hoặc, Đăng nhập với</span>
-
-                            <div class="my-3 flex gap-2 justify-center">
-                                <BaseIconFacebook />
-                                <BaseIconGoogle />
-                            </div>
-
-                            <span>Nếu chưa có tài khoản?</span>
-
-                            <div class="mt-5">
-                                <UButton
-                                    type="submit"
-                                    size="lg"
-                                    variant="outline"
-                                    to="/dang-ky"
-                                    block
-                                >
-                                    TẠO TÀI KHOẢN
-                                </UButton>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>

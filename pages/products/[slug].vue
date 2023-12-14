@@ -196,7 +196,7 @@ useServerSeoMeta({
                             </template>
 
                             <template #product-comment>
-                                <ProductPageComment
+                                <LazyProductPageComment
                                     :product-id="data.id"
                                     :total-rating="data.total_rating"
                                 />

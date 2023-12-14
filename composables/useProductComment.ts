@@ -1,8 +1,8 @@
 // ** Third Party Imports
-import { useQuery } from '@tanstack/vue-query'
+import { keepPreviousData, useQueryClient } from '@tanstack/vue-query'
 
 // ** Types Imports
-import type { IProductCommentPagination } from '~/types/product.type'
+import type { IProductCommentFormInput, IProductCommentPagination } from '~/types/product.type'
 
 // ** State
 const path = ref<string>(ROUTE.PRODUCT_COMMENT)
@@ -13,28 +13,38 @@ export default function () {
     }
 }
 
-export const useProductCommentList = async (id: number, params: { page: number, pageSize: number }) => {
-    // ** Hooks
-    const _fetcher = useFetchData()
-
-    const { data, isLoading, isFetching, suspense } = useQuery<IProductCommentPagination>({
-        queryKey: [`${path.value}DataList`, id, params],
-        queryFn: () => _fetcher(`${path.value}/${id}`, { params }),
-        keepPreviousData: true
+export const useProductCommentList = async (id: number) => {
+    // ** Data
+    const search = reactive({
+        page: PAGE.CURRENT,
+        pageSize: 8,
+        id
     })
 
-    // ** Computed
-    const dataTable = computed(() => data.value?.data || [])
-    const dataAggregations = computed(() => data.value?.aggregations || 0)
-    const dataComments = computed(() => data.value)
+    // ** useHooks
+    const { data, isFetching, suspense } = useQueryFetch<IProductCommentPagination>(path.value, `/${id}`, 'DataList', search, {
+        placeholderData: keepPreviousData
+    })
 
     await suspense()
 
     return {
-        isLoading,
+        search,
         isFetching,
-        dataTable,
-        dataAggregations,
-        dataComments
+        dataTable: computed(() => data.value?.data || []),
+        dataAggregations: computed(() => data.value?.aggregations || 0),
+        dataComments: computed(() => data.value)
     }
+}
+
+export const useProductCommentAdd = () => {
+    const queryClient = useQueryClient()
+
+    return useQueryMutation<IProductCommentFormInput>(path.value, {
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [`${path.value}DataList`] })
+            useNotification('Gửi đánh giá sản phẩm thành công!')
+        },
+        onError: () => useNotification(undefined, true)
+    })
 }

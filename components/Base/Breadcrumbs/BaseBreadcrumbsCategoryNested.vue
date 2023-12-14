@@ -13,8 +13,7 @@ interface Props {
 const props = defineProps<Props>()
 
 // ** useHooks
-const { path } = useCategory()
-const { dataList: categoryList } = await useCrudList<ICategory>(path.value, '/data-list-nested', 'DataListNested')
+const { dataList: categoryList } = await useCategoryDataListNested()
 
 // ** Data
 const breadcrumb = ref<ICategoryBreadcrumb[]>([])

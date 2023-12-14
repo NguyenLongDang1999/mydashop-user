@@ -2,7 +2,7 @@
 
 // ** Types Imports
 import type { IAttributeValues } from '~/types/attribute.type'
-import type { ICart, ICartFormInput } from '~/types/cart.type'
+import type { ICart } from '~/types/cart.type'
 
 // ** Props & Emits
 interface Props {
@@ -12,11 +12,10 @@ interface Props {
 defineProps<Props>()
 
 // ** useHooks
-const { path } = useCart()
-const { path: pathProduct } = useProduct()
-const { dataFormInput: cartQuantity } = useCrudFormInput<ICartFormInput>(path.value, 'Thành công!', false)
-const { isLoading, dataFormInput } = useCrudDelete(path.value, MESSAGE_SUCCESS.DELETE_CART)
-const { dataFormInput: purgeCart } = useCrudDelete(`${path.value}/purge-cart`, MESSAGE_SUCCESS.DELETE_CART)
+const { path } = useProduct()
+const { mutateAsync: cartQuantity } = useCartQuantity()
+const { isPending, mutateAsync } = useCartDelete()
+const { mutateAsync: purgeCart } = useCartDelete(true)
 
 // ** Data
 const cartColumns = [{
@@ -49,7 +48,7 @@ const cartColumns = [{
                 <div class="flex items-center gap-2">
                     <div class="relative">
                         <NuxtImg
-                            :src="getImageFile(pathProduct, row.Product.image_uri)"
+                            :src="getImageFile(path, row.Product.image_uri)"
                             :alt="row.Product.name"
                             :width="56"
                             :height="56"
@@ -61,8 +60,8 @@ const cartColumns = [{
                             icon="i-heroicons-x-mark-20-solid"
                             size="2xs"
                             :ui="{ rounded: 'rounded-full' }"
-                            :disabled="isLoading"
-                            @click="dataFormInput(row.id)"
+                            :loading="isPending"
+                            @click="mutateAsync(row.id)"
                         />
                     </div>
 

@@ -2,7 +2,8 @@
 
 // ** useHooks
 const { dataList: categoryBrand } = await useBrandDataListAll()
-const { isFetching, dataTable, dataAggregations, categoryList, search } = await useCategoryPagination()
+const { dataList: categoryList } = await useCategoryDataListNested()
+const { isFetching, dataTable, dataAggregations, search } = await useCategoryPagination()
 
 provide('product', {
     dataTable,

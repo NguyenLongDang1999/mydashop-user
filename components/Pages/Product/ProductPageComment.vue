@@ -1,8 +1,5 @@
 <script setup lang="ts">
 
-// ** Types Imports
-import type { IProductCommentFormInput } from '~/types/product.type'
-
 // ** Validations Import
 import { label, schema } from '~/validations/comment'
 
@@ -14,21 +11,14 @@ interface Props {
 
 const props = defineProps<Props>()
 
-// ** Data
-const search = reactive({
-    page: 1,
-    pageSize: 8
-})
-
 // ** useHooks
-const { path } = useProductComment()
 const { handleSubmit } = useForm({ validationSchema: schema })
-const { isLoading, dataFormInput } = useCrudFormInput<IProductCommentFormInput>(path.value, 'Gửi đánh giá sản phẩm thành công!')
-const { dataComments, dataTable: commentList, dataAggregations } = await useProductCommentList(props.productId as number, search)
+const { isPending, mutateAsync } = useProductCommentAdd()
+const { search, dataComments, dataTable: commentList, dataAggregations } = await useProductCommentList(props.productId as number)
 
 // ** Methods
 const onSubmit = handleSubmit((values, { resetForm }) => {
-    dataFormInput({
+    mutateAsync({
         ...values,
         user_id: useCookie('userData').value.id,
         product_id: props.productId
@@ -79,7 +69,7 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
                         <div class="col-span-12">
                             <UButton
                                 type="submit"
-                                :loading="isLoading"
+                                :loading="isPending"
                             >
                                 Gửi Bình Luận
                             </UButton>

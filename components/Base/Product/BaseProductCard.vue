@@ -99,17 +99,20 @@ const productAttributeLength = computed(() => props.product.productAttributes.le
                 />
             </div>
 
-            <UButton
-                size="md"
-                variant="outline"
-                block
-                :disabled="product.in_stock !== INVENTORY_STATUS.IN_STOCK || isPending"
-                :label="productAttributeLength ? 'Xem Lựa Chọn' : 'Thêm Giỏ Hàng'"
-                @click="productAttributeLength ? navigateTo(navigateProduct(product.slug)) : mutateAsync({
-                    product_id: product.id,
-                    quantity: 1
-                })"
-            />
+            <ClientOnly>
+                <UButton
+                    size="md"
+                    variant="outline"
+                    block
+                    :loading="isPending"
+                    :disabled="product.in_stock !== INVENTORY_STATUS.IN_STOCK"
+                    :label="productAttributeLength ? 'Xem Lựa Chọn' : 'Thêm Giỏ Hàng'"
+                    @click="productAttributeLength ? navigateTo(navigateProduct(product.slug)) : mutateAsync({
+                        product_id: product.id,
+                        quantity: 1
+                    })"
+                />
+            </ClientOnly>
         </div>
     </UCard>
 </template>
