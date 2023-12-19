@@ -11,5 +11,8 @@ defineProps<Props>()
 
 <template>
     <span class="font-semibold text-lg text-primary">{{ sellingPrice }}</span>
-    <span class="font-normal text-base text-gray-300 line-through pl-3">{{ formatCurrency(price) }}</span>
+    <span
+        v-if="sellingPrice !== formatCurrency(price)"
+        class="font-normal text-base text-gray-300 line-through pl-3"
+    >{{ formatCurrency(price) }}</span>
 </template>

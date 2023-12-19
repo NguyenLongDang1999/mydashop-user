@@ -1,7 +1,26 @@
 <script setup lang="ts">
 
 // ** Types Imports
-import type { IAuthProfile } from '~/types/auth.type'
+import type { TabItem } from '@nuxt/ui/dist/runtime/types'
+
+// ** Data
+const items: TabItem[] = [{
+    label: 'Tổng Quan',
+    icon: 'i-heroicons-home',
+    slot: 'dashboard'
+}, {
+    label: 'Sản Phẩm Yêu Thích',
+    icon: 'i-heroicons-heart',
+    slot: 'wishlist'
+}, {
+    label: 'Lịch Sử Đơn Hàng',
+    icon: 'i-heroicons-bookmark-square',
+    slot: 'purchase_history'
+}, {
+    label: 'Quản Lý Tài Khoản',
+    icon: 'i-heroicons-user',
+    slot: 'manage_profile'
+}]
 </script>
 
 <template>
@@ -12,155 +31,34 @@ import type { IAuthProfile } from '~/types/auth.type'
         />
 
         <UContainer>
-            <section
-                v-once
-                class="mt-10"
-            >
+            <section class="mt-10">
                 <div class="grid gap-4 grid-cols-12">
                     <div class="col-span-12">
-                        <UCard
-                            :ui="{
-                                header: { padding: '!p-0' }
-                            }"
-                        >
-                            <template #header>
-                                <NuxtImg
-                                    src="/profile-banner.png"
-                                    alt="Banner"
-                                    class="w-full object-cover h-60"
-                                />
-                            </template>
+                        <ProfilePageHeader />
+                    </div>
 
-                            <div class="flex flex-col sm:flex-row sm:text-start text-center -mt-16">
-                                <div class="flex justify-center sm:mb-3">
-                                    <NuxtImg
-                                        src="https://demos.pixinvent.com/vuexy-html-admin-template/assets/img/avatars/14.png"
-                                        alt="Banner"
-                                        class="w-32 object-cover border-4 border-solid rounded-md"
+                    <div class="col-span-12">
+                        <UTabs :items="items">
+                            <template #default="{ item, selected }">
+                                <div class="flex items-center gap-2 relative truncate">
+                                    <UIcon
+                                        :name="item.icon"
+                                        class="w-4 h-4 flex-shrink-0"
+                                    />
+
+                                    <span class="truncate">{{ item.label }}</span>
+
+                                    <span
+                                        v-if="selected"
+                                        class="absolute -right-4 w-2 h-2 rounded-full bg-primary-500 dark:bg-primary-400"
                                     />
                                 </div>
+                            </template>
 
-                                <div class="sm:mt-16 sm:ml-5 mt-4">
-                                    <h3 class="text-xl font-semibold capitalize mb-1">
-                                        {{ useCookie<IAuthProfile>('userData').value.name }}
-                                    </h3>
-
-                                    <p class="text-base text-gray-500">
-                                        {{ useCookie<IAuthProfile>('userData').value.phone }}
-                                    </p>
-                                </div>
-                            </div>
-                        </UCard>
-                    </div>
-
-                    <div class="lg:col-span-4 md:col-span-6 col-span-12">
-                        <UCard>
-                            <h5 class="uppercase text-gray-500">
-                                Giới thiệu
-                            </h5>
-
-                            <ul class="flex flex-col mt-3 gap-3">
-                                <li class="flex items-center gap-2">
-                                    <div class="flex items-center gap-1">
-                                        <BaseIconUser />
-                                        <span class="font-semibold capitalize">Họ và tên:</span>
-                                    </div>
-
-                                    <span class="capitalize flex-1">{{ useCookie<IAuthProfile>('userData').value.name }}</span>
-                                </li>
-
-                                <li class="flex items-center gap-2">
-                                    <div class="flex items-center gap-1">
-                                        <BaseIconPhoneCall />
-                                        <span class="font-semibold capitalize">SĐT:</span>
-                                    </div>
-
-                                    <span class="flex-1">{{ useCookie<IAuthProfile>('userData').value.phone }}</span>
-                                </li>
-
-                                <li class="flex items-center gap-2">
-                                    <div class="flex items-center gap-1">
-                                        <BaseIconMail />
-                                        <span class="font-semibold capitalize">Email:</span>
-                                    </div>
-
-                                    <span class="flex-1">{{ useCookie<IAuthProfile>('userData').value.email }}</span>
-                                </li>
-
-                                <li class="flex items-center gap-2">
-                                    <div class="flex items-center gap-1">
-                                        <BaseIconSkype />
-                                        <span class="font-semibold capitalize">Skype:</span>
-                                    </div>
-
-                                    <span class="flex-1">Skype ID</span>
-                                </li>
-
-                                <li class="flex items-center gap-2">
-                                    <div class="flex items-center gap-1">
-                                        <BaseIconFacebookTabler />
-                                        <span class="font-semibold capitalize">Facebook:</span>
-                                    </div>
-
-                                    <span class="flex-1">Facebook ID</span>
-                                </li>
-                            </ul>
-                        </UCard>
-                    </div>
-
-                    <div class="lg:col-span-4 md:col-span-6 col-span-12">
-                        <UCard>
-                            <h5 class="uppercase text-gray-500">
-                                Giới thiệu
-                            </h5>
-
-                            <ul class="flex flex-col mt-3 gap-3">
-                                <li class="flex items-center gap-2">
-                                    <div class="flex items-center gap-1">
-                                        <BaseIconUser />
-                                        <span class="font-semibold capitalize">Họ và tên:</span>
-                                    </div>
-
-                                    <span class="capitalize flex-1">{{ useCookie<IAuthProfile>('userData').value.name }}</span>
-                                </li>
-
-                                <li class="flex items-center gap-2">
-                                    <div class="flex items-center gap-1">
-                                        <BaseIconPhoneCall />
-                                        <span class="font-semibold capitalize">SĐT:</span>
-                                    </div>
-
-                                    <span class="flex-1">{{ useCookie<IAuthProfile>('userData').value.phone }}</span>
-                                </li>
-
-                                <li class="flex items-center gap-2">
-                                    <div class="flex items-center gap-1">
-                                        <BaseIconMail />
-                                        <span class="font-semibold capitalize">Email:</span>
-                                    </div>
-
-                                    <span class="flex-1">{{ useCookie<IAuthProfile>('userData').value.email }}</span>
-                                </li>
-
-                                <li class="flex items-center gap-2">
-                                    <div class="flex items-center gap-1">
-                                        <BaseIconSkype />
-                                        <span class="font-semibold capitalize">Skype:</span>
-                                    </div>
-
-                                    <span class="flex-1">Skype ID</span>
-                                </li>
-
-                                <li class="flex items-center gap-2">
-                                    <div class="flex items-center gap-1">
-                                        <BaseIconFacebookTabler />
-                                        <span class="font-semibold capitalize">Facebook:</span>
-                                    </div>
-
-                                    <span class="flex-1">Facebook ID</span>
-                                </li>
-                            </ul>
-                        </UCard>
+                            <template #dashboard>
+                                <ProfilePageDashboard />
+                            </template>
+                        </UTabs>
                     </div>
                 </div>
             </section>
