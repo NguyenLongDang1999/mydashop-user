@@ -23,7 +23,7 @@ export const formatTimeAgo = (dateString: string) => {
     const date = new Date(dateString)
     const now = new Date()
 
-    const timeDifference = now - date
+    const timeDifference = now.getTime() - date.getTime()
 
     const seconds = Math.floor(timeDifference / 1000)
     const minutes = Math.floor(seconds / 60)
@@ -53,3 +53,46 @@ export const generateUUIDv4 = () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.repla
 
     return v.toString(16)
 })
+
+export const compareDateTime = row => {
+    const startDate = new Date(row.discount_start_date).getTime()
+    const endDate = new Date(row.discount_end_date).getTime()
+    const today = new Date().getTime()
+
+    return today >= startDate && today <= endDate
+}
+
+export const formatSellingPrice = (row, quantity = 1) => {
+    let discount = 0
+    let sellingPrice = 0
+
+    const formatPrice = Number(row.price)
+    const formatSpecialPrice = Number(row.special_price)
+
+    if (row.special_price_type === SPECIAL_PRICE.PERCENT) {
+        discount = (formatPrice / 100) * formatSpecialPrice
+        sellingPrice = Math.round((formatPrice - discount) / 1000) * 1000
+    }
+
+    if (row.special_price_type === SPECIAL_PRICE.PRICE) {
+        discount = formatSpecialPrice
+        sellingPrice = formatPrice - discount
+    }
+
+    // ** Sale Price
+    if (compareDateTime(row)) {
+        const formatDiscountAmount = Number(row.discount_amount)
+
+        if (row.discount_type === SPECIAL_PRICE.PERCENT) {
+            discount = (formatPrice / 100) * formatDiscountAmount
+            sellingPrice = Math.round((formatPrice - discount) / 1000) * 1000
+        }
+
+        if (row.discount_type === SPECIAL_PRICE.PRICE) {
+            discount = formatDiscountAmount
+            sellingPrice = formatPrice - discount
+        }
+    }
+
+    return formatCurrency(sellingPrice * quantity)
+}

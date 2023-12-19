@@ -113,7 +113,7 @@ const { isPending, mutateAsync } = useCartDelete()
                                         {{ JSON.parse(cart.attributes).map((item: IAttributeValues) => `${item.attribute_name}: ${item.attribute_value}`).join(', ') }}
                                     </div>
 
-                                    <span class="font-semibold sm:text-lg text-primary text-base">{{ cart.quantity }} x {{ formatCurrency(Number(cart.Product.selling_price)) }}</span>
+                                    <span class="font-semibold sm:text-lg text-primary text-base">{{ cart.quantity }} x {{ formatSellingPrice(cart.Product) }}</span>
                                     <span class="font-normal sm:text-base text-sm text-gray-300 line-through pl-3">{{ formatCurrency(Number(cart.Product.price)) }}</span>
                                 </div>
                             </div>

@@ -82,7 +82,7 @@ export interface IProductCommentPagination extends IAggregations {
 
 export interface IProductFlashSale {
     campaign_name: string
-    FlashSaleProduct: IProduct[]
+    flashDealsProduct: IProduct[]
 }
 
 export interface IProductVariant {

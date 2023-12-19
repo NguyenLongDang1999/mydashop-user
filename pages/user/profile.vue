@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
-// ** useHooks
-const { userData } = useAuth()
+// ** Types Imports
+import type { IAuthProfile } from '~/types/auth.type'
 </script>
 
 <template>
@@ -42,11 +42,11 @@ const { userData } = useAuth()
 
                                 <div class="sm:mt-16 sm:ml-5 mt-4">
                                     <h3 class="text-xl font-semibold capitalize mb-1">
-                                        {{ userData?.name }}
+                                        {{ useCookie<IAuthProfile>('userData').value.name }}
                                     </h3>
 
                                     <p class="text-base text-gray-500">
-                                        {{ userData?.phone }}
+                                        {{ useCookie<IAuthProfile>('userData').value.phone }}
                                     </p>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@ const { userData } = useAuth()
                                         <span class="font-semibold capitalize">Họ và tên:</span>
                                     </div>
 
-                                    <span class="capitalize flex-1">{{ userData?.name }}</span>
+                                    <span class="capitalize flex-1">{{ useCookie<IAuthProfile>('userData').value.name }}</span>
                                 </li>
 
                                 <li class="flex items-center gap-2">
@@ -75,7 +75,7 @@ const { userData } = useAuth()
                                         <span class="font-semibold capitalize">SĐT:</span>
                                     </div>
 
-                                    <span class="flex-1">{{ userData?.phone }}</span>
+                                    <span class="flex-1">{{ useCookie<IAuthProfile>('userData').value.phone }}</span>
                                 </li>
 
                                 <li class="flex items-center gap-2">
@@ -84,7 +84,7 @@ const { userData } = useAuth()
                                         <span class="font-semibold capitalize">Email:</span>
                                     </div>
 
-                                    <span class="flex-1">{{ userData?.email }}</span>
+                                    <span class="flex-1">{{ useCookie<IAuthProfile>('userData').value.email }}</span>
                                 </li>
 
                                 <li class="flex items-center gap-2">
@@ -121,7 +121,7 @@ const { userData } = useAuth()
                                         <span class="font-semibold capitalize">Họ và tên:</span>
                                     </div>
 
-                                    <span class="capitalize flex-1">{{ userData?.name }}</span>
+                                    <span class="capitalize flex-1">{{ useCookie<IAuthProfile>('userData').value.name }}</span>
                                 </li>
 
                                 <li class="flex items-center gap-2">
@@ -130,7 +130,7 @@ const { userData } = useAuth()
                                         <span class="font-semibold capitalize">SĐT:</span>
                                     </div>
 
-                                    <span class="flex-1">{{ userData?.phone }}</span>
+                                    <span class="flex-1">{{ useCookie<IAuthProfile>('userData').value.phone }}</span>
                                 </li>
 
                                 <li class="flex items-center gap-2">
@@ -139,7 +139,7 @@ const { userData } = useAuth()
                                         <span class="font-semibold capitalize">Email:</span>
                                     </div>
 
-                                    <span class="flex-1">{{ userData?.email }}</span>
+                                    <span class="flex-1">{{ useCookie<IAuthProfile>('userData').value.email }}</span>
                                 </li>
 
                                 <li class="flex items-center gap-2">

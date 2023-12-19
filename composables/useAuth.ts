@@ -3,14 +3,10 @@ import type { IAuthLogin, IAuthProfile, IAuthRegister } from '~/types/auth.type'
 
 // ** State
 const path = ref<string>(ROUTE.AUTH)
-const userData = ref<IAuthProfile>()
 
 export default function () {
-    userData.value = useCookie<IAuthProfile>('userData').value
-
     return {
-        path,
-        userData
+        path
     }
 }
 

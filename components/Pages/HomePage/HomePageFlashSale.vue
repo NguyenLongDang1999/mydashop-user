@@ -65,7 +65,7 @@ const result = ref<IProductVariant>()
                 :slides-per-view="1.2"
             >
                 <SwiperSlide
-                    v-for="product in data.FlashSaleProduct"
+                    v-for="product in data.flashDealsProduct"
                     :key="product.id"
                 >
                     <UCard

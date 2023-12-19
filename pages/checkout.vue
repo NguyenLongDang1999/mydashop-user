@@ -3,14 +3,14 @@
 // ** Types Imports
 import { useCartList } from '~/composables/useCart'
 import type { IAttributeValues } from '~/types/attribute.type'
+import type { IAuthProfile } from '~/types/auth.type'
 
 // ** useHooks
-const { userData } = useAuth()
 const { path: pathProduct } = useProduct()
-const { dataList } = await useCartList()
+const { dataList, cartTotal } = useCartList()
 
 // ** Computed
-const cartTotal = computed(() => dataList.value.CartItem.reduce((acc, item) => acc + (item.quantity * Number(item.Product.selling_price)), 0))
+const userData = computed(() => useCookie<IAuthProfile>('userData').value || {})
 </script>
 
 <template>
@@ -45,63 +45,65 @@ const cartTotal = computed(() => dataList.value.CartItem.reduce((acc, item) => a
                                 </h4>
                             </template>
 
-                            <div class="flex flex-col gap-3">
-                                <div
-                                    v-for="row in dataList.CartItem"
-                                    :key="row.id"
-                                    class="flex items-center gap-2"
-                                >
-                                    <UChip
-                                        :text="row.quantity"
-                                        size="2xl"
+                            <ClientOnly>
+                                <div class="flex flex-col gap-3">
+                                    <div
+                                        v-for="row in dataList.CartItem"
+                                        :key="row.id"
+                                        class="flex items-center gap-2"
                                     >
-                                        <NuxtImg
-                                            :src="getImageFile(pathProduct, row.Product.image_uri)"
-                                            :alt="row.Product.name"
-                                            :width="60"
-                                            :height="60"
-                                            class="rounded-lg min-w-[60px] min-h-[60px] object-cover"
-                                        />
-                                    </UChip>
-
-                                    <div class="flex flex-col whitespace-normal">
-                                        <NuxtLink
-                                            :to="navigateProduct(row.Product.slug)"
-                                            class="hover:text-primary line-clamp-1"
+                                        <UChip
+                                            :text="row.quantity"
+                                            size="2xl"
                                         >
-                                            <h4 class="font-semibold">
-                                                {{ row.Product.name }} - {{ row.Product.sku }}
-                                            </h4>
-                                        </NuxtLink>
+                                            <NuxtImg
+                                                :src="getImageFile(pathProduct, row.Product.image_uri)"
+                                                :alt="row.Product.name"
+                                                :width="60"
+                                                :height="60"
+                                                class="rounded-lg min-w-[60px] min-h-[60px] object-cover"
+                                            />
+                                        </UChip>
 
-                                        <span
-                                            v-if="row.attributes"
-                                            class="text-xs text-gray-400 mt-1"
-                                        >{{ JSON.parse(row.attributes).map((item: IAttributeValues) => `${item.attribute_name}: ${item.attribute_value}`).join(', ') }}</span>
+                                        <div class="flex flex-col whitespace-normal">
+                                            <NuxtLink
+                                                :to="navigateProduct(row.Product.slug)"
+                                                class="hover:text-primary line-clamp-1"
+                                            >
+                                                <h4 class="font-semibold">
+                                                    {{ row.Product.name }} - {{ row.Product.sku }}
+                                                </h4>
+                                            </NuxtLink>
 
-                                        <span class="font-semibold text-primary mt-1">{{ formatCurrency(row.quantity * Number(row.Product.selling_price)) }}</span>
+                                            <span
+                                                v-if="row.attributes"
+                                                class="text-xs text-gray-400 mt-1"
+                                            >{{ JSON.parse(row.attributes).map((item: IAttributeValues) => `${item.attribute_name}: ${item.attribute_value}`).join(', ') }}</span>
+
+                                            <span class="font-semibold text-primary mt-1">{{ formatCurrency(row.quantity * Number(row.Product.selling_price)) }}</span>
+                                        </div>
+                                    </div>
+
+                                    <UDivider />
+
+                                    <div class="flex flex-col gap-1">
+                                        <div class="flex items-center gap-3 font-semibold">
+                                            <span>Số Tiền:</span>
+                                            <span class="text-primary">{{ formatCurrency(cartTotal) }}</span>
+                                        </div>
+
+                                        <div class="flex items-center gap-3 font-semibold">
+                                            <span>Giảm Giá:</span>
+                                            <span class="text-primary">{{ formatCurrency(500000) }}</span>
+                                        </div>
+
+                                        <div class="flex items-center gap-3 font-semibold">
+                                            <span>Tổng Tiền:</span>
+                                            <span class="text-primary">{{ formatCurrency(cartTotal) }}</span>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <UDivider />
-
-                                <div class="flex flex-col gap-1">
-                                    <div class="flex items-center gap-3 font-semibold">
-                                        <span>Số Tiền:</span>
-                                        <span class="text-primary">{{ formatCurrency(cartTotal) }}</span>
-                                    </div>
-
-                                    <div class="flex items-center gap-3 font-semibold">
-                                        <span>Giảm Giá:</span>
-                                        <span class="text-primary">{{ formatCurrency(500000) }}</span>
-                                    </div>
-
-                                    <div class="flex items-center gap-3 font-semibold">
-                                        <span>Tổng Tiền:</span>
-                                        <span class="text-primary">{{ formatCurrency(cartTotal) }}</span>
-                                    </div>
-                                </div>
-                            </div>
+                            </ClientOnly>
                         </UCard>
                     </div>
 
@@ -109,8 +111,8 @@ const cartTotal = computed(() => dataList.value.CartItem.reduce((acc, item) => a
                         <UAlert
                             v-if="!useIsLoggedIn()"
                             class="mb-4"
-                            title="Cảnh Báo!"
-                            color="red"
+                            title="Thông Báo!"
+                            color="amber"
                             icon="i-heroicons-information-circle"
                         >
                             <template #description>
@@ -134,6 +136,7 @@ const cartTotal = computed(() => dataList.value.CartItem.reduce((acc, item) => a
                                 <div class="grid grid-cols-12 gap-4">
                                     <div class="col-span-12">
                                         <FormInput
+                                            v-model="userData.name"
                                             name="name"
                                             label="Họ và tên"
                                         />
@@ -141,6 +144,7 @@ const cartTotal = computed(() => dataList.value.CartItem.reduce((acc, item) => a
 
                                     <div class="sm:col-span-6 col-span-12">
                                         <FormInput
+                                            v-model="userData.email"
                                             name="email"
                                             label="Email"
                                         />
@@ -148,6 +152,7 @@ const cartTotal = computed(() => dataList.value.CartItem.reduce((acc, item) => a
 
                                     <div class="sm:col-span-6 col-span-12">
                                         <FormInput
+                                            v-model="userData.phone"
                                             name="phone"
                                             label="Số điện thoại"
                                         />

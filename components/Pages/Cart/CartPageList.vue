@@ -85,7 +85,7 @@ const cartColumns = [{
 
             <template #price-data="{ row }">
                 <span class="font-semibold sm:text-lg text-primary text-base">
-                    {{ formatCurrency(Number(row.Product.selling_price)) }}
+                    {{ formatSellingPrice(row.Product) }}
                 </span>
             </template>
 
@@ -103,7 +103,7 @@ const cartColumns = [{
             </template>
 
             <template #total-data="{ row }">
-                <span class="font-semibold sm:text-lg text-primary text-base">{{ formatCurrency(row.quantity * Number(row.Product.selling_price)) }}</span>
+                <span class="font-semibold sm:text-lg text-primary text-base">{{ formatSellingPrice(row.Product, row.quantity) }}</span>
             </template>
         </UTable>
     </div>

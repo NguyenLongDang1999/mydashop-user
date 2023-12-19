@@ -107,7 +107,7 @@ watch(attributeValues, () => findAttributeValues(props.product.productVariant, a
 
         <BaseProductPrice
             :price="Number(result?.price || product.price)"
-            :selling-price="Number(result?.selling_price || product.selling_price)"
+            :selling-price="formatSellingPrice(result || product)"
         />
     </div>
 
