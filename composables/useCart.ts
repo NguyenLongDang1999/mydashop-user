@@ -20,7 +20,7 @@ export const useCartList = () => {
     // ** Computed
     const dataList = computed(() => data.value as ICart)
     const cartLength = computed(() => dataList.value?.CartItem && dataList.value?.CartItem.length)
-    const cartTotal = computed(() => cartLength.value && dataList.value?.CartItem.reduce((acc, item) => acc + (item.quantity * Number(item.Product.selling_price)), 0))
+    const cartTotal = computed(() => cartLength.value && dataList.value?.CartItem.reduce((acc, item) => acc + (formatSellingPrice(item.Product, item.quantity, false) as number), 0))
 
     return {
         path,
@@ -35,7 +35,7 @@ export const useCartAdd = () => {
 
     return useQueryMutation<ICartFormInput>(path.value, {
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: [`${path.value}DataList`] })
+            queryClient.refetchQueries({ queryKey: [`${path.value}DataList`] })
             useNotification(MESSAGE_SUCCESS.CART)
         },
         onError: () => useNotification(undefined, true)
@@ -46,7 +46,7 @@ export const useCartQuantity = () => {
     const queryClient = useQueryClient()
 
     return useQueryMutation<ICartFormInput>(path.value, {
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: [`${path.value}DataList`] }),
+        onSuccess: () => queryClient.refetchQueries({ queryKey: [`${path.value}DataList`] }),
         onError: () => useNotification(undefined, true)
     }, 'PATCH')
 }

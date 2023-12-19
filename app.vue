@@ -1,5 +1,8 @@
 <script setup lang="ts">
 
+// ** Third Party Imports
+import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
+
 // ** Meta SEO
 useHead({
     htmlAttrs: {
@@ -22,6 +25,7 @@ useHead({
         <NuxtPage />
     </NuxtLayout>
 
+    <VueQueryDevtools />
     <UNotifications />
 </template>
 

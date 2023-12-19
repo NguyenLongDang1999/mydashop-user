@@ -62,7 +62,7 @@ export const compareDateTime = row => {
     return today >= startDate && today <= endDate
 }
 
-export const formatSellingPrice = (row, quantity = 1) => {
+export const formatSellingPrice = (row, quantity = 1, isFormat = true) => {
     let discount = 0
     let sellingPrice = 0
 
@@ -94,5 +94,5 @@ export const formatSellingPrice = (row, quantity = 1) => {
         }
     }
 
-    return formatCurrency(sellingPrice * quantity)
+    return isFormat ? formatCurrency(sellingPrice * quantity) : (sellingPrice * quantity)
 }

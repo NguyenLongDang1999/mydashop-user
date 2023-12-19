@@ -80,7 +80,7 @@ const userData = computed(() => useCookie<IAuthProfile>('userData').value || {})
                                                 class="text-xs text-gray-400 mt-1"
                                             >{{ JSON.parse(row.attributes).map((item: IAttributeValues) => `${item.attribute_name}: ${item.attribute_value}`).join(', ') }}</span>
 
-                                            <span class="font-semibold text-primary mt-1">{{ formatCurrency(row.quantity * Number(row.Product.selling_price)) }}</span>
+                                            <span class="font-semibold text-primary mt-1">{{ formatSellingPrice(row.Product, row.quantity) }}</span>
                                         </div>
                                     </div>
 
@@ -112,7 +112,6 @@ const userData = computed(() => useCookie<IAuthProfile>('userData').value || {})
                             v-if="!useIsLoggedIn()"
                             class="mb-4"
                             title="Thông Báo!"
-                            color="amber"
                             icon="i-heroicons-information-circle"
                         >
                             <template #description>
