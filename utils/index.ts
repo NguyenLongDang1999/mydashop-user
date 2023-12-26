@@ -50,8 +50,6 @@ export const compareDateTime = row => {
     const endDate = new Date(row.discount_end_date).getTime()
     const today = new Date().getTime()
 
-    console.log(row)
-
     return today >= startDate && today <= endDate
 }
 
