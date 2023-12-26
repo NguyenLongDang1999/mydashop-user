@@ -12,7 +12,6 @@ interface Props {
 defineProps<Props>()
 
 // ** useHooks
-const { path } = useProduct()
 const { mutateAsync: cartQuantity } = useCartQuantity()
 const { isPending, mutateAsync } = useCartDelete()
 const { mutateAsync: purgeCart } = useCartDelete(true)
@@ -48,7 +47,7 @@ const cartColumns = [{
                 <div class="flex items-center gap-2">
                     <div class="relative">
                         <NuxtImg
-                            :src="getImageFile(path, row.Product.image_uri)"
+                            :src="getPathImageFile(row.Product.image_uri)"
                             :alt="row.Product.name"
                             :width="56"
                             :height="56"

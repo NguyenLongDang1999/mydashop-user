@@ -26,7 +26,7 @@ const groups: Group[] = [{
             id: _p.id,
             label: _p.name,
             avatar: {
-                src: getImageFile(path.value, _p.image_uri)
+                src: getPathImageFile(_p.image_uri)
             },
             to: navigateProduct(_p.slug),
             loading: 'lazy'

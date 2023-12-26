@@ -17,7 +17,6 @@ const props = defineProps<Props>()
 
 // ** useHooks
 const route = useRoute()
-const { path } = useCategory()
 
 // ** Data
 const isOpen = ref<boolean>(false)
@@ -120,7 +119,7 @@ updateDefaultOpen(items)
                                     >
                                         <template #leading>
                                             <NuxtImg
-                                                :src="getImageFile(path, item.image_uri)"
+                                                :src="getPathImageFile(item.image_uri)"
                                                 :alt="item.name"
                                                 class="rounded-full w-6 h-6 object-cover"
                                             />

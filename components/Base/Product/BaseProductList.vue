@@ -11,7 +11,6 @@ interface Props {
 const props = defineProps<Props>()
 
 // ** useHooks
-const { path } = useProduct()
 const { isPending, mutateAsync } = useCartAdd()
 
 // ** Computed
@@ -34,7 +33,7 @@ const productAttributeLength = computed(() => props.product.productAttributes.le
                 <div class="relative">
                     <NuxtLink :to="navigateProduct(product.slug)">
                         <NuxtImg
-                            :src="getImageFile(path, product.image_uri)"
+                            :src="getPathImageFile(product.image_uri)"
                             :alt="product.name"
                             :title="product.name"
                             width="600"

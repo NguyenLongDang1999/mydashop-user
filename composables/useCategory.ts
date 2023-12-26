@@ -27,7 +27,7 @@ export const useCategoryDataList = async () => {
             id: category.id,
             name: category.name,
             link: navigateCategory(category.slug),
-            imageSrc: getImageFile(path.value, category.image_uri),
+            imageSrc: getPathImageFile(category.image_uri),
             children: category.children.map(subCategory => ({
                 id: subCategory.id,
                 name: subCategory.name,

@@ -6,10 +6,20 @@ import type { IProductVariant } from '~/types/product.type'
 
 // ** useHooks
 const config = useRuntimeConfig()
-const { data, path, route } = await useProductDetail()
+const { data, route } = await useProductDetail()
 
 // ** Computed
-const technical_specifications = computed(() => JSON.parse(data.value.technical_specifications) || [])
+const technical_specifications = computed(() => {
+    if (typeof data.value.technical_specifications === 'string') {
+        return JSON.parse(data.value.technical_specifications)
+    }
+
+    if (Array.isArray(data.value.technical_specifications)) {
+        return data.value.technical_specifications
+    }
+
+    return []
+})
 
 // ** Data
 const result = ref<IProductVariant>()
@@ -53,11 +63,11 @@ useServerSeoMeta({
     ogUrl: config.public.domainUrl + route.path,
     ogTitle: data.value.meta_title,
     ogDescription: data.value.meta_description,
-    ogImage: getImageFile(path.value, data.value.image_uri),
+    ogImage: getPathImageFile(data.value.image_uri),
     ogImageAlt: data.value.name,
     twitterTitle: data.value.meta_title,
     twitterDescription: data.value.meta_description,
-    twitterImage: getImageFile(path.value, data.value.image_uri),
+    twitterImage: getPathImageFile(data.value.image_uri),
     twitterImageAlt: data.value.name
 })
 </script>

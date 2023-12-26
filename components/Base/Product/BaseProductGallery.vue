@@ -10,9 +10,6 @@ interface Props {
 
 defineProps<Props>()
 
-// ** useHooks
-const { path } = useProduct()
-
 // ** Data
 const thumbsSwiper = ref()
 </script>
@@ -26,7 +23,7 @@ const thumbsSwiper = ref()
         <SwiperSlide>
             <NuxtImg
                 :alt="product.name"
-                :src="getImageFile(path, product.image_uri)"
+                :src="getPathImageFile(product.image_uri)"
                 class="rounded-md w-full"
             />
         </SwiperSlide>
@@ -37,7 +34,7 @@ const thumbsSwiper = ref()
         >
             <NuxtImg
                 :alt="product.name"
-                :src="getImageFile(path, data.image_uri)"
+                :src="getPathImageFile(data.image_uri)"
                 class="rounded-md w-full"
             />
         </SwiperSlide>
@@ -55,7 +52,7 @@ const thumbsSwiper = ref()
         <SwiperSlide>
             <NuxtImg
                 :alt="product.name"
-                :src="getImageFile(path, product.image_uri)"
+                :src="getPathImageFile(product.image_uri)"
                 class="rounded-md w-full"
             />
         </SwiperSlide>
@@ -66,7 +63,7 @@ const thumbsSwiper = ref()
         >
             <NuxtImg
                 :alt="product.name"
-                :src="getImageFile(path, data.image_uri)"
+                :src="getPathImageFile(data.image_uri)"
                 class="rounded-md w-full"
             />
         </SwiperSlide>

@@ -4,18 +4,6 @@ export const formatCurrency = (amount: number) => amount.toLocaleString('vi-VN',
     minimumFractionDigits: 0
 })
 
-export const getImageFile = (path: string, name?: string) => {
-    if (name) {
-        const env = useRuntimeConfig()
-
-        return name.includes('https://') ?
-            name :
-            `${env.public.previewCdn}/${path}/${name}`
-    }
-
-    return IMAGE.DEFAULT
-}
-
 export const navigateProduct = (slug: string) => `/san-pham/${slug}`
 export const navigateCategory = (slug: string) => `/danh-muc/${slug}`
 
@@ -95,4 +83,16 @@ export const formatSellingPrice = (row, quantity = 1, isFormat = true) => {
     }
 
     return isFormat ? formatCurrency(sellingPrice * quantity) : (sellingPrice * quantity)
+}
+
+export const getPathImageFile = (name?: string) => {
+    const config = useRuntimeConfig()
+
+    if (name) {
+        return name.includes('https://') ?
+            name :
+            config.public.previewCdn + name
+    }
+
+    return IMAGE.DEFAULT
 }

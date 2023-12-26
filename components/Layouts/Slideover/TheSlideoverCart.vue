@@ -7,7 +7,6 @@ import type { IAttributeValues } from '~/types/attribute.type'
 const isOpen = ref<boolean>(false)
 
 // ** useHooks
-const { path } = useProduct()
 const { dataList, cartLength, cartTotal } = useCartList()
 const { isPending, mutateAsync } = useCartDelete()
 </script>
@@ -66,7 +65,7 @@ const { isPending, mutateAsync } = useCartDelete()
                                     @click="isOpen = false"
                                 >
                                     <NuxtImg
-                                        :src="getImageFile(path, cart.Product.image_uri)"
+                                        :src="getPathImageFile(cart.Product.image_uri)"
                                         :alt="cart.Product.name"
                                         :title="cart.Product.name"
                                         loading="lazy"

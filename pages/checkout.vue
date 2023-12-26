@@ -6,7 +6,6 @@ import type { IAttributeValues } from '~/types/attribute.type'
 import type { IAuthProfile } from '~/types/auth.type'
 
 // ** useHooks
-const { path: pathProduct } = useProduct()
 const { dataList, cartTotal } = useCartList()
 
 // ** Computed
@@ -57,7 +56,7 @@ const userData = computed(() => useCookie<IAuthProfile>('userData').value || {})
                                             size="2xl"
                                         >
                                             <NuxtImg
-                                                :src="getImageFile(pathProduct, row.Product.image_uri)"
+                                                :src="getPathImageFile(row.Product.image_uri)"
                                                 :alt="row.Product.name"
                                                 :width="60"
                                                 :height="60"

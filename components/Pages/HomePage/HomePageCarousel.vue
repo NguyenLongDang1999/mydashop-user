@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 // ** useHooks
-const { path, dataList } = await useSliderDataList()
+const { dataList } = await useSliderDataList()
 
 // ** Data
 const creativeEffect = {
@@ -36,7 +36,7 @@ const creativeEffect = {
                 :key="slider.id"
             >
                 <NuxtImg
-                    :src="getImageFile(path, slider.image_uri)"
+                    :src="getPathImageFile(slider.image_uri)"
                     :alt="slider.name"
                     :title="slider.name"
                     width="1900"

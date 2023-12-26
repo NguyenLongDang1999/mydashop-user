@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 // ** useHooks
-const { path, dataList } = await useCategoryDataListNested()
+const { dataList } = await useCategoryDataListNested()
 </script>
 
 <template>
@@ -26,7 +26,7 @@ const { path, dataList } = await useCategoryDataListNested()
                         class="hover:text-primary mb-6 pb-3 flex gap-2 items-center border-b-2 border-gray-200 relative after:content-[''] after:absolute after:left-0 after:-bottom-0.5 after:w-20 after:border-b-2 after:border-primary"
                     >
                         <NuxtImg
-                            :src="getImageFile(path, category.image_uri)"
+                            :src="getPathImageFile(category.image_uri)"
                             :alt="category.name"
                             :title="category.name"
                             width="50"

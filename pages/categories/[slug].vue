@@ -2,7 +2,6 @@
 
 // ** useHooks
 const route = useRoute()
-const { path } = useCategory()
 const { dataList: categoryList } = await useCategoryDataListNested()
 const { data, isFetching, dataTable, dataAggregations, search } = await useCategoryDetail(route.params.slug as string)
 const config = useRuntimeConfig()
@@ -29,11 +28,11 @@ useServerSeoMeta({
     ogUrl: config.public.domainUrl + route.path,
     ogTitle: data.value.meta_title,
     ogDescription: data.value.meta_description,
-    ogImage: getImageFile(path.value, data.value.image_uri),
+    ogImage: getPathImageFile(data.value.image_uri),
     ogImageAlt: data.value.name,
     twitterTitle: data.value.meta_title,
     twitterDescription: data.value.meta_description,
-    twitterImage: getImageFile(path.value, data.value.image_uri),
+    twitterImage: getPathImageFile(data.value.image_uri),
     twitterImageAlt: data.value.name
 })
 
@@ -61,7 +60,7 @@ provide('search', search)
                 class="mt-20"
             >
                 <BaseCategoryTitle
-                    :image="getImageFile(path, data.image_uri)"
+                    :image="getPathImageFile(data.image_uri)"
                     :title="data.name"
                     :description="data.description"
                 />
