@@ -1,3 +1,12 @@
+<script setup lang="ts">
+
+// // ** useHooks
+// const { data } = await useWebsiteSetupSystem()
+
+// // ** Computed
+// const dataWebsiteLogo = computed(() => getValueBySlug('website_logo', data.value))
+</script>
+
 <template>
     <NuxtLink
         href="/"

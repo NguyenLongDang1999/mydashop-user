@@ -12,3 +12,8 @@ export interface ICrudTableOptions<T> {
 export interface IAggregations {
     aggregations: number
 }
+
+export interface IWebsiteSetup {
+    slug: string
+    value: string
+}

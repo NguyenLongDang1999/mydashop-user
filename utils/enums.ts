@@ -5,7 +5,8 @@ export enum ROUTE {
     SLIDER = 'slider',
     PRODUCT = 'product',
     PRODUCT_COMMENT = 'product-comment',
-    CART = 'cart'
+    CART = 'cart',
+    WEBSITE_SETUP = 'website-setup'
 }
 
 export enum IMAGE {
@@ -30,4 +31,11 @@ export enum SPECIAL_PRICE {
 export enum MESSAGE_SUCCESS {
     CART = 'Sản phẩm đã được thêm vào giỏ hàng!',
     DELETE_CART = 'Xoá sản phẩm khỏi giỏ hàng!'
+}
+
+export enum WEBSITE_SETUP {
+    HOME_SLIDER = 'home_slider',
+    HOME_BANNER1 = 'home_banner1',
+    HOME_BANNER2 = 'home_banner2',
+    HOME_BANNER3 = 'home_banner3'
 }

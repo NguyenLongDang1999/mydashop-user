@@ -31,6 +31,16 @@ export const useProductDataList = async () => {
     return computed(() => data.value || [])
 }
 
+export const useProductDataListPopular = async () => {
+    // ** useHooks
+    const { data, suspense } = useQueryFetch<IProductDataList[]>(path.value, '/data-list-popular', 'DataListPopular')
+
+    await suspense()
+
+    // ** Computed
+    return computed(() => data.value || [])
+}
+
 export const useProductDetail = async () => {
     // ** useHooks
     const route = useRoute()

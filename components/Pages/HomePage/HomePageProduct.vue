@@ -32,7 +32,7 @@ const dataList = await useProductDataList()
                 <div class="mt-5">
                     <Swiper
                         :space-between="10"
-                        :slides-per-view="2"
+                        :slides-per-view="1"
                         :breakpoints="{
                             1200: {
                                 slidesPerView: 5,
@@ -43,7 +43,7 @@ const dataList = await useProductDataList()
                             768: {
                                 slidesPerView: 3,
                             },
-                            576: {
+                            460: {
                                 slidesPerView: 2,
                             },
                             360: {

@@ -13,7 +13,7 @@ const result = ref<IProductVariant>()
 <template>
     <section
         v-once
-        class="mt-20 relative"
+        class="mt-10 relative"
     >
         <div class="flex items-center justify-between">
             <div class="flex gap-3 items-center">

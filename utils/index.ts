@@ -1,3 +1,6 @@
+// ** Types Imports
+import type { IWebsiteSetup } from '~/types/core.type'
+
 export const formatCurrency = (amount: number) => amount.toLocaleString('vi-VN', {
     style: 'currency',
     currency: 'VND',
@@ -47,10 +50,12 @@ export const compareDateTime = row => {
     const endDate = new Date(row.discount_end_date).getTime()
     const today = new Date().getTime()
 
+    console.log(row)
+
     return today >= startDate && today <= endDate
 }
 
-export const formatSellingPrice = (row, quantity = 1, isFormat = true) => {
+export const formatSellingPrice = (row: any, quantity = 1, isFormat = true) => {
     let discount = 0
     let sellingPrice = 0
 
@@ -96,3 +101,5 @@ export const getPathImageFile = (name?: string) => {
 
     return IMAGE.DEFAULT
 }
+
+export const getValueBySlug = (slug: string, dataList: IWebsiteSetup[]) => (dataList.find(({ slug: dataSlug }) => dataSlug === slug)?.value) ?? ''

@@ -10,7 +10,6 @@ export default function () {
     }
 }
 
-
 export const useBrandDataListAll = async () => {
     // ** useHooks
     const { data, suspense } = useQueryFetch<IBrand[]>(path.value, '/data-list-all', 'DataListAll')

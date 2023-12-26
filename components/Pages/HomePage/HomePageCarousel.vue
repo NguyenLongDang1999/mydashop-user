@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 // ** useHooks
-const { dataList } = await useSliderDataList()
+const { data } = await useWebsiteSetupSystem()
 
 // ** Data
 const creativeEffect = {
@@ -13,6 +13,10 @@ const creativeEffect = {
         translate: ['100%', 0, 0]
     }
 }
+
+// ** Computed
+const dataHomeSlider = computed(() => getValueBySlug(WEBSITE_SETUP.HOME_SLIDER, data.value))
+const dataList = computed(() => typeof dataHomeSlider.value === 'string' ? JSON.parse(dataHomeSlider.value) : [])
 </script>
 
 <template>
@@ -32,13 +36,13 @@ const creativeEffect = {
             effect="creative"
         >
             <SwiperSlide
-                v-for="slider in dataList"
-                :key="slider.id"
+                v-for="(item, index) in dataList"
+                :key="index"
             >
                 <NuxtImg
-                    :src="getPathImageFile(slider.image_uri)"
-                    :alt="slider.name"
-                    :title="slider.name"
+                    :src="getPathImageFile(item.image_uri)"
+                    :alt="item.image_link"
+                    :title="item.image_link"
                     width="1900"
                     height="500"
                     class="w-full object-cover h-[500px]"

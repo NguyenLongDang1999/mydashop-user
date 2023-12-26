@@ -3,6 +3,17 @@
 // ** Third Party Imports
 import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
 
+// ** useHooks
+const config = useRuntimeConfig()
+const { data } = await useWebsiteSetupSystem()
+
+// ** Computed
+const dataWebsiteName = computed(() => getValueBySlug('website_name', data.value))
+const dataWebsiteMotto = computed(() => getValueBySlug('website_motto', data.value))
+const dataWebsiteFavicon = computed(() => getValueBySlug('website_favicon', data.value))
+const dataMetaTitle = computed(() => getValueBySlug('meta_title', data.value))
+const dataMetaDescription = computed(() => getValueBySlug('meta_description', data.value))
+
 // ** Meta SEO
 useHead({
     htmlAttrs: {
@@ -12,10 +23,35 @@ useHead({
     bodyAttrs: {
         class: 'font-[\'Bai_Jamjuree\'] bg-white text-sm overflow-x-hidden font-medium'
     },
-    title: 'Nuxivy',
+    link: [
+        {
+            rel: 'canonical',
+            href: config.public.domainUrl
+        },
+        {
+            rel: 'icon',
+            href: getPathImageFile(dataWebsiteFavicon.value)
+        }
+    ],
+    title: dataWebsiteName.value,
     titleTemplate: titleChunk => {
-        return titleChunk ? `${titleChunk} · Nuxivy` : 'Nuxivy'
+        return titleChunk ? `${titleChunk} · ${dataWebsiteMotto.value}` : dataWebsiteName.value
     }
+})
+
+useServerSeoMeta({
+    title: dataWebsiteName.value,
+    robots: {
+        index: true,
+        follow: true
+    },
+    description: dataMetaDescription.value,
+    ogType: 'website',
+    ogUrl: config.public.domainUrl,
+    ogTitle: dataMetaTitle.value,
+    ogDescription: dataMetaDescription.value,
+    twitterTitle: dataMetaTitle.value,
+    twitterDescription: dataMetaDescription.value
 })
 </script>
 

@@ -1,18 +1,14 @@
-<script setup lang="ts">
-
-// ** Meta SEO
-useHead({
-    title: 'Trang chủ'
-})
-</script>
-
 <template>
     <main>
         <HomePageCarousel />
 
         <UContainer>
-            <HomePageCategory />
             <HomePageFlashSale />
+            <HomePageBanner1 />
+            <HomePageCategory />
+            <HomePageBanner2 />
+            <HomePagePopular />
+            <HomePageBanner3 />
             <HomePageProduct />
         </UContainer>
     </main>
