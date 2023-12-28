@@ -50,7 +50,7 @@ function onSelect (option: Group) {
         <UButton
             icon="i-heroicons-magnifying-glass-20-solid"
             size="sm"
-            square
+            variant="ghost"
             color="gray"
             @click="isOpen = true"
         />

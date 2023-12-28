@@ -83,7 +83,7 @@ const productAttributeLength = computed(() => props.product.productAttributes.le
                     <div class="flex items-center">
                         <LazyBaseProductPrice
                             :price="Number(product.price)"
-                            :selling-price="formatSellingPrice(product)"
+                            :selling-price="formatSellingPrice(product).toString()"
                         />
                     </div>
 

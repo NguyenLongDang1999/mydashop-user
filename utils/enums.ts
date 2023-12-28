@@ -6,7 +6,8 @@ export enum ROUTE {
     PRODUCT = 'product',
     PRODUCT_COMMENT = 'product-comment',
     CART = 'cart',
-    WEBSITE_SETUP = 'website-setup'
+    WEBSITE_SETUP = 'website-setup',
+    WISHLISTS = 'wishlists'
 }
 
 export enum IMAGE {
@@ -30,6 +31,7 @@ export enum SPECIAL_PRICE {
 
 export enum MESSAGE_SUCCESS {
     CART = 'Sản phẩm đã được thêm vào giỏ hàng!',
+    WISHLISTS = 'Sản phẩm đã được thêm vào danh sách yêu thích!',
     DELETE_CART = 'Xoá sản phẩm khỏi giỏ hàng!'
 }
 
@@ -38,4 +40,9 @@ export enum WEBSITE_SETUP {
     HOME_BANNER1 = 'home_banner1',
     HOME_BANNER2 = 'home_banner2',
     HOME_BANNER3 = 'home_banner3'
+}
+
+export enum AUTH {
+    TOKEN = 'accessToken',
+    USER_DATA = 'userData',
 }

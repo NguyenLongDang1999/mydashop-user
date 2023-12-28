@@ -12,6 +12,7 @@ const props = defineProps<Props>()
 
 // ** useHooks
 const { isPending, mutateAsync } = useCartAdd()
+const { mutateAsync: mutateAsyncWishlist } = useWishlistAdd()
 
 // ** Computed
 const productAttributeLength = computed(() => props.product.productAttributes.length || 0)
@@ -55,6 +56,7 @@ const productAttributeLength = computed(() => props.product.productAttributes.le
                         <UButton
                             icon="i-heroicons-heart"
                             size="sm"
+                            @click="mutateAsyncWishlist({ product_id: product.id })"
                         />
                     </UTooltip>
                 </li>

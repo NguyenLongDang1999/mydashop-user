@@ -24,9 +24,19 @@
                     </ul>
                 </nav>
 
-                <div class="flex items-center justify-end lg:flex-1 gap-2">
+                <div class="flex items-center justify-end lg:flex-1 gap-1">
                     <TheSlideoverMenu />
                     <SearchDialog />
+                    <UTooltip text="Yêu Thích">
+                        <UButton
+                            icon="i-heroicons-heart"
+                            size="sm"
+                            square
+                            variant="ghost"
+                            color="gray"
+                            to="/thong-tin-tai-khoan"
+                        />
+                    </UTooltip>
                     <TheSlideoverCart />
                     <TheAuthDropdown />
                 </div>

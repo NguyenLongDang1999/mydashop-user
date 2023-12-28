@@ -2,9 +2,9 @@
 
 // ** Types Imports
 import type { DropdownItem } from '@nuxt/ui/dist/runtime/types'
-import type { IAuthProfile } from '~/types/auth.type'
 
 // ** useHooks
+const { userData } = useAuth()
 const { refetch } = useAuthLogout()
 
 // ** Data
@@ -25,7 +25,9 @@ const authLogined: DropdownItem[][]  = [
         icon: 'i-heroicons-arrow-left-on-rectangle',
         click: async () => {
             await refetch()
-            useCookie('userData').value = null
+
+            userData.value = undefined
+
             nextTick(() => navigateTo('/dang-nhap'))
             useNotification('Đăng xuất thành công')
         }
@@ -59,7 +61,7 @@ const authNoLogin: DropdownItem[][] = [
             <template #account>
                 <div class="text-left w-full">
                     <p class="font-medium text-gray-900 dark:text-white">
-                        {{ useCookie<IAuthProfile>('userData').value.name }}
+                        {{ userData?.name }}
                     </p>
                 </div>
             </template>

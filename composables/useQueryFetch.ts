@@ -3,6 +3,7 @@ import { useMutation, useQuery, type MutationObserverOptions } from '@tanstack/v
 import type { MaybeRefDeep } from '@tanstack/vue-query/build/legacy/types'
 import type { UseFetchOptions } from 'nuxt/dist/app/composables'
 import type { KeysOf } from 'nuxt/dist/app/composables/asyncData'
+import type { IAuthProfile } from '~/types/auth.type'
 
 export default function <T>(
     path: string,
@@ -42,7 +43,7 @@ export const useQueryMutationDelete = <T>(
 
 export const useFetcher = async <T>(
     path: string,
-    options?: UseFetchOptions<unknown, unknown, KeysOf<unknown>, null, string, 'get' | 'GET' | 'POST' | 'DELETE' | 'PATCH'> | undefined
+    opts?: UseFetchOptions<unknown, unknown, KeysOf<unknown>, null, string, 'get' | 'GET' | 'POST' | 'DELETE' | 'PATCH'> | undefined
 ): Promise<T> => {
     const config = useRuntimeConfig()
 
@@ -53,7 +54,31 @@ export const useFetcher = async <T>(
             headers: useRequestHeaders(),
             retry: 1,
             keepalive: true,
-            ...options
+            onRequest: ({ options, request }) => {
+                if (request !== 'auth/sign-in') {
+                    const access_token = useCookie<string>('accessToken').value
+
+                    if (access_token) {
+                        options.headers = {
+                            ...options.headers,
+                            Authorization: `Bearer ${access_token}`
+                        }
+                    }
+                }
+            },
+            onResponseError: async ({ response }) => {
+                if (
+                    response.status === 401 &&
+                    !response.ok
+                ) {
+                    try {
+                        await useFetcher<IAuthProfile>('/auth/refresh')
+                    } catch {
+                        nextTick(() => navigateTo('/dang-nhap'))
+                    }
+                }
+            },
+            ...opts
         })
 
         if (error.value) {

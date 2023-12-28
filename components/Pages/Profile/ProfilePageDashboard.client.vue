@@ -1,10 +1,8 @@
 <script setup lang="ts">
 
-// ** Types Imports
-import type { IAuthProfile } from '~/types/auth.type'
-
 // ** useHooks
-const { dataList } = useCartList()
+const { userData } = useAuth()
+const { dataList } = useWishlistList()
 </script>
 
 <template>
@@ -22,7 +20,7 @@ const { dataList } = useCartList()
                             <span class="font-semibold capitalize">Họ và tên:</span>
                         </div>
 
-                        <span class="capitalize flex-1">{{ useCookie<IAuthProfile>('userData').value.name }}</span>
+                        <span class="capitalize flex-1">{{ userData?.name }}</span>
                     </li>
 
                     <li class="flex items-center gap-2">
@@ -31,7 +29,7 @@ const { dataList } = useCartList()
                             <span class="font-semibold capitalize">SĐT:</span>
                         </div>
 
-                        <span class="flex-1">{{ useCookie<IAuthProfile>('userData').value.phone }}</span>
+                        <span class="flex-1">{{ userData?.phone }}</span>
                     </li>
 
                     <li class="flex items-center gap-2">
@@ -40,7 +38,7 @@ const { dataList } = useCartList()
                             <span class="font-semibold capitalize">Email:</span>
                         </div>
 
-                        <span class="flex-1">{{ useCookie<IAuthProfile>('userData').value.email }}</span>
+                        <span class="flex-1">{{ userData?.email }}</span>
                     </li>
                 </ul>
 
@@ -127,7 +125,10 @@ const { dataList } = useCartList()
             </UCard>
         </div>
 
-        <div class="col-span-12">
+        <div
+            v-if="dataList.length"
+            class="col-span-12"
+        >
             <div class="flex items-center justify-between mt-5">
                 <h2 class="uppercase font-bold text-base">
                     Sản phẩm yêu thích
@@ -144,36 +145,34 @@ const { dataList } = useCartList()
             </div>
 
             <div class="mt-2">
-                <ClientOnly>
-                    <Swiper
-                        :space-between="10"
-                        :slides-per-view="2"
-                        :breakpoints="{
-                            1200: {
-                                slidesPerView: 5,
-                            },
-                            1024: {
-                                slidesPerView: 4,
-                            },
-                            768: {
-                                slidesPerView: 3,
-                            },
-                            475: {
-                                slidesPerView: 2,
-                            },
-                            360: {
-                                slidesPerView: 1,
-                            },
-                        }"
+                <Swiper
+                    :space-between="10"
+                    :slides-per-view="2"
+                    :breakpoints="{
+                        1200: {
+                            slidesPerView: 5,
+                        },
+                        1024: {
+                            slidesPerView: 4,
+                        },
+                        768: {
+                            slidesPerView: 3,
+                        },
+                        475: {
+                            slidesPerView: 2,
+                        },
+                        360: {
+                            slidesPerView: 1,
+                        },
+                    }"
+                >
+                    <SwiperSlide
+                        v-for="product in dataList"
+                        :key="product.product.id"
                     >
-                        <SwiperSlide
-                            v-for="product in dataList.CartItem"
-                            :key="product.Product.id"
-                        >
-                            <BaseProductCard :product="product.Product" />
-                        </SwiperSlide>
-                    </Swiper>
-                </ClientOnly>
+                        <BaseProductCard :product="product.product" />
+                    </SwiperSlide>
+                </Swiper>
             </div>
         </div>
     </div>

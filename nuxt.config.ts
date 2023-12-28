@@ -70,9 +70,8 @@ export default defineNuxtConfig({
         }
     ],
     routeRules: {
-        '/': { prerender: true }
-
-        // 'gio-hang': { ssr: false }
+        '/': { prerender: true },
+        '/thong-tin-tai-khoan/**': { ssr: false }
     },
     runtimeConfig: {
         public: {
