@@ -8,6 +8,7 @@ export default defineNuxtConfig({
         '@nuxt/ui',
         '@nuxt/image',
         'nuxt-swiper',
+        '@vueuse/nuxt',
         '@vee-validate/nuxt',
         '@stefanobartoletti/nuxt-social-share'
     ],

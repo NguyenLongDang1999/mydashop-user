@@ -3,6 +3,8 @@
 // ** useHooks
 const { userData } = useAuth()
 const { dataList } = useWishlistList()
+const { cartLength } = useCartList()
+const { isPending, mutateAsync } = useWishlistDelete()
 </script>
 
 <template>
@@ -69,7 +71,7 @@ const { dataList } = useWishlistList()
                         />
 
                         <div class="flex flex-col">
-                            <span class="text-base font-semibold">01</span>
+                            <span class="text-base font-semibold">{{ cartLength }}</span>
                             <span class="capitalize text-slate-400">sản phẩm trong giỏ hàng</span>
                         </div>
                     </li>
@@ -170,7 +172,20 @@ const { dataList } = useWishlistList()
                         v-for="product in dataList"
                         :key="product.product.id"
                     >
-                        <BaseProductCard :product="product.product" />
+                        <BaseProductCard :product="product.product">
+                            <template #header-action>
+                                <div class="absolute top-3 left-3">
+                                    <UButton
+                                        icon="i-heroicons-trash"
+                                        size="sm"
+                                        color="red"
+                                        variant="solid"
+                                        :loading="isPending"
+                                        @click="mutateAsync(product.id)"
+                                    />
+                                </div>
+                            </template>
+                        </BaseProductCard>
                     </SwiperSlide>
                 </Swiper>
             </div>

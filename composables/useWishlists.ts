@@ -1,8 +1,8 @@
 // ** Third Party Imports
-import { useQueryClient } from '@tanstack/vue-query'
+import { keepPreviousData, useQueryClient } from '@tanstack/vue-query'
 
 // ** Types Imports
-import type { IWishlist, IWishlistFormInput } from '~/types/wishlists.type'
+import type { IWishlist, IWishlistDataTable, IWishlistFormInput } from '~/types/wishlists.type'
 
 // ** State
 const path = ref<string>(ROUTE.WISHLISTS)
@@ -27,31 +27,41 @@ export const useWishlistAdd = () => {
 
     return useQueryMutation<IWishlistFormInput>(path.value, {
         onSuccess: () => {
-            queryClient.refetchQueries({ queryKey: [`${path.value}DataList`] })
+            queryClient.refetchQueries({ queryKey: [`${path.value}DataTable`] })
+            queryClient.invalidateQueries({ queryKey: [`${path.value}DataList`] })
             useNotification(MESSAGE_SUCCESS.WISHLISTS)
         },
         onError: () => useNotification(undefined, true)
     })
 }
 
-// export const useCartQuantity = () => {
-//     const queryClient = useQueryClient()
+export const useWishlistDelete = () => {
+    const queryClient = useQueryClient()
 
-//     return useQueryMutation<ICartFormInput>(path.value, {
-//         onSuccess: () => queryClient.refetchQueries({ queryKey: [`${path.value}DataList`] }),
-//         onError: () => useNotification(undefined, true)
-//     }, 'PATCH')
-// }
+    return useQueryMutationDelete<number>(path.value, {
+        onSuccess: () => {
+            queryClient.refetchQueries({ queryKey: [`${path.value}DataTable`] })
+            queryClient.invalidateQueries({ queryKey: [`${path.value}DataList`] })
+        },
+        onError: () => useNotification(undefined, true)
+    })
+}
 
+export const useWishlistPagination = () => {
+    // ** Data
+    const search = reactive({
+        page: PAGE.CURRENT,
+        pageSize: 12
+    })
 
-// export const useCartDelete = (purge = false) => {
-//     const queryClient = useQueryClient()
+    const { data, isFetching } = useQueryFetch<IWishlistDataTable>(path.value, '', 'DataTable', search, {
+        placeholderData: keepPreviousData
+    })
 
-//     return useQueryMutationDelete<number>(purge ? `${path.value}/purge-cart` : path.value, {
-//         onSuccess: () => {
-//             queryClient.invalidateQueries({ queryKey: [`${path.value}DataList`] })
-//             useNotification(MESSAGE_SUCCESS.DELETE_CART)
-//         },
-//         onError: () => useNotification(undefined, true)
-//     })
-// }
+    return {
+        search,
+        isFetching,
+        dataTable: computed(() => data.value?.data || []),
+        dataAggregations: computed(() => data.value?.aggregations || 0)
+    }
+}

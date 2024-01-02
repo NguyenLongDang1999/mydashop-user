@@ -16,3 +16,10 @@ export interface IAuthProfile {
     email: string
     phone: string
 }
+
+export interface IAuthUpdateProfileFormInput {
+    name: string
+    email: string
+    phone: string
+    address?: string
+}

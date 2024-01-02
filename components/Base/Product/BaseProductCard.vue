@@ -44,23 +44,26 @@ const productAttributeLength = computed(() => props.product.productAttributes.le
 
             <span
                 v-if="Number(product.special_price_type) === SPECIAL_PRICE.PERCENT"
-                class="absolute top-3 left-3 bg-red-600 px-2 py-1 text-xs text-white rounded-md"
+                class="absolute top-3 right-3 bg-red-600 px-2 py-1 text-xs text-white rounded-md"
             >-{{ product.special_price }}%</span>
 
-            <ul class="absolute top-3 right-3 opacity-100 transform translate-x-0 group-hover:translate-x-0 group-hover:opacity-100 md:translate-x-20 md:op-0 transition">
-                <li>
-                    <UTooltip
-                        text="Thêm Yêu Thích"
-                        :popper="{ placement: 'left' }"
-                    >
-                        <UButton
-                            icon="i-heroicons-heart"
-                            size="sm"
-                            @click="mutateAsyncWishlist({ product_id: product.id })"
-                        />
-                    </UTooltip>
-                </li>
-            </ul>
+            <slot name="header-action">
+                <ul class="absolute top-3 right-3 opacity-100 transform translate-x-0 group-hover:translate-x-0 group-hover:opacity-100 md:translate-x-20 md:op-0 transition">
+                    <li>
+                        <UTooltip
+                            text="Thêm Yêu Thích"
+                            :popper="{ placement: 'left' }"
+                        >
+                            <UButton
+                                icon="i-heroicons-heart"
+                                size="sm"
+                                color="gray"
+                                @click="mutateAsyncWishlist({ product_id: product.id })"
+                            />
+                        </UTooltip>
+                    </li>
+                </ul>
+            </slot>
         </div>
 
         <div class="mt-3 flex gap-1 flex-col">

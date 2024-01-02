@@ -1,17 +1,7 @@
 <script setup lang="ts">
 
-// ** Types Imports
-import type { ICart } from '~/types/cart.type'
-
-// ** Props & Emits
-interface Props {
-    dataList: ICart
-}
-
-const props = defineProps<Props>()
-
-// ** Computed
-const cartTotal = computed(() => props.dataList.CartItem.reduce((acc, item) => acc + (item.quantity * Number(item.Product.selling_price)), 0))
+// ** useHooks
+const { cartTotal } = useCartList()
 </script>
 
 <template>

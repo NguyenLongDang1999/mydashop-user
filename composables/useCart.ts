@@ -51,7 +51,6 @@ export const useCartQuantity = () => {
     }, 'PATCH')
 }
 
-
 export const useCartDelete = (purge = false) => {
     const queryClient = useQueryClient()
 

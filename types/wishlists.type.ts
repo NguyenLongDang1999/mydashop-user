@@ -10,3 +10,8 @@ export interface IWishlistFormInput {
     id?: number
     product_id: number
 }
+
+export interface IWishlistDataTable {
+    data: IWishlist[]
+    aggregations: number
+}

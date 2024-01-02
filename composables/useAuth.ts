@@ -1,5 +1,5 @@
 // ** Types Imports
-import type { IAuthLogin, IAuthProfile, IAuthRegister } from '~/types/auth.type'
+import type { IAuthLogin, IAuthProfile, IAuthRegister, IAuthUpdateProfileFormInput } from '~/types/auth.type'
 
 // ** State
 const path = ref<string>(ROUTE.AUTH)
@@ -37,3 +37,8 @@ export const useAuthLogout = () => useQueryFetch(path.value, '/sign-out', 'Logou
 })
 
 export const useIsLoggedIn = () => !!(userData.value)
+
+export const useAuthUpdateProfile = () => useQueryMutation<IAuthProfile, IAuthUpdateProfileFormInput>(`${path.value}/update/profile`, {
+    onSuccess: () => useNotification('Cập nhật thành công!'),
+    onError: () => useNotification(undefined, true)
+})

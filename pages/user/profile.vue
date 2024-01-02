@@ -21,6 +21,24 @@ const items: TabItem[] = [{
     icon: 'i-heroicons-user',
     slot: 'manage_profile'
 }]
+
+// ** useHooks
+const route = useRoute()
+
+// ** Computed
+const defaultIndex = computed(() => items.findIndex(item => item.slot === route.query.tab))
+
+// ** Methods
+const onChange = (index: number) => {
+    const item = items[index]
+
+    return navigateTo({
+        path: route.path,
+        query: {
+            tab: item.slot
+        }
+    })
+}
 </script>
 
 <template>
@@ -38,7 +56,11 @@ const items: TabItem[] = [{
                     </div>
 
                     <div class="col-span-12">
-                        <UTabs :items="items">
+                        <UTabs
+                            :items="items"
+                            :default-index="defaultIndex === -1 ? 0 : defaultIndex"
+                            @change="onChange"
+                        >
                             <template #default="{ item, selected }">
                                 <div class="flex items-center gap-2 relative truncate">
                                     <UIcon
@@ -57,6 +79,14 @@ const items: TabItem[] = [{
 
                             <template #dashboard>
                                 <ProfilePageDashboard />
+                            </template>
+
+                            <template #wishlist>
+                                <ProfilePageWishlist />
+                            </template>
+
+                            <template #manage_profile>
+                                <ProfilePageManageProfile />
                             </template>
                         </UTabs>
                     </div>

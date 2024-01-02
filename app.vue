@@ -51,13 +51,13 @@ useServerSeoMeta({
     ogTitle: dataMetaTitle.value,
     ogDescription: dataMetaDescription.value,
     twitterTitle: dataMetaTitle.value,
-    twitterDescription: dataMetaDescription.value
+    twitterDescription: dataMetaDescription.value,
+    twitterCard: 'summary'
 })
 </script>
 
 <template>
     <NuxtLayout>
-        <NuxtLoadingIndicator />
         <NuxtPage />
     </NuxtLayout>
 

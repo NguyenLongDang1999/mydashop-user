@@ -68,7 +68,8 @@ useServerSeoMeta({
     twitterTitle: data.value.meta_title,
     twitterDescription: data.value.meta_description,
     twitterImage: getPathImageFile(data.value.image_uri),
-    twitterImageAlt: data.value.name
+    twitterImageAlt: data.value.name,
+    twitterCard: 'summary'
 })
 </script>
 
