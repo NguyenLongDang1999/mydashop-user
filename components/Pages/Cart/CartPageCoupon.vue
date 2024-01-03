@@ -1,7 +1,19 @@
 <script setup lang="ts">
 
+// ** VeeValidate Imports
+import { object, string } from 'yup'
+
+// ** Validate
+const schema = object({
+    coupon_code: string().required('Vui lòng nhập.')
+})
+
 // ** useHooks
+const { handleSubmit } = useForm({ validationSchema: schema })
 const { cartTotal } = useCartList()
+
+// ** Methods
+const onSubmit = handleSubmit(values => console.log(values))
 </script>
 
 <template>
@@ -16,19 +28,26 @@ const { cartTotal } = useCartList()
             </h6>
         </template>
 
-        <div class="flex items-end gap-2">
-            <FormInput
-                label="Mã giảm giá"
-                name="coupon"
-            />
+        <UForm
+            :state="{}"
+            @submit="onSubmit"
+        >
+            <div class="flex items-start gap-2">
+                <FormInput
+                    label="Mã giảm giá"
+                    name="coupon_code"
+                />
 
-            <UButton
-                variant="solid"
-                size="md"
-            >
-                Gửi
-            </UButton>
-        </div>
+                <UButton
+                    type="submit"
+                    variant="solid"
+                    size="md"
+                    class="mt-6"
+                >
+                    Gửi
+                </UButton>
+            </div>
+        </UForm>
 
         <div class="flex flex-col gap-4 mt-5">
             <ul class="flex flex-col gap-2">
