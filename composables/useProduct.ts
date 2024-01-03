@@ -20,7 +20,6 @@ export const useProductFlashSale = async () => {
     return computed(() => data.value as IProductFlashSale)
 }
 
-
 export const useProductDataList = async () => {
     // ** useHooks
     const { data, suspense } = useQueryFetch<IProductDataList[]>(path.value)

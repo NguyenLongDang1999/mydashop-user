@@ -12,6 +12,7 @@ const result = ref<IProductVariant>()
 
 <template>
     <section
+        v-if="data.flashDealsProduct.length"
         v-once
         class="mt-10 relative"
     >

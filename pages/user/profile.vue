@@ -59,6 +59,8 @@ const onChange = (index: number) => {
                         <UTabs
                             :items="items"
                             :default-index="defaultIndex === -1 ? 0 : defaultIndex"
+                            :ui="{ wrapper: 'md:flex items-start gap-4 justify-start space-y-1', list: { width: 'w-48', tab: { base: 'justify-start' } } }"
+                            orientation="vertical"
                             @change="onChange"
                         >
                             <template #default="{ item, selected }">

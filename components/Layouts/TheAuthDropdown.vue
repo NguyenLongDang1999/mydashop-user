@@ -21,6 +21,10 @@ const authLogined: DropdownItem[][]  = [
         label: 'Đổi mật khẩu',
         icon: 'i-heroicons-cog-8-tooth'
     }], [{
+        label: 'Sản phẩm yêu thích',
+        icon: 'i-heroicons-heart',
+        to: '/thong-tin-tai-khoan?tab=wishlist'
+    }], [{
         label: 'Đăng Xuất',
         icon: 'i-heroicons-arrow-left-on-rectangle',
         click: async () => {
@@ -87,6 +91,7 @@ const authNoLogin: DropdownItem[][] = [
                     icon="i-heroicons-user"
                     size="sm"
                     square
+                    variant="link"
                     color="gray"
                 />
             </UTooltip>

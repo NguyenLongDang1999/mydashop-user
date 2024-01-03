@@ -151,13 +151,13 @@ const { isPending, mutateAsync } = useWishlistDelete()
                     :space-between="10"
                     :slides-per-view="2"
                     :breakpoints="{
-                        1200: {
-                            slidesPerView: 5,
-                        },
                         1024: {
                             slidesPerView: 4,
                         },
                         768: {
+                            slidesPerView: 2,
+                        },
+                        560: {
                             slidesPerView: 3,
                         },
                         475: {

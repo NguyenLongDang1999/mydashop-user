@@ -12,7 +12,7 @@ const isOpen = ref<boolean>(false)
                 size="sm"
                 square
                 color="gray"
-                variant="ghost"
+                variant="link"
                 @click="isOpen = true"
             />
         </UTooltip>

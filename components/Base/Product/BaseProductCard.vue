@@ -96,7 +96,7 @@ const productAttributeLength = computed(() => props.product.productAttributes.le
                 </UTooltip>
             </NuxtLink>
 
-            <div class="flex items-center">
+            <div class="flex flex-wrap items-center">
                 <BaseProductPrice
                     :price="Number(product.price)"
                     :selling-price="formatSellingPrice(product).toString()"

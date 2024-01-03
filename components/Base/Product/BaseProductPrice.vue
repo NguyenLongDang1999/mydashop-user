@@ -10,9 +10,12 @@ defineProps<Props>()
 </script>
 
 <template>
-    <span class="font-semibold text-lg text-primary">{{ sellingPrice }}</span>
+    <span
+        class="font-semibold text-lg text-primary"
+        :class="sellingPrice !== formatCurrency(price) ? 'pr-3' : ''"
+    >{{ sellingPrice }}</span>
     <span
         v-if="sellingPrice !== formatCurrency(price)"
-        class="font-normal text-base text-gray-300 line-through pl-3"
+        class="font-normal text-base text-gray-300 line-through"
     >{{ formatCurrency(price) }}</span>
 </template>

@@ -22,7 +22,7 @@ const { isPending, mutateAsync } = useCartDelete()
                     icon="i-heroicons-shopping-bag"
                     size="sm"
                     square
-                    variant="ghost"
+                    variant="link"
                     color="gray"
                     @click="isOpen = true"
                 />
