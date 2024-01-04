@@ -112,10 +112,12 @@ useServerSeoMeta({
                             {{ data.short_description }}
                         </p>
 
-                        <ProductPageAddToCart
-                            :product="data"
-                            @result="val => result = val"
-                        />
+                        <ClientOnly>
+                            <ProductPageAddToCart
+                                :product="data"
+                                @result="val => result = val"
+                            />
+                        </ClientOnly>
 
                         <div class="mt-2 flex items-center gap-2">
                             <span class="capitalize font-semibold">Chia sẻ:</span>
