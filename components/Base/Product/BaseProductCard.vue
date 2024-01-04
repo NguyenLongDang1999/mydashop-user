@@ -16,6 +16,18 @@ const { mutateAsync: mutateAsyncWishlist } = useWishlistAdd()
 
 // ** Computed
 const productAttributeLength = computed(() => props.product.productAttributes.length || 0)
+
+// ** Methods
+const handleAddtoCart = () => {
+    if (useIsLoggedIn()) {
+        return productAttributeLength ? navigateTo(navigateProduct(props.product.slug)) : mutateAsync({
+            product_id: props.product.id,
+            quantity: 1
+        })
+    }
+
+    return navigateTo('/dang-nhap')
+}
 </script>
 
 <template>
@@ -96,7 +108,7 @@ const productAttributeLength = computed(() => props.product.productAttributes.le
                 </UTooltip>
             </NuxtLink>
 
-            <div class="flex flex-wrap items-center">
+            <div class="flex items-center">
                 <BaseProductPrice
                     :price="Number(product.price)"
                     :selling-price="formatSellingPrice(product).toString()"
@@ -111,10 +123,7 @@ const productAttributeLength = computed(() => props.product.productAttributes.le
                     :loading="isPending"
                     :disabled="product.in_stock !== INVENTORY_STATUS.IN_STOCK"
                     :label="productAttributeLength ? 'Xem Lựa Chọn' : 'Thêm Giỏ Hàng'"
-                    @click="productAttributeLength ? navigateTo(navigateProduct(product.slug)) : mutateAsync({
-                        product_id: product.id,
-                        quantity: 1
-                    })"
+                    @click="handleAddtoCart"
                 />
             </ClientOnly>
         </div>

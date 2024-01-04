@@ -11,9 +11,10 @@ const schema = object({
 // ** useHooks
 const { handleSubmit } = useForm({ validationSchema: schema })
 const { cartTotal } = useCartList()
+const { mutateAsync } = useCartApplyCoupon()
 
 // ** Methods
-const onSubmit = handleSubmit(values => console.log(values))
+const onSubmit = handleSubmit(values => mutateAsync(values))
 </script>
 
 <template>

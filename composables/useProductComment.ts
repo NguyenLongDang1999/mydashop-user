@@ -42,7 +42,7 @@ export const useProductCommentAdd = () => {
 
     return useQueryMutation<IProductCommentFormInput>(path.value, {
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: [`${path.value}DataList`] })
+            queryClient.refetchQueries({ queryKey: [`${path.value}DataList`] })
             useNotification('Gửi đánh giá sản phẩm thành công!')
         },
         onError: () => useNotification(undefined, true)

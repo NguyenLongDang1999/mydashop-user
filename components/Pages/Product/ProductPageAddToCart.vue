@@ -96,7 +96,7 @@ watch(attributeValues, () => findAttributeValues(props.product.productVariant, a
                             <UButton
                                 :label="value.attribute_values.value"
                                 variant="solid"
-                                :color="attributeValues[index].attribute_value_id === value.attribute_value_id ? 'blue' : 'white'"
+                                :color="attributeValues[index].attribute_value_id === value.attribute_value_id ? 'primary' : 'white'"
                                 @click="handleAttributeValues(attribute, value.attribute_values)"
                             />
                         </UButtonGroup>
@@ -108,6 +108,7 @@ watch(attributeValues, () => findAttributeValues(props.product.productVariant, a
         <BaseProductPrice
             :price="Number(result?.price || product.price)"
             :selling-price="formatSellingPrice(result || product).toString()"
+            class="text-lg"
         />
     </div>
 

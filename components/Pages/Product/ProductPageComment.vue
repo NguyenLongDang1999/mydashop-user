@@ -12,6 +12,7 @@ interface Props {
 const props = defineProps<Props>()
 
 // ** useHooks
+const { userData } = useAuth()
 const { handleSubmit } = useForm({ validationSchema: schema })
 const { isPending, mutateAsync } = useProductCommentAdd()
 const { search, dataComments, dataTable: commentList, dataAggregations } = await useProductCommentList(props.productId as number)
@@ -20,7 +21,7 @@ const { search, dataComments, dataTable: commentList, dataAggregations } = await
 const onSubmit = handleSubmit((values, { resetForm }) => {
     mutateAsync({
         ...values,
-        user_id: useCookie('userData').value.id,
+        user_id: userData.value?.id,
         product_id: props.productId
     })
 

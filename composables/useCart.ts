@@ -2,7 +2,7 @@
 import { useQueryClient } from '@tanstack/vue-query'
 
 // ** Types Imports
-import type { ICart, ICartFormInput } from '~/types/cart.type'
+import type { ICart, ICartFormInput, ICouponFormInput } from '~/types/cart.type'
 
 // ** State
 const path = ref<string>(ROUTE.CART)
@@ -37,6 +37,18 @@ export const useCartAdd = () => {
         onSuccess: () => {
             queryClient.refetchQueries({ queryKey: [`${path.value}DataList`] })
             useNotification(MESSAGE_SUCCESS.CART)
+        },
+        onError: () => useNotification(undefined, true)
+    })
+}
+
+export const useCartApplyCoupon = () => {
+    const queryClient = useQueryClient()
+
+    return useQueryMutation<ICouponFormInput>(path.value + '/apply-coupon', {
+        onSuccess: () => {
+            // queryClient.refetchQueries({ queryKey: [`${path.value}DataList`] })
+            // useNotification(MESSAGE_SUCCESS.CART)
         },
         onError: () => useNotification(undefined, true)
     })

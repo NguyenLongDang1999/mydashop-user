@@ -12,9 +12,11 @@ export interface IAuthRegister {
 }
 
 export interface IAuthProfile {
+    id: number
     name: string
     email: string
     phone: string
+    image_uri?: string
 }
 
 export interface IAuthUpdateProfileFormInput {

@@ -74,7 +74,7 @@ export const useFetcher = async <T>(
                     try {
                         await useFetcher<IAuthProfile>('/auth/refresh')
                     } catch {
-                        nextTick(() => navigateTo('/dang-nhap'))
+                        // nextTick(() => navigateTo('/dang-nhap'))
                     }
                 }
             },

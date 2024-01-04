@@ -11,11 +11,12 @@ defineProps<Props>()
 
 <template>
     <span
-        class="font-semibold text-lg text-primary"
+        class="font-semibold text-base text-primary"
+        v-bind="$attrs"
         :class="sellingPrice !== formatCurrency(price) ? 'pr-3' : ''"
     >{{ sellingPrice }}</span>
     <span
         v-if="sellingPrice !== formatCurrency(price)"
-        class="font-normal text-base text-gray-300 line-through"
+        class="font-normal text-sm text-gray-300 line-through"
     >{{ formatCurrency(price) }}</span>
 </template>

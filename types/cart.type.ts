@@ -19,3 +19,7 @@ export interface ICartFormInput {
     quantity: number
     attributes?: string
 }
+
+export interface ICouponFormInput {
+    counpon_code: string
+}
