@@ -1,5 +1,5 @@
 // ** Third Party Imports
-import { keepPreviousData, useQueryClient } from '@tanstack/vue-query'
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 
 // ** Types Imports
 import type { IProductCommentFormInput, IProductCommentPagination } from '~/types/product.type'
@@ -17,12 +17,13 @@ export const useProductCommentList = async (id: number) => {
     // ** Data
     const search = reactive({
         page: PAGE.CURRENT,
-        pageSize: 8,
-        id
+        pageSize: 8
     })
 
     // ** useHooks
-    const { data, isFetching, suspense } = useQueryFetch<IProductCommentPagination>(path.value, `/${id}`, 'DataList', search, {
+    const { data, isFetching, suspense } = useQuery<IProductCommentPagination>({
+        queryKey: [path.value + 'DataList', id, search],
+        queryFn: () => useFetcher(path.value + `/${id}`, { params: search }),
         placeholderData: keepPreviousData
     })
 
@@ -40,11 +41,12 @@ export const useProductCommentList = async (id: number) => {
 export const useProductCommentAdd = () => {
     const queryClient = useQueryClient()
 
-    return useQueryMutation<IProductCommentFormInput>(path.value, {
+    return useMutation({
+        mutationFn: (body: IProductCommentFormInput) => useAuthFetcher(path.value, { method: 'POST', body }),
         onSuccess: () => {
             queryClient.refetchQueries({ queryKey: [`${path.value}DataList`] })
             useNotification('Gửi đánh giá sản phẩm thành công!')
         },
-        onError: () => useNotification(undefined, true)
+        onError: () => useNotificationError()
     })
 }

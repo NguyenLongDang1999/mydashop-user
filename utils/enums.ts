@@ -2,7 +2,6 @@ export enum ROUTE {
     AUTH = 'auth',
     CATEGORY = 'category',
     BRAND = 'brand',
-    SLIDER = 'slider',
     PRODUCT = 'product',
     PRODUCT_COMMENT = 'product-comment',
     CART = 'cart',
@@ -29,6 +28,11 @@ export enum SPECIAL_PRICE {
     PERCENT = 20
 }
 
+export enum PRODUCT_TYPE {
+    SINGLE = 10,
+    VARIANT = 20
+}
+
 export enum MESSAGE_SUCCESS {
     CART = 'Sản phẩm đã được thêm vào giỏ hàng!',
     WISHLISTS = 'Sản phẩm đã được thêm vào danh sách yêu thích!',
@@ -41,9 +45,4 @@ export enum WEBSITE_SETUP {
     HOME_BANNER2 = 'home_banner2',
     HOME_BANNER3 = 'home_banner3',
     WEBSITE_COLOUR = 'website_colour',
-}
-
-export enum AUTH {
-    TOKEN = 'accessToken',
-    USER_DATA = 'userData',
 }

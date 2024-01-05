@@ -4,13 +4,15 @@
 interface Props {
     label?: string
     name?: string
+    modelValue?: string
 }
 
 const props = defineProps<Props>()
 
 // ** useHooks
 const { value, errorMessage } = useField(() => props.name as string, undefined, {
-    syncVModel: true
+    syncVModel: true,
+    initialValue: props.modelValue
 })
 </script>
 

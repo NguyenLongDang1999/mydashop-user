@@ -65,8 +65,22 @@ const arraysAreEqual = (productVariant: string[], valuesData: string[]) => {
     return productVariant.every((value, index) => value === valuesData[index])
 }
 
+const handleAddtoCart = () => {
+    if (useIsLoggedIn()) {
+        return mutateAsync({
+            product_id: props.product.id,
+            quantity: quantity.value,
+            attributes: props.product.product_attributes.length ? JSON.stringify(attributeValues) : undefined
+        })
+    }
+
+    return navigateTo('/dang-nhap')
+}
+
 // ** Watch
 watch(attributeValues, () => findAttributeValues(props.product.productVariant, attributeValues), { immediate: true })
+
+
 </script>
 
 <template>
@@ -136,11 +150,7 @@ watch(attributeValues, () => findAttributeValues(props.product.productVariant, a
                 :loading="isPending"
                 :disabled="(result?.in_stock || product.in_stock) !== INVENTORY_STATUS.IN_STOCK"
                 label="Thêm Giỏ Hàng"
-                @click="mutateAsync({
-                    product_id: product.id,
-                    quantity,
-                    attributes: product.product_attributes.length ? JSON.stringify(attributeValues) : undefined
-                })"
+                @click="handleAddtoCart"
             />
         </div>
     </div>

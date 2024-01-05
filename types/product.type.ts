@@ -17,6 +17,7 @@ export interface IProduct {
     technical_specifications: string
     image_uri: string
     price: string
+    product_type: number
     in_stock: number
     special_price: string
     selling_price: string
@@ -24,7 +25,6 @@ export interface IProduct {
     special_price_type: number
     total_rating: number
     productVariant: IProductVariant[]
-    productAttributes: IProductAttribute[]
     product_attributes: IProductAttribute[]
     productImage: {
         image_uri: string

@@ -38,13 +38,6 @@ export const formatTimeAgo = (dateString: string) => {
     }
 }
 
-export const generateUUIDv4 = () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    const r = (Math.random() * 16) | 0
-    const v = c === 'x' ? r : (r & 0x3) | 0x8
-
-    return v.toString(16)
-})
-
 export const compareDateTime = row => {
     const startDate = new Date(row.discount_start_date).getTime()
     const endDate = new Date(row.discount_end_date).getTime()
@@ -53,6 +46,7 @@ export const compareDateTime = row => {
     return today >= startDate && today <= endDate
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const formatSellingPrice = (row: any, quantity = 1, isFormat = true) => {
     let discount = 0
     let sellingPrice = 0
@@ -101,3 +95,23 @@ export const getPathImageFile = (name?: string) => {
 }
 
 export const getValueBySlug = (slug: string, dataList: IWebsiteSetup[]) => (dataList.find(({ slug: dataSlug }) => dataSlug === slug)?.value) ?? ''
+
+export const formatCouponDiscount = (amount: number) => {
+    if (amount > 0 && amount <= 100) {
+        return amount + '%'
+    }
+
+    return formatCurrency(Number(amount))
+}
+
+export const calculateCartDiscount = (cartTotal: number, amount: number) => {
+    let discount = amount
+    let sellingPrice = cartTotal - discount
+
+    if (amount > 0 && amount <= 100) {
+        discount = ((cartTotal / 100) * amount)
+        sellingPrice = Math.round((cartTotal - discount) / 1000) * 1000
+    }
+
+    return formatCurrency(sellingPrice)
+}

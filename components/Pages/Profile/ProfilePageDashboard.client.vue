@@ -3,7 +3,7 @@
 // ** useHooks
 const { userData } = useAuth()
 const { dataList } = useWishlistList()
-const { cartLength } = useCartList()
+const { cartQuantity } = useCartList()
 const { isPending, mutateAsync } = useWishlistDelete()
 </script>
 
@@ -71,7 +71,7 @@ const { isPending, mutateAsync } = useWishlistDelete()
                         />
 
                         <div class="flex flex-col">
-                            <span class="text-base font-semibold">{{ cartLength }}</span>
+                            <span class="text-base font-semibold">{{ cartQuantity }}</span>
                             <span class="capitalize text-slate-400">sản phẩm trong giỏ hàng</span>
                         </div>
                     </li>

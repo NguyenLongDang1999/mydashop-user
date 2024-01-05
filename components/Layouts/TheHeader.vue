@@ -27,7 +27,20 @@
                 <div class="flex items-center justify-end lg:flex-1 gap-1">
                     <TheSlideoverMenu />
                     <SearchDialog />
-                    <TheSlideoverCart />
+                    <TheSlideoverCart v-if="useIsLoggedIn()" />
+                    <UTooltip
+                        v-else
+                        text="Giỏ Hàng"
+                    >
+                        <UButton
+                            icon="i-heroicons-shopping-bag"
+                            size="sm"
+                            square
+                            variant="link"
+                            color="gray"
+                            to="/dang-nhap"
+                        />
+                    </UTooltip>
                     <TheAuthDropdown />
                 </div>
             </div>

@@ -1,3 +1,6 @@
+// ** Third Party Imports
+import { useMutation, useQuery } from '@tanstack/vue-query'
+
 // ** Types Imports
 import type { IAuthLogin, IAuthProfile, IAuthRegister, IAuthUpdateProfileFormInput } from '~/types/auth.type'
 
@@ -14,31 +17,41 @@ export default function () {
     }
 }
 
-export const useAuthLogin = () => useQueryMutation<IAuthProfile, IAuthLogin>(`${path.value}/sign-in`, {
+export const useAuthLogin = () => useMutation({
+    mutationFn: (body: IAuthLogin) => useFetcher(`${path.value}/sign-in`, { method: 'POST', body }),
     onSuccess: () => {
         userData.value = useCookie<IAuthProfile>('userData').value
 
         nextTick(() => navigateTo('/'))
         useNotification('Đăng nhập thành công!')
     },
-    onError: () => useNotification(undefined, true)
+    onError: () => useNotificationError()
 })
 
-export const useAuthRegister = () => useQueryMutation<IAuthProfile, IAuthRegister>(`${path.value}/sign-up`, {
+export const useAuthRegister = () => useMutation({
+    mutationFn: (body: IAuthRegister) => useFetcher(`${path.value}/sign-up`, { method: 'POST', body }),
     onSuccess: () => {
+        userData.value = useCookie<IAuthProfile>('userData').value
+
         nextTick(() => navigateTo('/'))
         useNotification('Đăng nhập thành công!')
     },
-    onError: () => useNotification(undefined, true)
+    onError: () => useNotificationError()
 })
 
-export const useAuthLogout = () => useQueryFetch(path.value, '/sign-out', 'Logout', {}, {
+export const useAuthLogout = () => useQuery({
+    queryKey: [path.value + 'Logout'],
+    queryFn: () => useAuthFetcher(path.value + '/sign-out'),
     enabled: false
 })
 
 export const useIsLoggedIn = () => !!(userData.value)
 
-export const useAuthUpdateProfile = () => useQueryMutation<IAuthProfile, IAuthUpdateProfileFormInput>(`${path.value}/update/profile`, {
-    onSuccess: () => useNotification('Cập nhật thành công!'),
-    onError: () => useNotification(undefined, true)
+export const useAuthUpdateProfile = () => useMutation<IAuthProfile>({
+    mutationFn: (body: IAuthUpdateProfileFormInput) => useAuthFetcher(`${path.value}/update/profile`, { method: 'POST', body }),
+    onSuccess: data => {
+        useNotification('Cập nhật thành công!')
+        userData.value = data
+    },
+    onError: () => useNotificationError()
 })

@@ -39,14 +39,16 @@ const dataList = computed(() => typeof dataHomeSlider.value === 'string' ? JSON.
                 v-for="(item, index) in dataList"
                 :key="index"
             >
-                <NuxtImg
-                    :src="getPathImageFile(item.image_uri)"
-                    :alt="item.image_link"
-                    :title="item.image_link"
-                    width="1900"
-                    height="500"
-                    class="w-full object-cover h-[500px]"
-                />
+                <NuxtLink :to="item.image_link">
+                    <NuxtImg
+                        :src="getPathImageFile(item.image_uri)"
+                        :alt="item.image_link"
+                        :title="item.image_link"
+                        width="1900"
+                        height="500"
+                        class="w-full object-cover h-[500px]"
+                    />
+                </NuxtLink>
             </SwiperSlide>
         </Swiper>
     </section>

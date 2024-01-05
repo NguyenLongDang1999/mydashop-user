@@ -1,3 +1,6 @@
+// ** Third Party Imports
+import { useQuery } from '@tanstack/vue-query'
+
 // ** Types Imports
 import type { IProductDataList, IProductDetail, IProductFlashSale } from '~/types/product.type'
 
@@ -12,7 +15,10 @@ export default function () {
 
 export const useProductFlashSale = async () => {
     // ** useHooks
-    const { data, suspense } = useQueryFetch<IProductFlashSale>(path.value, '/data-list-flash-sale', 'DataListFlashSale')
+    const { data, suspense } = useQuery<IProductFlashSale>({
+        queryKey: [path.value + 'DataListFlashSale'],
+        queryFn: () => useFetcher(path.value + '/data-list-flash-sale')
+    })
 
     await suspense()
 
@@ -22,7 +28,10 @@ export const useProductFlashSale = async () => {
 
 export const useProductDataList = async () => {
     // ** useHooks
-    const { data, suspense } = useQueryFetch<IProductDataList[]>(path.value)
+    const { data, suspense } = useQuery<IProductDataList[]>({
+        queryKey: [path.value + 'DataList'],
+        queryFn: () => useFetcher(path.value + '/data-list')
+    })
 
     await suspense()
 
@@ -32,7 +41,10 @@ export const useProductDataList = async () => {
 
 export const useProductDataListPopular = async () => {
     // ** useHooks
-    const { data, suspense } = useQueryFetch<IProductDataList[]>(path.value, '/data-list-popular', 'DataListPopular')
+    const { data, suspense } = useQuery<IProductDataList[]>({
+        queryKey: [path.value + 'DataListPopular'],
+        queryFn: () => useFetcher(path.value + '/data-list-popular')
+    })
 
     await suspense()
 
@@ -44,8 +56,9 @@ export const useProductDetail = async () => {
     // ** useHooks
     const route = useRoute()
 
-    const { data: row, suspense } = useQueryFetch<IProductDetail>(path.value, `/${route.params.slug}`, 'Detail', {}, {
-        queryKey: [path.value + 'Detail', route.params.slug]
+    const { data, suspense } = useQuery<IProductDetail>({
+        queryKey: [path.value + 'Detail', route.params.slug],
+        queryFn: () => useFetcher(path.value + `/${route.params.slug}`)
     })
 
     await suspense()
@@ -53,6 +66,6 @@ export const useProductDetail = async () => {
     return {
         path,
         route,
-        data: computed(() => row.value as IProductDetail)
+        data: computed(() => data.value as IProductDetail)
     }
 }

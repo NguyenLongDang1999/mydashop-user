@@ -1,5 +1,5 @@
 // ** Third Party Imports
-import { keepPreviousData, useQueryClient } from '@tanstack/vue-query'
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 
 // ** Types Imports
 import type { IWishlist, IWishlistDataTable, IWishlistFormInput } from '~/types/wishlists.type'
@@ -15,7 +15,10 @@ export default function () {
 
 export const useWishlistList = () => {
     // ** useHooks
-    const { data } = useQueryFetch<IWishlist[]>(path.value)
+    const { data } = useQuery<IWishlist[]>({
+        queryKey: [path.value + 'DataList'],
+        queryFn: () => useAuthFetcher(path.value + '/data-list')
+    })
 
     return {
         dataList: computed(() => data.value || [])
@@ -25,25 +28,27 @@ export const useWishlistList = () => {
 export const useWishlistAdd = () => {
     const queryClient = useQueryClient()
 
-    return useQueryMutation<IWishlistFormInput>(path.value, {
+    return useMutation({
+        mutationFn: (body: IWishlistFormInput) => useAuthFetcher(path.value, { method: 'POST', body }),
         onSuccess: () => {
             queryClient.refetchQueries({ queryKey: [`${path.value}DataTable`] })
             queryClient.invalidateQueries({ queryKey: [`${path.value}DataList`] })
             useNotification(MESSAGE_SUCCESS.WISHLISTS)
         },
-        onError: () => useNotification(undefined, true)
+        onError: () => useNotificationError()
     })
 }
 
 export const useWishlistDelete = () => {
     const queryClient = useQueryClient()
 
-    return useQueryMutationDelete<number>(path.value, {
+    return useMutation({
+        mutationFn: (body: number) => useAuthFetcher(path.value + `/${body}`, { method: 'DELETE' }),
         onSuccess: () => {
             queryClient.refetchQueries({ queryKey: [`${path.value}DataTable`] })
             queryClient.invalidateQueries({ queryKey: [`${path.value}DataList`] })
         },
-        onError: () => useNotification(undefined, true)
+        onError: () => useNotificationError()
     })
 }
 
@@ -54,7 +59,9 @@ export const useWishlistPagination = () => {
         pageSize: 12
     })
 
-    const { data, isFetching } = useQueryFetch<IWishlistDataTable>(path.value, '', 'DataTable', search, {
+    const { data, isFetching } = useQuery<IWishlistDataTable>({
+        queryKey: [path.value + 'DataTable', search],
+        queryFn: () => useAuthFetcher(path.value, { params: search }),
         placeholderData: keepPreviousData
     })
 

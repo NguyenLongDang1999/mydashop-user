@@ -1,8 +1,7 @@
 <script setup lang="ts">
 
-// ** Types Imports
-import type { IAuthProfile } from '~/types/auth.type'
-
+// ** useHooks
+const { userData } = useAuth()
 </script>
 
 <template>
@@ -30,11 +29,11 @@ import type { IAuthProfile } from '~/types/auth.type'
 
             <div class="sm:mt-16 sm:ml-5 mt-4">
                 <h3 class="text-xl font-semibold capitalize mb-1">
-                    {{ useCookie<IAuthProfile>('userData').value.name }}
+                    {{ userData?.name }}
                 </h3>
 
                 <p class="text-base text-gray-500">
-                    {{ useCookie<IAuthProfile>('userData').value.phone }}
+                    {{ userData?.phone }}
                 </p>
             </div>
         </div>

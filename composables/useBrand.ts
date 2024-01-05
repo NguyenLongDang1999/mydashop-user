@@ -1,3 +1,6 @@
+// ** Third Party Imports
+import { useQuery } from '@tanstack/vue-query'
+
 // ** Types Imports
 import type { IBrand } from '~/types/brand.type'
 
@@ -12,7 +15,10 @@ export default function () {
 
 export const useBrandDataListAll = async () => {
     // ** useHooks
-    const { data, suspense } = useQueryFetch<IBrand[]>(path.value, '/data-list-all', 'DataListAll')
+    const { data, suspense } = useQuery<IBrand[]>({
+        queryKey: [path.value + 'DataListAll'],
+        queryFn: () => useFetcher(path.value + '/data-list-all')
+    })
 
     await suspense()
 

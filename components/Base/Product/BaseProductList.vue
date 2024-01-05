@@ -14,7 +14,19 @@ const props = defineProps<Props>()
 const { isPending, mutateAsync } = useCartAdd()
 
 // ** Computed
-const productAttributeLength = computed(() => props.product.productAttributes.length || 0)
+const productTypeSingle = computed(() => props.product.product_type === PRODUCT_TYPE.SINGLE)
+
+// ** Methods
+const handleAddtoCart = () => {
+    if (useIsLoggedIn()) {
+        return productTypeSingle.value ? mutateAsync({
+            product_id: props.product.id,
+            quantity: 1
+        }) : navigateTo(navigateProduct(props.product.slug))
+    }
+
+    return navigateTo('/dang-nhap')
+}
 </script>
 
 <template>
@@ -96,10 +108,7 @@ const productAttributeLength = computed(() => props.product.productAttributes.le
                                 :loading="isPending"
                                 :disabled="product.in_stock !== INVENTORY_STATUS.IN_STOCK"
                                 :label="productAttributeLength ? 'Xem Lựa Chọn' : 'Thêm Giỏ Hàng'"
-                                @click="productAttributeLength ? navigateTo(navigateProduct(product.slug)) : mutateAsync({
-                                    product_id: product.id,
-                                    quantity: 1
-                                })"
+                                @click="handleAddtoCart"
                             />
                         </ClientOnly>
 

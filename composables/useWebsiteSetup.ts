@@ -1,3 +1,6 @@
+// ** Third Party Imports
+import { useQuery } from '@tanstack/vue-query'
+
 // ** Types Imports
 import type { IWebsiteSetup } from '~/types/core.type'
 
@@ -10,26 +13,12 @@ export default function () {
     }
 }
 
-export const useWebsiteSetupDetail = async (slug: string) => {
-    // ** useHooks
-    const { data, suspense } = useQueryFetch<IWebsiteSetup>(path.value, '', 'Detail',
-        { slug },
-        {
-            queryKey: [path.value + '-detail', slug]
-        }
-    )
-
-    await suspense()
-
-    // ** Computed
-    return {
-        data: computed(() => data.value as IWebsiteSetup || {})
-    }
-}
-
 export const useWebsiteSetupSystem = async () => {
     // ** useHooks
-    const { data, suspense } = useQueryFetch<IWebsiteSetup[]>(path.value, '/system', 'DataListSystem')
+    const { data, suspense } = useQuery<IWebsiteSetup[]>({
+        queryKey: [path.value + 'DataListSystem'],
+        queryFn: () => useFetcher(path.value + '/system')
+    })
 
     await suspense()
 

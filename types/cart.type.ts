@@ -10,6 +10,8 @@ export interface ICartItem {
 
 export interface ICart {
     id: number
+    coupon_code: string
+    discount: number
     CartItem: ICartItem[]
 }
 
@@ -21,5 +23,6 @@ export interface ICartFormInput {
 }
 
 export interface ICouponFormInput {
-    counpon_code: string
+    coupon_code: string
+    cart_total: number
 }

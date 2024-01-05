@@ -1,5 +1,5 @@
 // ** Third Party Imports
-import { keepPreviousData } from '@tanstack/vue-query'
+import { keepPreviousData, useQuery } from '@tanstack/vue-query'
 
 // ** Types Imports
 import type { LocationQueryValue } from 'vue-router'
@@ -17,7 +17,10 @@ export default function () {
 
 export const useCategoryDataList = async () => {
     // ** useHooks
-    const { data, suspense } = useQueryFetch<ICategory[]>(path.value)
+    const { data, suspense } = useQuery<ICategory[]>({
+        queryKey: [path.value + 'DataList'],
+        queryFn: () => useFetcher(path.value + '/data-list')
+    })
 
     await suspense()
 
@@ -39,7 +42,10 @@ export const useCategoryDataList = async () => {
 
 export const useCategoryDataListNested = async () => {
     // ** useHooks
-    const { data, suspense } = useQueryFetch<ICategory[]>(path.value, '/data-list-nested', 'DataListNested')
+    const { data, suspense } = useQuery<ICategory[]>({
+        queryKey: [path.value + 'DataListNested'],
+        queryFn: () => useFetcher(path.value + '/data-list-nested')
+    })
 
     await suspense()
 
@@ -60,11 +66,12 @@ export const useCategoryDetail = async (slug: string) => {
         pageSize: route.query.pageSize as string || paginationOption[0],
         page: Number(route.query.page) || PAGE.CURRENT,
         attribute: parseQueryArray(route.query.attribute),
-        brand: parseQueryArray(route.query.brand),
-        slug
+        brand: parseQueryArray(route.query.brand)
     })
 
-    const { data: row, isFetching, suspense } = useQueryFetch<ICategoryDetail>(path.value, `/${slug}`, 'Detail', search, {
+    const { data, isFetching, suspense } = useQuery<ICategoryDetail>({
+        queryKey: [path.value + 'Detail', slug, search],
+        queryFn: () => useFetcher(path.value + `/${slug}`, { params: search }),
         placeholderData: keepPreviousData
     })
 
@@ -73,9 +80,9 @@ export const useCategoryDetail = async (slug: string) => {
     return {
         search,
         isFetching,
-        data: computed(() => row.value as ICategoryDetail),
-        dataTable: computed(() => row.value?.Product || []),
-        dataAggregations: computed(() => row.value?.aggregations || 0)
+        data: computed(() => data.value as ICategoryDetail),
+        dataTable: computed(() => data.value?.Product || []),
+        dataAggregations: computed(() => data.value?.aggregations || 0)
     }
 }
 
@@ -92,7 +99,9 @@ export const useCategoryPagination = async () => {
         brand: parseQueryArray(route.query.brand)
     })
 
-    const { data, isFetching, suspense } = useQueryFetch<IProductPagination>(path.value, '/data-list-shop', 'DataListShop', search, {
+    const { data, isFetching, suspense } = useQuery<IProductPagination>({
+        queryKey: [path.value + 'DataListShop', search],
+        queryFn: () => useFetcher(path.value + '/data-list-shop', { params: search }),
         placeholderData: keepPreviousData
     })
 

@@ -93,12 +93,12 @@ const userData = computed(() => useCookie<IAuthProfile>('userData').value || {})
 
                                         <div class="flex items-center gap-3 font-semibold">
                                             <span>Giảm Giá:</span>
-                                            <span class="text-primary">{{ formatCurrency(500000) }}</span>
+                                            <span class="text-primary">{{ formatCouponDiscount(dataList.discount) }}</span>
                                         </div>
 
                                         <div class="flex items-center gap-3 font-semibold">
                                             <span>Tổng Tiền:</span>
-                                            <span class="text-primary">{{ formatCurrency(cartTotal) }}</span>
+                                            <span class="text-primary">{{ calculateCartDiscount(cartTotal, Number(dataList.discount)) }}</span>
                                         </div>
                                     </div>
                                 </div>

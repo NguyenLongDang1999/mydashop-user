@@ -9,12 +9,22 @@ const schema = object({
 })
 
 // ** useHooks
-const { handleSubmit } = useForm({ validationSchema: schema })
-const { cartTotal } = useCartList()
+const { dataList, cartTotal } = useCartList()
 const { mutateAsync } = useCartApplyCoupon()
+const { mutateAsync: removeCoupon } = useCartRemoveCoupon()
+
+const { handleSubmit } = useForm({
+    validationSchema: schema,
+    initialValues: {
+        coupon_code: dataList.value.coupon_code
+    }
+})
 
 // ** Methods
-const onSubmit = handleSubmit(values => mutateAsync(values))
+const onSubmit = handleSubmit(values => mutateAsync({
+    coupon_code: values.coupon_code,
+    cart_total: cartTotal.value
+}))
 </script>
 
 <template>
@@ -37,15 +47,27 @@ const onSubmit = handleSubmit(values => mutateAsync(values))
                 <FormInput
                     label="Mã giảm giá"
                     name="coupon_code"
+                    :disabled="!!dataList.coupon_code"
                 />
 
                 <UButton
+                    v-if="!dataList.coupon_code"
                     type="submit"
                     variant="solid"
                     size="md"
                     class="mt-6"
                 >
                     Gửi
+                </UButton>
+
+                <UButton
+                    v-else
+                    variant="solid"
+                    size="md"
+                    class="mt-6"
+                    @click="removeCoupon"
+                >
+                    Xóa
                 </UButton>
             </div>
         </UForm>
@@ -61,14 +83,14 @@ const onSubmit = handleSubmit(values => mutateAsync(values))
 
                 <li class="flex items-center justify-between">
                     <span class="capitalize font-semibold">Giảm giá:</span>
-                    <span class="text-base font-semibold">{{ formatCurrency(500000) }}</span>
+                    <span class="text-base font-semibold">{{ formatCouponDiscount(dataList.discount) }}</span>
                 </li>
 
                 <UDivider />
 
                 <li class="flex items-center justify-between text-primary">
                     <span class="capitalize font-semibold">Tổng tiền:</span>
-                    <span class="text-base font-semibold">{{ formatCurrency(cartTotal) }}</span>
+                    <span class="text-base font-semibold">{{ calculateCartDiscount(cartTotal, Number(dataList.discount)) }}</span>
                 </li>
             </ul>
         </div>
