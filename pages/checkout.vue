@@ -3,13 +3,34 @@
 // ** Types Imports
 import { useCartList } from '~/composables/useCart'
 import type { IAttributeValues } from '~/types/attribute.type'
-import type { IAuthProfile } from '~/types/auth.type'
+
+// ** Validations Imports
+import { schema } from '~/validations/checkout'
+
+definePageMeta({ middleware: ['auth'] })
 
 // ** useHooks
-const { dataList, cartTotal } = useCartList()
+const { userData } = useAuth()
+const { dataList, cartLength, cartTotal } = useCartList()
 
-// ** Computed
-const userData = computed(() => useCookie<IAuthProfile>('userData').value || {})
+// ** useHooks
+const { handleSubmit } = useForm({
+    validationSchema: schema,
+    initialValues: {
+        name: userData.value?.name,
+        email: userData.value?.email,
+        phone: userData.value?.phone,
+        address: userData.value?.address,
+        note: ''
+    }
+})
+
+// const { isPending, mutateAsync } = useAuthLogin()
+
+// ** Methods
+const onSubmit = handleSubmit(values => {
+    console.log(values)
+})
 </script>
 
 <template>
@@ -45,7 +66,10 @@ const userData = computed(() => useCookie<IAuthProfile>('userData').value || {})
                             </template>
 
                             <ClientOnly>
-                                <div class="flex flex-col gap-3">
+                                <div
+                                    v-if="cartLength"
+                                    class="flex flex-col gap-3"
+                                >
                                     <div
                                         v-for="row in dataList.CartItem"
                                         :key="row.id"
@@ -107,22 +131,6 @@ const userData = computed(() => useCookie<IAuthProfile>('userData').value || {})
                     </div>
 
                     <div class="md:col-span-7 col-span-12">
-                        <UAlert
-                            v-if="!useIsLoggedIn()"
-                            class="mb-4"
-                            title="Thông Báo!"
-                            icon="i-heroicons-information-circle"
-                        >
-                            <template #description>
-                                Bạn chưa đăng nhập. Nếu đã có thông tin tài khoản, tới <NuxtLink
-                                    to="/dang-nhap?to=/thanh-toan"
-                                    class="underline"
-                                >
-                                    Đăng Nhập
-                                </NuxtLink>.
-                            </template>
-                        </UAlert>
-
                         <UCard>
                             <template #header>
                                 <h4 class="uppercase font-semibold">
@@ -130,11 +138,13 @@ const userData = computed(() => useCookie<IAuthProfile>('userData').value || {})
                                 </h4>
                             </template>
 
-                            <UForm :state="{}">
+                            <UForm
+                                :state="{}"
+                                @submit="onSubmit"
+                            >
                                 <div class="grid grid-cols-12 gap-4">
                                     <div class="col-span-12">
                                         <FormInput
-                                            v-model="userData.name"
                                             name="name"
                                             label="Họ và tên"
                                         />
@@ -142,7 +152,6 @@ const userData = computed(() => useCookie<IAuthProfile>('userData').value || {})
 
                                     <div class="sm:col-span-6 col-span-12">
                                         <FormInput
-                                            v-model="userData.email"
                                             name="email"
                                             label="Email"
                                         />
@@ -150,7 +159,6 @@ const userData = computed(() => useCookie<IAuthProfile>('userData').value || {})
 
                                     <div class="sm:col-span-6 col-span-12">
                                         <FormInput
-                                            v-model="userData.phone"
                                             name="phone"
                                             label="Số điện thoại"
                                         />

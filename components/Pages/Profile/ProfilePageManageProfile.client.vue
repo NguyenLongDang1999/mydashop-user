@@ -9,7 +9,7 @@ const { isPending, mutateAsync } = useAuthUpdateProfile()
 
 const { handleSubmit } = useForm({
     validationSchema: schema,
-    initialValues: userData
+    initialValues: userData.value
 })
 
 // ** Methods

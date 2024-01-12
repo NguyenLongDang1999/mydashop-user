@@ -15,8 +15,7 @@ export const schema = object({
     email: string()
         .required(`${label.email} không được bỏ trống.`)
         .email(`${label.email} không đúng định dạng.`),
-    phone: string(),
-    address: string()
-        .notRequired()
-        .max(300, () => `${label.address} quá dài.`)
+    phone: string().notRequired(),
+    address: string().notRequired(),
+    note: string().notRequired()
 })

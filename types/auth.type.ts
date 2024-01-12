@@ -17,6 +17,7 @@ export interface IAuthProfile {
     email: string
     phone: string
     image_uri?: string
+    accessToken: string
 }
 
 export interface IAuthUpdateProfileFormInput {

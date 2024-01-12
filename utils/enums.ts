@@ -6,11 +6,17 @@ export enum ROUTE {
     PRODUCT_COMMENT = 'product-comment',
     CART = 'cart',
     WEBSITE_SETUP = 'website-setup',
-    WISHLISTS = 'wishlists'
+    WISHLISTS = 'wishlists',
+    ORDERS = 'orders'
 }
 
 export enum IMAGE {
     DEFAULT = '/default.jpg'
+}
+
+export enum AUTH {
+    TOKEN = 'accessToken',
+    USER_DATA = 'userData',
 }
 
 export enum PAGE {

@@ -76,10 +76,10 @@ export const useCartQuantity = () => {
 export const useCartDelete = (purge = false) => {
     const queryClient = useQueryClient()
 
-    const newPath = purge ? `${path.value}/purge-cart` : path.value + '/'
+    const newPath = purge ? `${path.value}/purge-cart` : path.value
 
     return useMutation({
-        mutationFn: (body: number) => useAuthFetcher(newPath + body, { method: 'DELETE' }),
+        mutationFn: (body: number) => useAuthFetcher(newPath + '/' + body, { method: 'DELETE' }),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: [`${path.value}DataList`] })
             useNotification(MESSAGE_SUCCESS.DELETE_CART)

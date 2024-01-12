@@ -30,6 +30,8 @@ const authLogined: DropdownItem[][]  = [
         click: async () => {
             await refetch()
 
+            removeToken()
+            removeUserData()
             userData.value = undefined
 
             nextTick(() => navigateTo('/dang-nhap'))
@@ -53,65 +55,63 @@ const authNoLogin: DropdownItem[][] = [
 </script>
 
 <template>
-    <ClientOnly>
-        <UDropdown
-            v-if="useIsLoggedIn()"
-            :items="authLogined"
-            :ui="{ item: { disabled: 'cursor-text select-text', base: 'capitalize' } }"
-            :popper="{ placement: 'bottom-start' }"
-        >
-            <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" />
+    <UDropdown
+        v-if="useIsLoggedIn()"
+        :items="authLogined"
+        :ui="{ item: { disabled: 'cursor-text select-text', base: 'capitalize' } }"
+        :popper="{ placement: 'bottom-start' }"
+    >
+        <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" />
 
-            <template #account>
-                <div class="text-left w-full">
-                    <p class="font-medium text-gray-900 dark:text-white">
-                        {{ userData?.name }}
-                    </p>
-                </div>
-            </template>
+        <template #account>
+            <div class="text-left w-full">
+                <p class="font-medium text-gray-900 dark:text-white">
+                    {{ userData?.name }}
+                </p>
+            </div>
+        </template>
 
-            <template #item="{ item }">
-                <span class="truncate">{{ item.label }}</span>
+        <template #item="{ item }">
+            <span class="truncate">{{ item.label }}</span>
 
-                <UIcon
-                    :name="item.icon"
-                    class="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-500 ms-auto"
-                />
-            </template>
-        </UDropdown>
+            <UIcon
+                :name="item.icon"
+                class="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-500 ms-auto"
+            />
+        </template>
+    </UDropdown>
 
-        <UDropdown
-            v-else
-            :items="authNoLogin"
-            :ui="{ item: { disabled: 'cursor-text select-text', base: 'capitalize' } }"
-            :popper="{ placement: 'bottom-start' }"
-        >
-            <UTooltip text="Đăng Nhập">
-                <UButton
-                    icon="i-heroicons-user"
-                    size="sm"
-                    square
-                    variant="link"
-                    color="gray"
-                />
-            </UTooltip>
+    <UDropdown
+        v-else
+        :items="authNoLogin"
+        :ui="{ item: { disabled: 'cursor-text select-text', base: 'capitalize' } }"
+        :popper="{ placement: 'bottom-start' }"
+    >
+        <UTooltip text="Đăng Nhập">
+            <UButton
+                icon="i-heroicons-user"
+                size="sm"
+                square
+                variant="link"
+                color="gray"
+            />
+        </UTooltip>
 
-            <template #account="{ item }">
-                <div class="text-left w-full">
-                    <p class="font-medium text-gray-900 dark:text-white">
-                        {{ item.label }}
-                    </p>
-                </div>
-            </template>
+        <template #account="{ item }">
+            <div class="text-left w-full">
+                <p class="font-medium text-gray-900 dark:text-white">
+                    {{ item.label }}
+                </p>
+            </div>
+        </template>
 
-            <template #item="{ item }">
-                <span class="truncate">{{ item.label }}</span>
+        <template #item="{ item }">
+            <span class="truncate">{{ item.label }}</span>
 
-                <UIcon
-                    :name="item.icon"
-                    class="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-500 ms-auto"
-                />
-            </template>
-        </UDropdown>
-    </ClientOnly>
+            <UIcon
+                :name="item.icon"
+                class="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-500 ms-auto"
+            />
+        </template>
+    </UDropdown>
 </template>

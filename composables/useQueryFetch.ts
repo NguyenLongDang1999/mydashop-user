@@ -67,7 +67,7 @@ export const useAuthFetcher = async <T>(
 
 const onRequest = ({ options, request }: FetchContext) => {
     if (request !== 'auth/sign-in') {
-        const access_token = useCookie<string>('accessToken').value
+        const access_token = JSON.parse(getToken() || 'null')
 
         if (access_token) {
             options.headers = {
@@ -81,7 +81,9 @@ const onRequest = ({ options, request }: FetchContext) => {
 const onResponseError = async ({ response }: FetchContext & { response: FetchResponse<ResponseType> }) => {
     if (response.status === 401) {
         try {
-            await useFetcher<IAuthProfile>('/auth/refresh')
+            const data = await useAuthFetcher<IAuthProfile>('/auth/refresh')
+
+            setToken(data.accessToken)
         } catch {
             // nextTick(() => navigateTo('/dang-nhap'))
         }
