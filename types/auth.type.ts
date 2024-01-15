@@ -16,6 +16,7 @@ export interface IAuthProfile {
     name: string
     email: string
     phone: string
+    address?: string
     image_uri?: string
     accessToken: string
 }

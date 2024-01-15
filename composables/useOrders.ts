@@ -1,5 +1,5 @@
 // ** Third Party Imports
-import { useMutation } from '@tanstack/vue-query'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
 
 // ** State
 const path = ref<string>(ROUTE.ORDERS)
@@ -11,10 +11,15 @@ export default function () {
 }
 
 export const useOrderCheckout = () => {
+    const queryClient = useQueryClient()
+
     return useMutation({
-        mutationFn: (body: IProductCommentFormInput) => useAuthFetcher(path.value, { method: 'POST', body }),
+        mutationFn: body => useAuthFetcher(path.value, { method: 'POST', body }),
         onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['cartDataList'] })
+
             useNotification('Đặt hàng thành công!')
+            nextTick(() => navigateTo('/thanh-toan/cam-on'))
         },
         onError: () => useNotificationError()
     })

@@ -13,7 +13,7 @@
     "devDependencies": {
         "@nuxt/devtools": "latest",
         "@nuxt/image": "1.1.0",
-        "@nuxt/ui": "^2.11.0",
+        "@nuxt/ui": "^2.12.0",
         "@nuxtjs/google-fonts": "^3.0.2",
         "@nuxtjs/tailwindcss": "^6.10.1",
         "@stefanobartoletti/nuxt-social-share": "^0.5.0",

@@ -104,7 +104,7 @@ export const formatCouponDiscount = (amount: number) => {
     return formatCurrency(Number(amount))
 }
 
-export const calculateCartDiscount = (cartTotal: number, amount: number) => {
+export const calculateCartDiscount = (cartTotal: number, amount: number, isFormat = true) => {
     let discount = amount
     let sellingPrice = cartTotal - discount
 
@@ -113,5 +113,5 @@ export const calculateCartDiscount = (cartTotal: number, amount: number) => {
         sellingPrice = Math.round((cartTotal - discount) / 1000) * 1000
     }
 
-    return formatCurrency(sellingPrice)
+    return isFormat ? formatCurrency(sellingPrice) : sellingPrice
 }

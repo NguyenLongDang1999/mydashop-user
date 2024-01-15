@@ -33,7 +33,7 @@ export const useAuthLogin = () => useMutation({
 
 export const useAuthRegister = () => useMutation({
     mutationFn: (body: IAuthRegister) => useFetcher(`${path.value}/sign-up`, { method: 'POST', body }),
-    onSuccess: () => {
+    onSuccess: data => {
         setToken(data.accessToken)
         setUserData(data.user)
 

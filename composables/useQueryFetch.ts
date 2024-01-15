@@ -14,7 +14,6 @@ export const useFetcher = async <T>(
             baseURL: config.public.apiBase,
             credentials: 'include',
             headers: useRequestHeaders(),
-            retry: 1,
             keepalive: true,
             ...opts
         })
@@ -44,7 +43,6 @@ export const useAuthFetcher = async <T>(
             baseURL: config.public.apiBase,
             credentials: 'include',
             headers: useRequestHeaders(),
-            retry: 1,
             keepalive: true,
             onRequest,
             onResponseError,
@@ -81,11 +79,17 @@ const onRequest = ({ options, request }: FetchContext) => {
 const onResponseError = async ({ response }: FetchContext & { response: FetchResponse<ResponseType> }) => {
     if (response.status === 401) {
         try {
-            const data = await useAuthFetcher<IAuthProfile>('/auth/refresh')
+            const data = await useFetcher<IAuthProfile>('/auth/refresh')
 
             setToken(data.accessToken)
         } catch {
-            // nextTick(() => navigateTo('/dang-nhap'))
+            const { userData } = useAuth()
+
+            removeToken()
+            removeUserData()
+            userData.value = undefined
+
+            nextTick(() => navigateTo('/dang-nhap'))
         }
     }
 }

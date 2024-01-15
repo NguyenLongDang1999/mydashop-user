@@ -61,12 +61,12 @@ function onSelect (option: Group) {
             :groups="groups"
             :autoselect="false"
             :close-button="{ icon: 'i-heroicons-x-mark-20-solid', color: 'gray', variant: 'link', padded: false }"
-            placeholder="Tìm kiếm..."
             :empty-state="{
                 icon: 'i-heroicons-magnifying-glass-20-solid',
                 label: 'Nhập từ khoá cần tìm kiếm.',
                 queryLabel: 'Không tìm thấy sản phẩm nào.'
             }"
+            placeholder="Tìm kiếm..."
             @update:model-value="onSelect"
         />
     </UModal>

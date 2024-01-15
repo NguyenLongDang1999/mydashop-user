@@ -12,24 +12,34 @@ definePageMeta({ middleware: ['auth'] })
 // ** useHooks
 const { userData } = useAuth()
 const { dataList, cartLength, cartTotal } = useCartList()
+const { mutateAsync } = useOrderCheckout()
 
-// ** useHooks
 const { handleSubmit } = useForm({
     validationSchema: schema,
     initialValues: {
         name: userData.value?.name,
         email: userData.value?.email,
         phone: userData.value?.phone,
-        address: userData.value?.address,
-        note: ''
+        shipping_address: userData.value?.address
     }
 })
 
-// const { isPending, mutateAsync } = useAuthLogin()
-
 // ** Methods
 const onSubmit = handleSubmit(values => {
-    console.log(values)
+    const product = dataList.value.CartItem.map(_p => ({
+        id: _p.Product.id,
+        quantity: _p.quantity,
+        price: formatSellingPrice(_p.Product, _p.quantity, false),
+        variation: _p.attributes ? JSON.parse(_p.attributes).map((item: IAttributeValues) => `${item.attribute_name}: ${item.attribute_value}`).join(', ') : undefined
+    }))
+
+    mutateAsync({
+        ...values,
+        cart_id: dataList.value.id,
+        coupon_discount: Number(dataList.value.discount),
+        grand_total: calculateCartDiscount(cartTotal.value, Number(dataList.value.discount), false),
+        product_details: JSON.stringify(product)
+    })
 })
 </script>
 
@@ -166,7 +176,7 @@ const onSubmit = handleSubmit(values => {
 
                                     <div class="col-span-12">
                                         <FormTextarea
-                                            name="address"
+                                            name="shipping_address"
                                             label="Địa chỉ giao hàng"
                                         />
                                     </div>
@@ -182,6 +192,7 @@ const onSubmit = handleSubmit(values => {
                                         <UButton
                                             type="submit"
                                             size="sm"
+                                            :loading="isPending"
                                         >
                                             Thanh Toán
                                         </UButton>

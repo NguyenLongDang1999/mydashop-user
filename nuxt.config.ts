@@ -53,7 +53,11 @@ export default defineNuxtConfig({
             }, {
                 name: 'product-checkout',
                 path: '/thanh-toan',
-                file: resolve(__dirname, 'pages/checkout.vue')
+                file: resolve(__dirname, 'pages/checkout/index.vue')
+            }, {
+                name: 'product-checkout-thanks',
+                path: '/thanh-toan/cam-on',
+                file: resolve(__dirname, 'pages/checkout/thanks.vue')
             })
         }
     },
@@ -72,6 +76,7 @@ export default defineNuxtConfig({
     ],
     routeRules: {
         '/': { prerender: true },
+        '/gio-hang': { ssr: false },
         '/thanh-toan/**': { ssr: false },
         '/thong-tin-tai-khoan/**': { ssr: false }
     },
