@@ -9,7 +9,7 @@ const { isPending, mutateAsync } = useWishlistDelete()
 
 <template>
     <div class="grid grid-cols-12 gap-4 auto-rows-max">
-        <div class="lg:col-span-4 col-span-12">
+        <div class="lg:col-span-5 col-span-12">
             <UCard class="relative h-full">
                 <h5 class="uppercase text-gray-500">
                     Giới thiệu
@@ -45,7 +45,7 @@ const { isPending, mutateAsync } = useWishlistDelete()
                 </ul>
 
                 <NuxtLink
-                    to="/"
+                    to="/thong-tin-tai-khoan/quan-ly-tai-khoan"
                     class="absolute bg-primary text-white px-2 py-1 text-xs rounded-tl-md right-0 bottom-0"
                 >
                     Chỉnh Sửa
@@ -53,7 +53,7 @@ const { isPending, mutateAsync } = useWishlistDelete()
             </UCard>
         </div>
 
-        <div class="lg:col-span-8 col-span-12">
+        <div class="lg:col-span-7 col-span-12">
             <UCard class="relative h-full">
                 <h5 class="uppercase text-gray-500">
                     Tóm Tắt
@@ -140,7 +140,7 @@ const { isPending, mutateAsync } = useWishlistDelete()
                     label="Button"
                     color="gray"
                     trailing-icon="i-heroicons-arrow-right-20-solid"
-                    to="/tat-ca-danh-muc"
+                    to="/thong-tin-tai-khoan/san-pham-yeu-thich"
                 >
                     Xem Tất Cả
                 </UButton>

@@ -20,6 +20,7 @@ export interface ICategoryProductFilter {
     sort?: number
     attribute?: number[]
     brand?: number[]
+    rating?: number[]
     page: number
     pageSize?: string
     slug?: string

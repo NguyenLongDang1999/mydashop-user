@@ -190,7 +190,7 @@ useServerSeoMeta({
                         >
                             <template #product-description>
                                 <div
-                                    class="font-['Bai_Jamjuree'] text-left"
+                                    class="font-[Quicksand] text-left"
                                     v-html="data.description"
                                 />
                             </template>

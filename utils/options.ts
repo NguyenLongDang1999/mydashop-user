@@ -29,3 +29,26 @@ export const sortOption: IOptions[] = [
 ]
 
 export const paginationOption: string[] = ['12', '24', '36', '48']
+
+export const ratingList: IOptions[] = [
+    {
+        id: 1,
+        label: '5 Sao'
+    },
+    {
+        id: 2,
+        label: '4 Sao'
+    },
+    {
+        id: 3,
+        label: '3 Sao'
+    },
+    {
+        id: 4,
+        label: '2 Sao'
+    },
+    {
+        id: 5,
+        label: '1 Sao'
+    }
+]

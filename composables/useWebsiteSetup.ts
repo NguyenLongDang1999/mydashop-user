@@ -20,7 +20,7 @@ export const useWebsiteSetupSystem = async () => {
         queryFn: () => useFetcher(path.value + '/system')
     })
 
-    await suspense()
+    await callOnce(async () => await suspense())
 
     return {
         data: computed(() => data.value as IWebsiteSetup[] || [])

@@ -114,5 +114,6 @@ const route = useRoute()
         </nav>
 
         <CategoryPageFilterAttribute :category-attribute="categoryAttribute" />
+        <CategoryPageFilterRating />
     </div>
 </template>

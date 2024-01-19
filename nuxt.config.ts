@@ -45,7 +45,15 @@ export default defineNuxtConfig({
             }, {
                 name: 'user-profile',
                 path: '/thong-tin-tai-khoan',
-                file: resolve(__dirname, 'pages/user/profile.vue')
+                file: resolve(__dirname, 'pages/user/index.vue')
+            }, {
+                name: 'user-profile-wishlist',
+                path: '/thong-tin-tai-khoan/san-pham-yeu-thich',
+                file: resolve(__dirname, 'pages/user/profile/wishlist.vue')
+            }, {
+                name: 'user-profile-manager',
+                path: '/thong-tin-tai-khoan/quan-ly-tai-khoan',
+                file: resolve(__dirname, 'pages/user/profile/manager.vue')
             }, {
                 name: 'contact',
                 path: '/lien-he',
@@ -65,7 +73,7 @@ export default defineNuxtConfig({
         prefetch: true,
         preconnect: true,
         families: {
-            'Bai Jamjuree': [400, 500, 600, 700]
+            'Quicksand': [400, 500, 600, 700]
         }
     },
     components: [

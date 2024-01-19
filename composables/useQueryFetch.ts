@@ -3,6 +3,9 @@ import type { UseFetchOptions } from 'nuxt/dist/app/composables'
 import type { FetchContext, FetchResponse } from 'ofetch'
 import type { IAuthProfile } from '~/types/auth.type'
 
+let refreshTokenPromise: Promise<void> | null = null
+const refreshTokenLock = ref<boolean>(false)
+
 export const useFetcher = async <T>(
     path: string,
     opts?: UseFetchOptions<unknown>
@@ -19,6 +22,10 @@ export const useFetcher = async <T>(
         })
 
         if (error.value) {
+            if (error.value?.data?.message) {
+                throw new Error(error.value?.data?.message || 'An unknown error occurred during data fetching.')
+            }
+
             throw new Error(error.value?.data?.error || 'An unknown error occurred during data fetching.')
         }
 
@@ -38,6 +45,10 @@ export const useAuthFetcher = async <T>(
 ): Promise<T> => {
     const config = useRuntimeConfig()
 
+    if (refreshTokenLock.value) {
+        await refreshTokenPromise
+    }
+
     try {
         const { data, error } = await useFetch(path, {
             baseURL: config.public.apiBase,
@@ -50,6 +61,10 @@ export const useAuthFetcher = async <T>(
         })
 
         if (error.value) {
+            if (error.value?.data?.message) {
+                throw new Error(error.value?.data?.message || 'An unknown error occurred during data fetching.')
+            }
+
             throw new Error(error.value?.data?.error || 'An unknown error occurred during data fetching.')
         }
 
@@ -77,19 +92,30 @@ const onRequest = ({ options, request }: FetchContext) => {
 }
 
 const onResponseError = async ({ response }: FetchContext & { response: FetchResponse<ResponseType> }) => {
-    if (response.status === 401) {
-        try {
-            const data = await useFetcher<IAuthProfile>('/auth/refresh')
+    if (
+        response.status === 401 &&
+        !response.ok
+    ) {
+        if (!refreshTokenLock.value) {
+            refreshTokenLock.value = true
 
-            setToken(data.accessToken)
-        } catch {
-            const { userData } = useAuth()
+            refreshTokenPromise = new Promise<void>(async (resolve, reject) => {
+                try {
+                    const res = await useAuthFetcher<IAuthProfile>('/auth/refresh')
 
-            removeToken()
-            removeUserData()
-            userData.value = undefined
-
-            nextTick(() => navigateTo('/dang-nhap'))
+                    setToken(res.accessToken)
+                    resolve()
+                } catch {
+                    removeToken()
+                    removeUserData()
+                    navigateTo('/dang-nhap')
+                    reject()
+                } finally {
+                    refreshTokenLock.value = false
+                }
+            })
         }
+
+        await refreshTokenPromise
     }
 }

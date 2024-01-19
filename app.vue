@@ -21,7 +21,7 @@ useHead({
         class: 'nuxt-ui-scrollbars'
     },
     bodyAttrs: {
-        class: 'font-[\'Bai_Jamjuree\'] bg-white text-sm overflow-x-hidden font-medium'
+        class: 'font-[Quicksand] bg-white text-sm overflow-x-hidden font-medium'
     },
     link: [
         {
@@ -66,23 +66,6 @@ useServerSeoMeta({
 </template>
 
 <style>
-.page-leave-active,
-.page-enter-active {
-  transition: all 0.2s;
-}
-
-.page-enter-from {
-  opacity: 0;
-  transition: all 0.2s;
-  transform: translateX(-30px);
-}
-
-.page-leave-to {
-  opacity: 0;
-  transition: all 0.2s;
-  transform: translateX(30px);
-}
-
 .nuxt-ui-scrollbars ::-webkit-scrollbar {
     background-color: transparent;
     height: .6em;

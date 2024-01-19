@@ -15,15 +15,19 @@ const authLogined: DropdownItem[][]  = [
         disabled: true
     }], [{
         label: 'Thông tin tài khoản',
-        icon: 'i-heroicons-cog-8-tooth',
+        icon: 'i-heroicons-home',
         to: '/thong-tin-tai-khoan'
     }, {
         label: 'Đổi mật khẩu',
-        icon: 'i-heroicons-cog-8-tooth'
+        icon: 'i-heroicons-lock-closed'
     }], [{
         label: 'Sản phẩm yêu thích',
         icon: 'i-heroicons-heart',
-        to: '/thong-tin-tai-khoan?tab=wishlist'
+        to: '/thong-tin-tai-khoan/san-pham-yeu-thich'
+    }, {
+        label: 'Quản lý tài khoản',
+        icon: 'i-heroicons-user',
+        to: '/thong-tin-tai-khoan/quan-ly-tai-khoan'
     }], [{
         label: 'Đăng Xuất',
         icon: 'i-heroicons-arrow-left-on-rectangle',
