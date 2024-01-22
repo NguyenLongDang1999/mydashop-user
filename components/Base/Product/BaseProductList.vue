@@ -12,6 +12,7 @@ const props = defineProps<Props>()
 
 // ** useHooks
 const { isPending, mutateAsync } = useCartAdd()
+const { mutateAsync: mutateAsyncWishlist } = useWishlistAdd()
 
 // ** Computed
 const productTypeSingle = computed(() => props.product.product_type === PRODUCT_TYPE.SINGLE)
@@ -50,7 +51,7 @@ const handleAddtoCart = () => {
                             :title="product.name"
                             width="600"
                             height="600"
-                            class="w-40 rounded-md object-cover"
+                            class="w-44 rounded-md object-cover"
                         />
                     </NuxtLink>
 
@@ -102,20 +103,21 @@ const handleAddtoCart = () => {
                     <div class="flex flex-wrap gap-2">
                         <ClientOnly>
                             <UButton
-                                size="md"
+                                size="sm"
                                 icon="i-heroicons-shopping-bag"
                                 class="capitalize"
                                 :loading="isPending"
                                 :disabled="product.in_stock !== INVENTORY_STATUS.IN_STOCK"
-                                :label="productAttributeLength ? 'Xem Lựa Chọn' : 'Thêm Giỏ Hàng'"
+                                :label="productTypeSingle ? 'Xem Lựa Chọn' : 'Thêm Giỏ Hàng'"
                                 @click="handleAddtoCart"
                             />
                         </ClientOnly>
 
                         <UButton
-                            size="md"
+                            size="sm"
                             color="red"
                             icon="i-heroicons-heart"
+                            @click="mutateAsyncWishlist({ product_id: product.id })"
                         />
                     </div>
                 </div>

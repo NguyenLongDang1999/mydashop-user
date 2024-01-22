@@ -1,3 +1,9 @@
+<script setup lang="ts">
+
+// ** useHooks
+const { userData } = useAuth()
+</script>
+
 <template>
     <main>
         <UContainer>
@@ -16,7 +22,7 @@
                     </h2>
 
                     <p class="my-3 lg:w-3/5 md:w-4/6">
-                        <!-- Đơn đặt hàng đã -->
+                        Cảm ơn vì đã mua hàng! Chúng tôi đã nhận được đơn đặt hàng của bạn. Khi đơn hàng của bạn được giao, chúng tôi đã gửi thông tin đơn đặt hàng tới <strong>{{ userData?.email }}</strong> để theo dõi đơn hàng.
                     </p>
 
                     <UButton

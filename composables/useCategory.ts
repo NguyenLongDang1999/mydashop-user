@@ -66,7 +66,8 @@ export const useCategoryDetail = async (slug: string) => {
         pageSize: route.query.pageSize as string || paginationOption[0],
         page: Number(route.query.page) || PAGE.CURRENT,
         attribute: parseQueryArray(route.query.attribute),
-        brand: parseQueryArray(route.query.brand)
+        brand: parseQueryArray(route.query.brand),
+        rating: parseQueryArray(route.query.rating)
     })
 
     const { data, isFetching, suspense } = useQuery<ICategoryDetail>({

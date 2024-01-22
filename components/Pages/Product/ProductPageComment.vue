@@ -13,9 +13,12 @@ const props = defineProps<Props>()
 
 // ** useHooks
 const { userData } = useAuth()
-const { handleSubmit } = useForm({ validationSchema: schema })
 const { isPending, mutateAsync } = useProductCommentAdd()
 const { search, dataComments, dataTable: commentList, dataAggregations } = await useProductCommentList(props.productId as number)
+
+const { handleSubmit } = useForm({
+    validationSchema: schema
+})
 
 // ** Methods
 const onSubmit = handleSubmit((values, { resetForm }) => {

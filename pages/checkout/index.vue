@@ -12,7 +12,7 @@ definePageMeta({ middleware: ['auth'] })
 // ** useHooks
 const { userData } = useAuth()
 const { dataList, cartLength, cartTotal } = useCartList()
-const { mutateAsync } = useOrderCheckout()
+const { isPending, mutateAsync } = useOrderCheckout()
 
 const { handleSubmit } = useForm({
     validationSchema: schema,
@@ -192,7 +192,7 @@ const onSubmit = handleSubmit(values => {
                                         <UButton
                                             type="submit"
                                             size="sm"
-                                            :loading="isPending"
+                                            :loading="Boolean(isPending)"
                                         >
                                             Thanh Toán
                                         </UButton>
