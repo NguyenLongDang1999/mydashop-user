@@ -7,14 +7,15 @@ const { userData } = useAuth()
 <template>
     <UCard
         :ui="{
-            header: { padding: '!p-0' }
+            header: { padding: '!p-0' },
+            ring: ''
         }"
     >
         <template #header>
             <NuxtImg
                 src="/profile-banner.png"
                 alt="Banner"
-                class="w-full object-cover h-60"
+                class="w-full object-cover h-60 rounded-md rounded-ee-none rounded-es-none"
             />
         </template>
 

@@ -36,7 +36,7 @@ defineProps<Props>()
 
         <p
             v-if="description"
-            class="w-3/4 text-center"
+            class="md:w-3/4 text-center"
         >
             {{ description }}
         </p>

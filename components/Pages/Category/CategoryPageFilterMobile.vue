@@ -68,7 +68,7 @@ updateDefaultOpen(items)
             side="left"
         >
             <UCard
-                class="flex flex-col flex-1"
+                class="flex flex-col flex-1 overflow-y-auto"
                 :ui="{ body: { base: 'flex-1 overflow-y-auto scroll-py-10' }, ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }"
             >
                 <template #header>
@@ -87,7 +87,7 @@ updateDefaultOpen(items)
                     </div>
                 </template>
 
-                <div class="overflow-y-auto overflow-x-hidden">
+                <div class="overflow-x-hidden">
                     <div class="flex flex-col">
                         <h3 class="my-1.5 font-semibold text-lg capitalize flex items-center gap-2">
                             <UIcon

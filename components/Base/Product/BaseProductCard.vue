@@ -56,23 +56,18 @@ const handleAddtoCart = () => {
 
             <span
                 v-if="Number(product.special_price_type) === SPECIAL_PRICE.PERCENT"
-                class="absolute top-3 right-3 bg-red-600 px-2 py-1 text-xs text-white rounded-md"
+                class="absolute top-3 left-3 bg-red-600 px-2 py-1 text-xs text-white rounded-md"
             >-{{ product.special_price }}%</span>
 
             <slot name="header-action">
-                <ul class="absolute top-3 right-3 opacity-100 transform translate-x-0 group-hover:translate-x-0 group-hover:opacity-100 md:translate-x-20 md:op-0 transition">
+                <ul class="absolute top-3 right-3">
                     <li>
-                        <UTooltip
-                            text="Thêm Yêu Thích"
-                            :popper="{ placement: 'left' }"
-                        >
-                            <UButton
-                                icon="i-heroicons-heart"
-                                size="sm"
-                                color="gray"
-                                @click="mutateAsyncWishlist({ product_id: product.id })"
-                            />
-                        </UTooltip>
+                        <UButton
+                            icon="i-heroicons-heart"
+                            size="sm"
+                            color="gray"
+                            @click="mutateAsyncWishlist({ product_id: product.id })"
+                        />
                     </li>
                 </ul>
             </slot>
