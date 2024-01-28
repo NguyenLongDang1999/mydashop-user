@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 // ** Types Imports
-import type { IProduct } from '~/types/product.type'
+import type { IProduct } from '~/types/product.type';
 
 // ** Props & Emits
 interface Props {
@@ -19,14 +19,14 @@ const productTypeSingle = computed(() => props.product.product_type === PRODUCT_
 
 // ** Methods
 const handleAddtoCart = () => {
-    if (useIsLoggedIn()) {
-        return productTypeSingle.value ? mutateAsync({
+    if (productTypeSingle.value) {
+        return useIsLoggedIn() ? mutateAsync({
             product_id: props.product.id,
             quantity: 1
-        }) : navigateTo(navigateProduct(props.product.slug))
+        }) : navigateTo('/dang-nhap')
+    } else {
+        return navigateTo(navigateProduct(props.product.slug))
     }
-
-    return navigateTo('/dang-nhap')
 }
 </script>
 
@@ -108,7 +108,7 @@ const handleAddtoCart = () => {
                                 class="capitalize"
                                 :loading="isPending"
                                 :disabled="product.in_stock !== INVENTORY_STATUS.IN_STOCK"
-                                :label="productTypeSingle ? 'Xem Lựa Chọn' : 'Thêm Giỏ Hàng'"
+                                :label="productTypeSingle ? 'Thêm Giỏ Hàng' : 'Xem Lựa Chọn'"
                                 @click="handleAddtoCart"
                             />
                         </ClientOnly>

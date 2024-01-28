@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 // ** Types Imports
-import type { IProduct } from '~/types/product.type'
+import type { IProduct } from '~/types/product.type';
 
 // ** Props & Emits
 interface Props {
@@ -19,14 +19,14 @@ const productTypeSingle = computed(() => props.product.product_type === PRODUCT_
 
 // ** Methods
 const handleAddtoCart = () => {
-    if (useIsLoggedIn()) {
-        return productTypeSingle.value ? mutateAsync({
+    if (productTypeSingle.value) {
+        return useIsLoggedIn() ? mutateAsync({
             product_id: props.product.id,
             quantity: 1
-        }) : navigateTo(navigateProduct(props.product.slug))
+        }) : navigateTo('/dang-nhap')
+    } else {
+        return navigateTo(navigateProduct(props.product.slug))
     }
-
-    return navigateTo('/dang-nhap')
 }
 </script>
 
