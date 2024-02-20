@@ -1,5 +1,5 @@
 // ** Third Party Imports
-import type { UseFetchOptions } from 'nuxt/dist/app/composables'
+import type { UseFetchOptions } from '#app'
 import type { FetchContext, FetchResponse } from 'ofetch'
 import type { IAuthProfile } from '~/types/auth.type'
 
@@ -96,26 +96,32 @@ const onResponseError = async ({ response }: FetchContext & { response: FetchRes
         response.status === 401 &&
         !response.ok
     ) {
-        if (!refreshTokenLock.value) {
-            refreshTokenLock.value = true
+        try {
+            if (!refreshTokenLock.value) {
+                refreshTokenLock.value = true
 
-            refreshTokenPromise = new Promise<void>(async (resolve, reject) => {
-                try {
-                    const res = await useAuthFetcher<IAuthProfile>('/auth/refresh')
+                refreshTokenPromise = new Promise<void>(async (resolve, reject) => {
+                    try {
+                        const res = await useAuthFetcher<IAuthProfile>('/auth/refresh')
 
-                    setToken(res.accessToken)
-                    resolve()
-                } catch {
-                    removeToken()
-                    removeUserData()
-                    navigateTo('/dang-nhap')
-                    reject()
-                } finally {
-                    refreshTokenLock.value = false
-                }
-            })
+                        setToken(res.accessToken)
+                        resolve()
+                    } catch {
+                        removeToken()
+                        removeUserData()
+                        navigateTo('/dang-nhap')
+                        reject()
+                    } finally {
+                        refreshTokenLock.value = false
+                    }
+                })
+            }
+
+            await refreshTokenPromise
+        } catch {
+            removeToken()
+            removeUserData()
+            navigateTo('/dang-nhap')
         }
-
-        await refreshTokenPromise
     }
 }
