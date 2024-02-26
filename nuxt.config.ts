@@ -9,6 +9,7 @@ export default defineNuxtConfig({
         '@nuxt/image',
         'nuxt-swiper',
         '@vueuse/nuxt',
+        'nuxt-anchorscroll',
         '@vee-validate/nuxt',
         '@stefanobartoletti/nuxt-social-share'
     ],
