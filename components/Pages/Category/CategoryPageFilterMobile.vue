@@ -2,9 +2,9 @@
 
 
 // ** Types Imports
-import type { ICategoryAttribute } from '~/types/attribute.type'
-import type { IBrand } from '~/types/brand.type'
-import type { ICategory } from '~/types/category.type'
+import type { ICategoryAttribute } from '~/types/attribute.type';
+import type { IBrand } from '~/types/brand.type';
+import type { ICategory } from '~/types/category.type';
 
 // ** Props & Emits
 interface Props {
@@ -60,6 +60,7 @@ updateDefaultOpen(items)
             icon="i-heroicons-bars-3-center-left"
             label="Bộ Lọc Tìm Kiếm"
             size="md"
+            variant="soft"
             @click="isOpen = true"
         />
 
@@ -91,7 +92,7 @@ updateDefaultOpen(items)
                     <div class="flex flex-col">
                         <h3 class="my-1.5 font-semibold text-lg capitalize flex items-center gap-2">
                             <UIcon
-                                name="i-heroicons-arrow-right-circle"
+                                name="i-heroicons-squares-2x2"
                                 class="w-5 h-5"
                             />
                             Tất cả danh mục

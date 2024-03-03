@@ -2,7 +2,7 @@
     <main>
         <BaseBreadcrumbs
             v-once
-            title="Sản phẩm yêu thích"
+            title="Lịch sử đơn hàng"
         >
             <BaseBreadcrumbsItem
                 to="/thong-tin-tai-khoan"
@@ -22,7 +22,7 @@
                             <ProfilePageNav />
 
                             <section class="w-full">
-                                <ProfilePageWishlist />
+                                <ProfilePageOrderHistories />
                             </section>
                         </div>
                     </div>

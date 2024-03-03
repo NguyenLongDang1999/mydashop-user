@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 // ** Types Imports
-import type { AccordionItem } from '@nuxt/ui/dist/runtime/types'
+import type { AccordionItem } from '@nuxt/ui/dist/runtime/types';
 
 // ** Data
 const items: AccordionItem[] = [{
@@ -22,7 +22,8 @@ const information = [
         to: '/thong-tin-tai-khoan/san-pham-yeu-thich'
     }, {
         label: 'Lịch Sử Đơn Hàng',
-        icon: 'i-heroicons-bookmark-square'
+        icon: 'i-heroicons-bookmark-square',
+        to: '/thong-tin-tai-khoan/lish-su-don-hang'
     }, {
         label: 'Đổi mật khẩu',
         icon: 'i-heroicons-lock-closed'

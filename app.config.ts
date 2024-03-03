@@ -19,6 +19,15 @@ export default defineAppConfig({
         },
         modal: {
             container: 'items-center'
+        },
+        table: {
+            thead: 'capitalize',
+            default: {
+                emptyState: {
+                    icon: 'i-heroicons-face-frown',
+                    label: 'Không tìm thấy kết quả nào!'
+                }
+            }
         }
     }
 })

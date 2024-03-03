@@ -1,9 +1,9 @@
 <script setup lang="ts">
 
 // ** Types Imports
-import type { ICategoryAttribute } from '~/types/attribute.type'
-import type { IBrand } from '~/types/brand.type'
-import type { ICategoryProductFilter } from '~/types/category.type'
+import type { ICategoryAttribute } from '~/types/attribute.type';
+import type { IBrand } from '~/types/brand.type';
+import type { ICategoryProductFilter } from '~/types/category.type';
 
 // ** Props & Emits
 interface Props {
@@ -30,7 +30,7 @@ const route = useRoute()
     <div class="flex flex-col">
         <h3 class="mb-1.5 font-semibold text-lg capitalize flex items-center gap-2">
             <UIcon
-                name="i-heroicons-arrow-right-circle"
+                name="i-heroicons-funnel"
                 class="w-5 h-5"
             />
             Bộ lọc tìm kiếm

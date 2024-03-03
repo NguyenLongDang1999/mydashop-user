@@ -56,6 +56,10 @@ export default defineNuxtConfig({
                 path: '/thong-tin-tai-khoan/quan-ly-tai-khoan',
                 file: resolve(__dirname, 'pages/user/profile/manager.vue')
             }, {
+                name: 'user-profile-order-histories',
+                path: '/thong-tin-tai-khoan/lish-su-don-hang',
+                file: resolve(__dirname, 'pages/user/profile/order-histories.vue')
+            }, {
                 name: 'contact',
                 path: '/lien-he',
                 file: resolve(__dirname, 'pages/contact.vue')
